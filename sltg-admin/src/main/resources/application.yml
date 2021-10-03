@@ -3,7 +3,7 @@ sltg:
   # 名称
   name: SLTG_VUE
   # 版本
-  version: 3.5.0
+  version: 1.0.0
   # 版权年份
   copyrightYear: 2021
   # 实例演示开关
