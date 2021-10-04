@@ -121,7 +121,7 @@ export default {
               this.msgError(response.msg);
             } else {
               this.msgSuccess("注册成功！");
-              this.$router.push("/login");
+              this.$router.push("/login?registerName=" + this.registerForm.userName);
             }
           });
         }
