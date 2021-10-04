@@ -141,7 +141,7 @@ export default {
   align-items: center;
   height: 100%;
   background-image: url("../assets/images/login-background.jpg");
-  background-size: cover;
+  background-size: 100% 110%;
 }
 .title {
   margin: 0 auto 30px auto;
