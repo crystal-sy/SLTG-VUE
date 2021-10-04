@@ -8,7 +8,7 @@ create table sys_user (
   nick_name         varchar(30)     not null                   comment '用户昵称',
   email             varchar(50)     default ''                 comment '用户邮箱',
   phone_number      varchar(11)     default ''                 comment '手机号码',
-  sex               char(1)         default '0'                comment '用户性别（0-男 1-女 2-未知）',
+  sex               char(1)         default '2'                comment '用户性别（0-男 1-女 2-未知）',
   avatar            varchar(100)    default ''                 comment '头像地址',
   password          varchar(100)    default ''                 comment '密码',
   status            char(1)         default '0'                comment '帐号状态（0-正常 1-停用）',
