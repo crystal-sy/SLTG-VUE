@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
       <h3 class="title">虚假新闻管理系统</h3>
       <el-form-item prop="username">
-        <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="请输入登录账号">
+        <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="请输入登录账号" maxLength="30">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
         </el-input>
       </el-form-item>
@@ -14,6 +14,7 @@
           auto-complete="off"
           placeholder="请输入登录密码"
           @keyup.enter.native="handleLogin"
+          maxlength="20"
         >
           <svg-icon slot="prefix" icon-class="password" class="el-input__icon input-icon" />
         </el-input>
@@ -25,6 +26,7 @@
           placeholder="请输入验证码"
           style="width: 63%"
           @keyup.enter.native="handleLogin"
+          maxLength="5"
         >
           <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
         </el-input>
@@ -32,7 +34,7 @@
           <img :src="codeUrl" @click="getCode" class="login-code-img"/>
         </div>
       </el-form-item>
-      <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
+      <el-checkbox v-model="loginForm.rememberMe" style="margin:0 0 25px 0;">记住密码</el-checkbox>
       <el-link @click="toRegister()" style="float: right; color: #1890ff;">注册新用户</el-link>
       <el-form-item style="width:100%;">
         <el-button
@@ -70,12 +72,15 @@ export default {
       },
       loginRules: {
         username: [
-          { required: true, trigger: "blur", message: "登录账号不能为空" }
+          { required: true, trigger: "blur", message: "登录账号不能为空" },
+          { pattern: /^[\w]+$/, trigger: "blur", message: "登录账号只能是字母、数字或下划线" }
         ],
         password: [
           { required: true, trigger: "blur", message: "登录密码不能为空" }
         ],
-        code: [{ required: true, trigger: "change", message: "验证码不能为空" }]
+        code: [
+          { required: true, trigger: "change", message: "验证码不能为空" }
+        ]
       },
       loading: false,
       redirect: undefined
@@ -158,7 +163,7 @@ export default {
   background-size: 100% 110%;
 }
 .title {
-  margin: 0px auto 30px auto;
+  margin: 0 auto 30px auto;
   text-align: center;
   color: #707070;
 }
@@ -202,7 +207,7 @@ export default {
   width: 100%;
   text-align: center;
   color: #fff;
-  font-family: Arial;
+  font-family: Arial,serif;
   font-size: 12px;
   letter-spacing: 1px;
 }

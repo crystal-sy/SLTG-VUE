@@ -5,35 +5,35 @@
       <el-row>
         <el-col :span="24">
           <el-form-item v-if="registerForm.userId === undefined" label="登录账号" prop="userName">
-            <el-input style="width: 220px;" v-model="registerForm.userName" placeholder="请输入登录账号" maxlength="30" />
+            <el-input style="width: 270px;" v-model="registerForm.userName" placeholder="请输入登录账号" maxlength="30" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="24">
           <el-form-item v-if="registerForm.userId === undefined" label="登录密码" prop="password">
-            <el-input style="width: 220px;" v-model="registerForm.password" placeholder="请输入登录密码" type="password" maxlength="20" />
+            <el-input style="width: 270px;" v-model="registerForm.password" placeholder="请输入登录密码" type="password" maxlength="20" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="24">
           <el-form-item label="用户昵称" prop="nickName">
-            <el-input style="width: 220px;" v-model="registerForm.nickName" placeholder="请输入用户昵称" maxlength="30" />
+            <el-input style="width: 270px;" v-model="registerForm.nickName" placeholder="请输入用户昵称" maxlength="30" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="24">
           <el-form-item label="手机号码" prop="phoneNumber">
-            <el-input style="width: 220px;" v-model="registerForm.phoneNumber" placeholder="请输入手机号码" maxlength="11" />
+            <el-input style="width: 270px;" v-model="registerForm.phoneNumber" placeholder="请输入手机号码" maxlength="11" />
           </el-form-item>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="24">
           <el-form-item label="用户邮箱" prop="email" style="margin-left: 10px;">
-            <el-input style="width: 220px;" v-model="registerForm.email" placeholder="请输入用户邮箱" maxlength="50" />
+            <el-input style="width: 270px;" v-model="registerForm.email" placeholder="请输入用户邮箱" maxlength="50" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -78,7 +78,8 @@ export default {
       },
       registerRules: {
         userName: [
-          { required: true, message: "登录账号不能为空", trigger: "blur" }
+          { required: true, message: "登录账号不能为空", trigger: "blur" },
+          { pattern: /^[\w]+$/, message: "登录账号只能是字母、数字或下划线", trigger: "blur" }
         ],
         nickName: [
           { required: true, message: "用户昵称不能为空", trigger: "blur" }
