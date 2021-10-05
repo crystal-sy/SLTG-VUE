@@ -28,12 +28,6 @@ export default {
     show: {
       get() {
         return this.$store.state.settings.showSettings
-      },
-      set(val) {
-        this.$store.dispatch('settings/changeSetting', {
-          key: 'showSettings',
-          value: val
-        })
       }
     },
     theme() {
