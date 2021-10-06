@@ -10,7 +10,7 @@ import com.sltg.quartz.domain.SysJob;
  * 
  * @author styra~
  */
-public interface ISysJobService {
+public interface SysJobService {
     /**
      * 获取quartz调度器的计划任务
      * 

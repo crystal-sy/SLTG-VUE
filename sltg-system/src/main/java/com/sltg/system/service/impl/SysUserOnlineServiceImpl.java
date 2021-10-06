@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import com.sltg.common.core.domain.model.LoginUser;
 import com.sltg.common.utils.StringUtils;
 import com.sltg.system.domain.SysUserOnline;
-import com.sltg.system.service.ISysUserOnlineService;
+import com.sltg.system.service.SysUserOnlineService;
 
 /**
  * 在线用户 服务层处理
@@ -12,7 +12,7 @@ import com.sltg.system.service.ISysUserOnlineService;
  * @author styra~
  */
 @Service
-public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
+public class SysUserOnlineServiceImpl implements SysUserOnlineService {
     /**
      * 通过登录地址查询信息
      * 

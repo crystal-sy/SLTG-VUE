@@ -15,7 +15,7 @@ import com.sltg.common.core.page.TableDataInfo;
 import com.sltg.common.enums.BusinessType;
 import com.sltg.common.utils.poi.ExcelUtil;
 import com.sltg.system.domain.SysOperateLog;
-import com.sltg.system.service.ISysOperateLogService;
+import com.sltg.system.service.SysOperateLogService;
 
 /**
  * 操作日志记录
@@ -26,7 +26,7 @@ import com.sltg.system.service.ISysOperateLogService;
 @RequestMapping("/monitor/operateLog")
 public class SysOperateLogController extends BaseController {
     @Autowired
-    private ISysOperateLogService operateLogService;
+    private SysOperateLogService operateLogService;
 
     @PreAuthorize("@ss.hasPermi('monitor:operlog:list')")
     @GetMapping("/list")

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import com.sltg.common.core.domain.entity.SysDictData;
 import com.sltg.common.utils.DictUtils;
 import com.sltg.system.mapper.SysDictDataMapper;
-import com.sltg.system.service.ISysDictDataService;
+import com.sltg.system.service.SysDictDataService;
 
 /**
  * 字典 业务层处理
@@ -14,7 +14,7 @@ import com.sltg.system.service.ISysDictDataService;
  * @author styra~
  */
 @Service
-public class SysDictDataServiceImpl implements ISysDictDataService {
+public class SysDictDataServiceImpl implements SysDictDataService {
     @Autowired
     private SysDictDataMapper dictDataMapper;
 

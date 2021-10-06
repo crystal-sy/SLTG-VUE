@@ -12,7 +12,7 @@ import com.sltg.common.utils.SecurityUtils;
 import com.sltg.common.utils.ServletUtils;
 import com.sltg.common.utils.poi.ExcelUtil;
 import com.sltg.framework.web.service.TokenService;
-import com.sltg.system.service.IUserNewsService;
+import com.sltg.system.service.UserNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -30,7 +30,7 @@ import java.util.List;
 @RequestMapping("/user/management")
 public class UserManagementController extends BaseController {
     @Autowired
-    private IUserNewsService userNewsService;
+    private UserNewsService userNewsService;
 
     @Autowired
     private TokenService tokenService;

@@ -10,7 +10,7 @@ import com.sltg.system.domain.SysUserRole;
  * 
  * @author styra~
  */
-public interface ISysRoleService {
+public interface SysRoleService {
     /**
      * 根据条件分页查询角色数据
      * 

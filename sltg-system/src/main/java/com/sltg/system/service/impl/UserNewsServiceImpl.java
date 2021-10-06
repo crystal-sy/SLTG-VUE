@@ -5,7 +5,7 @@ import com.sltg.common.core.domain.entity.UserNews;
 import com.sltg.common.exception.CustomException;
 import com.sltg.common.utils.StringUtils;
 import com.sltg.system.mapper.UserNewsMapper;
-import com.sltg.system.service.IUserNewsService;
+import com.sltg.system.service.UserNewsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.List;
  * @author styra~
  */
 @Service
-public class UserNewsServiceImpl implements IUserNewsService {
+public class UserNewsServiceImpl implements UserNewsService {
     private static final Logger logger = LoggerFactory.getLogger(UserNewsServiceImpl.class);
 
     @Autowired

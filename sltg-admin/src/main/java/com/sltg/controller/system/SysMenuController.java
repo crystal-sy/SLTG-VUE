@@ -24,7 +24,7 @@ import com.sltg.common.utils.SecurityUtils;
 import com.sltg.common.utils.ServletUtils;
 import com.sltg.common.utils.StringUtils;
 import com.sltg.framework.web.service.TokenService;
-import com.sltg.system.service.ISysMenuService;
+import com.sltg.system.service.SysMenuService;
 
 /**
  * 菜单信息
@@ -35,7 +35,7 @@ import com.sltg.system.service.ISysMenuService;
 @RequestMapping("/system/menu")
 public class SysMenuController extends BaseController {
     @Autowired
-    private ISysMenuService menuService;
+    private SysMenuService menuService;
 
     @Autowired
     private TokenService tokenService;

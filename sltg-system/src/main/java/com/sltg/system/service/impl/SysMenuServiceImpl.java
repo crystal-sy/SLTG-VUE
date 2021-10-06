@@ -21,7 +21,7 @@ import com.sltg.system.domain.vo.RouterVo;
 import com.sltg.system.mapper.SysMenuMapper;
 import com.sltg.system.mapper.SysRoleMapper;
 import com.sltg.system.mapper.SysRoleMenuMapper;
-import com.sltg.system.service.ISysMenuService;
+import com.sltg.system.service.SysMenuService;
 
 /**
  * 菜单 业务层处理
@@ -29,7 +29,7 @@ import com.sltg.system.service.ISysMenuService;
  * @author styra~
  */
 @Service
-public class SysMenuServiceImpl implements ISysMenuService {
+public class SysMenuServiceImpl implements SysMenuService {
     @Autowired
     private SysMenuMapper menuMapper;
 

@@ -11,7 +11,7 @@ import com.sltg.system.domain.vo.RouterVo;
  * 
  * @author styra~
  */
-public interface ISysMenuService {
+public interface SysMenuService {
     /**
      * 根据用户查询系统菜单列表
      * 

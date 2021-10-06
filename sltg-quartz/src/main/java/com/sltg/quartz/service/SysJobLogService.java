@@ -8,7 +8,7 @@ import com.sltg.quartz.domain.SysJobLog;
  * 
  * @author styra~
  */
-public interface ISysJobLogService {
+public interface SysJobLogService {
     /**
      * 获取quartz调度器日志的计划任务
      * 

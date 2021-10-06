@@ -18,7 +18,7 @@ import com.sltg.common.utils.ServletUtils;
 import com.sltg.framework.web.service.SysLoginService;
 import com.sltg.framework.web.service.SysPermissionService;
 import com.sltg.framework.web.service.TokenService;
-import com.sltg.system.service.ISysMenuService;
+import com.sltg.system.service.SysMenuService;
 
 /**
  * 登录验证
@@ -31,7 +31,7 @@ public class SysLoginController {
     private SysLoginService loginService;
 
     @Autowired
-    private ISysMenuService menuService;
+    private SysMenuService menuService;
 
     @Autowired
     private SysPermissionService permissionService;

@@ -4,7 +4,7 @@ import com.sltg.common.core.controller.BaseController;
 import com.sltg.common.core.domain.AjaxResult;
 import com.sltg.common.core.domain.entity.SysNews;
 import com.sltg.common.core.page.TableDataInfo;
-import com.sltg.system.service.ISysNewsService;
+import com.sltg.system.service.SysNewsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,7 +24,7 @@ import java.util.List;
 @RequestMapping("/system/news")
 public class SysNewsController extends BaseController {
     @Autowired
-    private ISysNewsService newsService;
+    private SysNewsService newsService;
 
     /**
      * 获取新闻列表

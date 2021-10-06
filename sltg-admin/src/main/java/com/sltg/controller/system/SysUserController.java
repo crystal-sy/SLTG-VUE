@@ -29,8 +29,8 @@ import com.sltg.common.utils.ServletUtils;
 import com.sltg.common.utils.StringUtils;
 import com.sltg.common.utils.poi.ExcelUtil;
 import com.sltg.framework.web.service.TokenService;
-import com.sltg.system.service.ISysRoleService;
-import com.sltg.system.service.ISysUserService;
+import com.sltg.system.service.SysRoleService;
+import com.sltg.system.service.SysUserService;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -42,10 +42,10 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/system/user")
 public class SysUserController extends BaseController {
     @Autowired
-    private ISysUserService userService;
+    private SysUserService userService;
 
     @Autowired
-    private ISysRoleService roleService;
+    private SysRoleService roleService;
 
     @Autowired
     private TokenService tokenService;

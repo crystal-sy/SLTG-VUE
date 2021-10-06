@@ -21,7 +21,7 @@ import com.sltg.common.utils.ServletUtils;
 import com.sltg.common.utils.ip.IpUtils;
 import com.sltg.framework.manager.AsyncManager;
 import com.sltg.framework.manager.factory.AsyncFactory;
-import com.sltg.system.service.ISysUserService;
+import com.sltg.system.service.SysUserService;
 
 /**
  * 登录校验方法
@@ -40,7 +40,7 @@ public class SysLoginService {
     private RedisCache redisCache;
     
     @Autowired
-    private ISysUserService userService;
+    private SysUserService userService;
 
     /**
      * 登录验证

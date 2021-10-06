@@ -18,8 +18,8 @@ import com.sltg.system.domain.SysUserRole;
 import com.sltg.system.mapper.SysRoleMapper;
 import com.sltg.system.mapper.SysUserMapper;
 import com.sltg.system.mapper.SysUserRoleMapper;
-import com.sltg.system.service.ISysConfigService;
-import com.sltg.system.service.ISysUserService;
+import com.sltg.system.service.SysConfigService;
+import com.sltg.system.service.SysUserService;
 
 /**
  * 用户 业务层处理
@@ -27,7 +27,7 @@ import com.sltg.system.service.ISysUserService;
  * @author styra~
  */
 @Service
-public class SysUserServiceImpl implements ISysUserService {
+public class SysUserServiceImpl implements SysUserService {
     private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
     @Autowired
@@ -40,7 +40,7 @@ public class SysUserServiceImpl implements ISysUserService {
     private SysUserRoleMapper userRoleMapper;
 
     @Autowired
-    private ISysConfigService configService;
+    private SysConfigService configService;
 
     /**
      * 根据条件分页查询用户列表

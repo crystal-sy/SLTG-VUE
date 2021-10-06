@@ -16,7 +16,7 @@ import com.sltg.common.core.domain.AjaxResult;
 import com.sltg.common.core.page.TableDataInfo;
 import com.sltg.common.enums.BusinessType;
 import com.sltg.common.utils.poi.ExcelUtil;
-import com.sltg.system.service.ISysLoginInfoService;
+import com.sltg.system.service.SysLoginInfoService;
 
 /**
  * 系统访问记录
@@ -27,7 +27,7 @@ import com.sltg.system.service.ISysLoginInfoService;
 @RequestMapping("/monitor/loginInfo")
 public class SysLoginInfoController extends BaseController {
     @Autowired
-    private ISysLoginInfoService loginInfoService;
+    private SysLoginInfoService loginInfoService;
 
     @PreAuthorize("@ss.hasPermi('monitor:logininfor:list')")
     @GetMapping("/list")

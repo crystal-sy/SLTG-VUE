@@ -19,7 +19,7 @@ import com.sltg.system.domain.SysUserRole;
 import com.sltg.system.mapper.SysRoleMapper;
 import com.sltg.system.mapper.SysRoleMenuMapper;
 import com.sltg.system.mapper.SysUserRoleMapper;
-import com.sltg.system.service.ISysRoleService;
+import com.sltg.system.service.SysRoleService;
 
 /**
  * 角色 业务层处理
@@ -27,7 +27,7 @@ import com.sltg.system.service.ISysRoleService;
  * @author styra~
  */
 @Service
-public class SysRoleServiceImpl implements ISysRoleService {
+public class SysRoleServiceImpl implements SysRoleService {
     @Autowired
     private SysRoleMapper roleMapper;
 

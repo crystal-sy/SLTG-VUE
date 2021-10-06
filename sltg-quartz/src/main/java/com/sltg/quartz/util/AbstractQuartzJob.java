@@ -4,7 +4,7 @@ import java.util.Date;
 
 import com.sltg.quartz.domain.SysJob;
 import com.sltg.quartz.domain.SysJobLog;
-import com.sltg.quartz.service.ISysJobLogService;
+import com.sltg.quartz.service.SysJobLogService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -81,7 +81,7 @@ public abstract class AbstractQuartzJob implements Job {
         }
 
         // 写入数据库当中
-        SpringUtils.getBean(ISysJobLogService.class).addJobLog(sysJobLog);
+        SpringUtils.getBean(SysJobLogService.class).addJobLog(sysJobLog);
     }
 
     /**

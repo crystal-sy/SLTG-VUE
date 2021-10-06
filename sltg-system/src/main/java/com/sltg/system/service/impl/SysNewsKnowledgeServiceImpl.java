@@ -2,7 +2,7 @@ package com.sltg.system.service.impl;
 
 import com.sltg.common.core.domain.entity.SysNewsKnowledge;
 import com.sltg.system.mapper.SysNewsKnowledgeMapper;
-import com.sltg.system.service.ISysKnowledgeService;
+import com.sltg.system.service.SysKnowledgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @author styra~
  */
 @Service
-public class SysNewsKnowledgeServiceImpl implements ISysKnowledgeService {
+public class SysNewsKnowledgeServiceImpl implements SysKnowledgeService {
     @Autowired
     private SysNewsKnowledgeMapper newsKnowledgeMapper;
 

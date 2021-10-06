@@ -8,7 +8,7 @@ import com.sltg.system.domain.SysNotice;
  * 
  * @author styra~
  */
-public interface ISysNoticeService {
+public interface SysNoticeService {
     /**
      * 查询公告信息
      * 

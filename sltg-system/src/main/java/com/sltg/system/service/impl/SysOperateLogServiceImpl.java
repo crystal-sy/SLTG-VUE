@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sltg.system.domain.SysOperateLog;
 import com.sltg.system.mapper.SysOperateLogMapper;
-import com.sltg.system.service.ISysOperateLogService;
+import com.sltg.system.service.SysOperateLogService;
 
 /**
  * 操作日志 服务层处理
@@ -13,7 +13,7 @@ import com.sltg.system.service.ISysOperateLogService;
  * @author styra~
  */
 @Service
-public class SysOperateLogServiceImpl implements ISysOperateLogService {
+public class SysOperateLogServiceImpl implements SysOperateLogService {
     @Autowired
     private SysOperateLogMapper operateLogMapper;
 

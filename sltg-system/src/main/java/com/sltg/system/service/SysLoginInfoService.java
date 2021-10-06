@@ -8,7 +8,7 @@ import com.sltg.system.domain.SysLoginInfo;
  * 
  * @author styra~
  */
-public interface ISysLoginInfoService {
+public interface SysLoginInfoService {
     /**
      * 新增系统登录日志
      * 

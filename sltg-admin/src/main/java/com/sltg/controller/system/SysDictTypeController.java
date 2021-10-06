@@ -21,7 +21,7 @@ import com.sltg.common.core.page.TableDataInfo;
 import com.sltg.common.enums.BusinessType;
 import com.sltg.common.utils.SecurityUtils;
 import com.sltg.common.utils.poi.ExcelUtil;
-import com.sltg.system.service.ISysDictTypeService;
+import com.sltg.system.service.SysDictTypeService;
 
 /**
  * 数据字典信息
@@ -32,7 +32,7 @@ import com.sltg.system.service.ISysDictTypeService;
 @RequestMapping("/system/dict/type")
 public class SysDictTypeController extends BaseController {
     @Autowired
-    private ISysDictTypeService dictTypeService;
+    private SysDictTypeService dictTypeService;
 
     @PreAuthorize("@ss.hasPermi('system:dict:list')")
     @GetMapping("/list")

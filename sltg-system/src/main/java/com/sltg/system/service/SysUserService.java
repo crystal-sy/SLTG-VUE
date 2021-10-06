@@ -8,7 +8,7 @@ import com.sltg.common.core.domain.entity.SysUser;
  * 
  * @author styra~
  */
-public interface ISysUserService {
+public interface SysUserService {
     /**
      * 根据条件分页查询用户列表
      * 

@@ -13,7 +13,7 @@ import com.sltg.common.utils.DictUtils;
 import com.sltg.common.utils.StringUtils;
 import com.sltg.system.mapper.SysDictDataMapper;
 import com.sltg.system.mapper.SysDictTypeMapper;
-import com.sltg.system.service.ISysDictTypeService;
+import com.sltg.system.service.SysDictTypeService;
 
 /**
  * 字典 业务层处理
@@ -21,7 +21,7 @@ import com.sltg.system.service.ISysDictTypeService;
  * @author styra~
  */
 @Service
-public class SysDictTypeServiceImpl implements ISysDictTypeService {
+public class SysDictTypeServiceImpl implements SysDictTypeService {
     @Autowired
     private SysDictTypeMapper dictTypeMapper;
 

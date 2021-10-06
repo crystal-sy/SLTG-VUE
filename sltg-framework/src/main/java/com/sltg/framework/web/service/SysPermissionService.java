@@ -5,8 +5,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.sltg.common.core.domain.entity.SysUser;
-import com.sltg.system.service.ISysMenuService;
-import com.sltg.system.service.ISysRoleService;
+import com.sltg.system.service.SysMenuService;
+import com.sltg.system.service.SysRoleService;
 
 /**
  * 用户权限处理
@@ -16,10 +16,10 @@ import com.sltg.system.service.ISysRoleService;
 @Component
 public class SysPermissionService {
     @Autowired
-    private ISysRoleService roleService;
+    private SysRoleService roleService;
 
     @Autowired
-    private ISysMenuService menuService;
+    private SysMenuService menuService;
 
     /**
      * 获取角色数据权限

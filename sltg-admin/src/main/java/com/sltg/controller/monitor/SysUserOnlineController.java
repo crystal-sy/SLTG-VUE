@@ -21,7 +21,7 @@ import com.sltg.common.core.redis.RedisCache;
 import com.sltg.common.enums.BusinessType;
 import com.sltg.common.utils.StringUtils;
 import com.sltg.system.domain.SysUserOnline;
-import com.sltg.system.service.ISysUserOnlineService;
+import com.sltg.system.service.SysUserOnlineService;
 
 /**
  * 在线用户监控
@@ -32,7 +32,7 @@ import com.sltg.system.service.ISysUserOnlineService;
 @RequestMapping("/monitor/online")
 public class SysUserOnlineController extends BaseController {
     @Autowired
-    private ISysUserOnlineService userOnlineService;
+    private SysUserOnlineService userOnlineService;
 
     @Autowired
     private RedisCache redisCache;

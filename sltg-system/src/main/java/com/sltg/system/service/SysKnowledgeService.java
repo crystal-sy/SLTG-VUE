@@ -10,7 +10,7 @@ import java.util.List;
  * 
  * @author styra~
  */
-public interface ISysKnowledgeService {
+public interface SysKnowledgeService {
     /**
      * 根据条件分页查询新闻知识库列表
      * 

@@ -13,7 +13,7 @@ import com.sltg.common.constant.ScheduleConstants;
 import com.sltg.common.exception.job.TaskException;
 import com.sltg.quartz.domain.SysJob;
 import com.sltg.quartz.mapper.SysJobMapper;
-import com.sltg.quartz.service.ISysJobService;
+import com.sltg.quartz.service.SysJobService;
 import com.sltg.quartz.util.CronUtils;
 import com.sltg.quartz.util.ScheduleUtils;
 
@@ -23,7 +23,7 @@ import com.sltg.quartz.util.ScheduleUtils;
  * @author styra~
  */
 @Service
-public class SysJobServiceImpl implements ISysJobService {
+public class SysJobServiceImpl implements SysJobService {
     @Autowired
     private Scheduler scheduler;
 

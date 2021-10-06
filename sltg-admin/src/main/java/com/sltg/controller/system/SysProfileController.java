@@ -22,7 +22,7 @@ import com.sltg.common.utils.ServletUtils;
 import com.sltg.common.utils.StringUtils;
 import com.sltg.common.utils.file.FileUploadUtils;
 import com.sltg.framework.web.service.TokenService;
-import com.sltg.system.service.ISysUserService;
+import com.sltg.system.service.SysUserService;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -34,7 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/system/user/profile")
 public class SysProfileController extends BaseController {
     @Autowired
-    private ISysUserService userService;
+    private SysUserService userService;
 
     @Autowired
     private TokenService tokenService;

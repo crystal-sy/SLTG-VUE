@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sltg.system.domain.SysLoginInfo;
 import com.sltg.system.mapper.SysLoginInfoMapper;
-import com.sltg.system.service.ISysLoginInfoService;
+import com.sltg.system.service.SysLoginInfoService;
 
 /**
  * 系统访问日志情况信息 服务层处理
@@ -13,7 +13,7 @@ import com.sltg.system.service.ISysLoginInfoService;
  * @author styra~
  */
 @Service
-public class SysLoginInfoServiceImpl implements ISysLoginInfoService {
+public class SysLoginInfoServiceImpl implements SysLoginInfoService {
 
     @Autowired
     private SysLoginInfoMapper loginInfoMapper;

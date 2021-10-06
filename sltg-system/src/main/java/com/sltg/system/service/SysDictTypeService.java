@@ -9,7 +9,7 @@ import com.sltg.common.core.domain.entity.SysDictType;
  * 
  * @author styra~
  */
-public interface ISysDictTypeService {
+public interface SysDictTypeService {
     /**
      * 根据条件分页查询字典类型
      * 

@@ -8,7 +8,7 @@ import com.sltg.common.core.domain.entity.SysDictData;
  * 
  * @author styra~
  */
-public interface ISysDictDataService {
+public interface SysDictDataService {
     /**
      * 根据条件分页查询字典数据
      * 

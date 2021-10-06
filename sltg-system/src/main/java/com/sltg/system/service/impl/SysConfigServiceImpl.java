@@ -15,7 +15,7 @@ import com.sltg.common.exception.CustomException;
 import com.sltg.common.utils.StringUtils;
 import com.sltg.system.domain.SysConfig;
 import com.sltg.system.mapper.SysConfigMapper;
-import com.sltg.system.service.ISysConfigService;
+import com.sltg.system.service.SysConfigService;
 
 /**
  * 参数配置 服务层实现
@@ -23,7 +23,7 @@ import com.sltg.system.service.ISysConfigService;
  * @author styra~
  */
 @Service
-public class SysConfigServiceImpl implements ISysConfigService {
+public class SysConfigServiceImpl implements SysConfigService {
     @Autowired
     private SysConfigMapper configMapper;
 

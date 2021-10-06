@@ -8,7 +8,7 @@ import com.sltg.system.domain.SysOperateLog;
  * 
  * @author styra~
  */
-public interface ISysOperateLogService {
+public interface SysOperateLogService {
     /**
      * 新增操作日志
      * 

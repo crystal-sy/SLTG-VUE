@@ -9,7 +9,7 @@ import java.util.List;
  * 
  * @author styra~
  */
-public interface IUserNewsService {
+public interface UserNewsService {
     /**
      * 根据条件分页查询新闻列表
      * 

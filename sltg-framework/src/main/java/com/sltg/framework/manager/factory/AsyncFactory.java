@@ -11,8 +11,8 @@ import com.sltg.common.utils.ip.IpUtils;
 import com.sltg.common.utils.spring.SpringUtils;
 import com.sltg.system.domain.SysLoginInfo;
 import com.sltg.system.domain.SysOperateLog;
-import com.sltg.system.service.ISysLoginInfoService;
-import com.sltg.system.service.ISysOperateLogService;
+import com.sltg.system.service.SysLoginInfoService;
+import com.sltg.system.service.SysOperateLogService;
 import eu.bitwalker.useragentutils.UserAgent;
 
 /**
@@ -65,7 +65,7 @@ public class AsyncFactory {
                     loginInfo.setStatus(Constants.FAIL);
                 }
                 // 插入数据
-                SpringUtils.getBean(ISysLoginInfoService.class).insertLoginInfo(loginInfo);
+                SpringUtils.getBean(SysLoginInfoService.class).insertLoginInfo(loginInfo);
             }
         };
     }
@@ -82,7 +82,7 @@ public class AsyncFactory {
             public void run() {
                 // 远程查询操作地点
                 operateLog.setOperateLocation(AddressUtils.getRealAddressByIP(operateLog.getOperateIp()));
-                SpringUtils.getBean(ISysOperateLogService.class).insertOperateLog(operateLog);
+                SpringUtils.getBean(SysOperateLogService.class).insertOperateLog(operateLog);
             }
         };
     }

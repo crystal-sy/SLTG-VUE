@@ -28,8 +28,8 @@ import com.sltg.common.utils.poi.ExcelUtil;
 import com.sltg.framework.web.service.SysPermissionService;
 import com.sltg.framework.web.service.TokenService;
 import com.sltg.system.domain.SysUserRole;
-import com.sltg.system.service.ISysRoleService;
-import com.sltg.system.service.ISysUserService;
+import com.sltg.system.service.SysRoleService;
+import com.sltg.system.service.SysUserService;
 
 /**
  * 角色信息
@@ -40,7 +40,7 @@ import com.sltg.system.service.ISysUserService;
 @RequestMapping("/system/role")
 public class SysRoleController extends BaseController {
     @Autowired
-    private ISysRoleService roleService;
+    private SysRoleService roleService;
 
     @Autowired
     private TokenService tokenService;
@@ -49,7 +49,7 @@ public class SysRoleController extends BaseController {
     private SysPermissionService permissionService;
     
     @Autowired
-    private ISysUserService userService;
+    private SysUserService userService;
 
     @PreAuthorize("@ss.hasPermi('system:role:list')")
     @GetMapping("/list")

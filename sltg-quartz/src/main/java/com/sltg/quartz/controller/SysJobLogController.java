@@ -15,7 +15,7 @@ import com.sltg.common.core.page.TableDataInfo;
 import com.sltg.common.enums.BusinessType;
 import com.sltg.common.utils.poi.ExcelUtil;
 import com.sltg.quartz.domain.SysJobLog;
-import com.sltg.quartz.service.ISysJobLogService;
+import com.sltg.quartz.service.SysJobLogService;
 
 /**
  * 调度日志操作处理
@@ -26,7 +26,7 @@ import com.sltg.quartz.service.ISysJobLogService;
 @RequestMapping("/monitor/jobLog")
 public class SysJobLogController extends BaseController {
     @Autowired
-    private ISysJobLogService jobLogService;
+    private SysJobLogService jobLogService;
 
     /**
      * 查询定时任务调度日志列表

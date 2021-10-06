@@ -8,7 +8,7 @@ import com.sltg.system.domain.SysUserOnline;
  * 
  * @author styra~
  */
-public interface ISysUserOnlineService {
+public interface SysUserOnlineService {
     /**
      * 通过登录地址查询信息
      * 

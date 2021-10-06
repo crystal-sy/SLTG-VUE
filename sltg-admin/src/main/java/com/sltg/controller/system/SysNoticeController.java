@@ -19,7 +19,7 @@ import com.sltg.common.core.page.TableDataInfo;
 import com.sltg.common.enums.BusinessType;
 import com.sltg.common.utils.SecurityUtils;
 import com.sltg.system.domain.SysNotice;
-import com.sltg.system.service.ISysNoticeService;
+import com.sltg.system.service.SysNoticeService;
 
 /**
  * 公告 信息操作处理
@@ -30,7 +30,7 @@ import com.sltg.system.service.ISysNoticeService;
 @RequestMapping("/system/notice")
 public class SysNoticeController extends BaseController {
     @Autowired
-    private ISysNoticeService noticeService;
+    private SysNoticeService noticeService;
 
     /**
      * 获取通知公告列表

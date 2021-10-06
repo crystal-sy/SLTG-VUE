@@ -23,7 +23,7 @@ import com.sltg.common.utils.SecurityUtils;
 import com.sltg.common.utils.StringUtils;
 import com.sltg.common.utils.poi.ExcelUtil;
 import com.sltg.quartz.domain.SysJob;
-import com.sltg.quartz.service.ISysJobService;
+import com.sltg.quartz.service.SysJobService;
 import com.sltg.quartz.util.CronUtils;
 
 /**
@@ -35,7 +35,7 @@ import com.sltg.quartz.util.CronUtils;
 @RequestMapping("/monitor/job")
 public class SysJobController extends BaseController {
     @Autowired
-    private ISysJobService jobService;
+    private SysJobService jobService;
 
     /**
      * 查询定时任务列表
