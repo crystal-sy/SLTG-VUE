@@ -352,9 +352,7 @@ create table sys_config (
   primary key (config_id)
 ) engine=innodb auto_increment=100 comment = '参数配置表';
 
-insert into sys_config values(1, '主框架页-默认皮肤样式名称', 'sys.index.skinName',     'skin-blue',     'Y', 'admin', sysdate(), '', null, '蓝色 skin-blue、绿色 skin-green、紫色 skin-purple、红色 skin-red、黄色 skin-yellow' );
-insert into sys_config values(2, '用户管理-账号初始密码',    'sys.user.initPassword',  '123456',        'Y', 'admin', sysdate(), '', null, '初始化密码 123456' );
-insert into sys_config values(3, '主框架页-侧边栏主题',      'sys.index.sideTheme',    'theme-dark',    'Y', 'admin', sysdate(), '', null, '深色主题theme-dark，浅色主题theme-light' );
+insert into sys_config values(1, '用户管理-账号初始密码',    'sys.user.initPassword',  'admin123',        'Y', 'admin', sysdate(), '', null, '初始化密码 admin123' );
 
 
 -- ----------------------------
@@ -467,17 +465,23 @@ create table sys_news (
 -- ----------------------------
 drop table if exists sys_news_knowledge;
 create table sys_news_knowledge (
-    news_id            bigint(20)     not null auto_increment    comment '新闻ID',
-    news_title         varchar(100)   not null                   comment '新闻标题',
+    news_index         bigint(20)     not null auto_increment    comment '新闻序列号',
+    news_id            varchar(100)   not null                   comment '新闻ID',
+    news_title         varchar(200)   not null                   comment '新闻标题',
+    news_url           varchar(200)   not null                   comment '新闻url',
     news_type          char(2)        not null                   comment '新闻分类',
     detection_type     char(1)        default ''                 comment '检测类型',
-    news_path          varchar(200)   default ''                 comment '新闻内容路径',
+    detection_result   varchar(50)    default ''                 comment '检测结果',
+    news_date          varchar(10)    not null                   comment '新闻日期',
+    news_spider        varchar(200)   not null                   comment '新闻获取来源',
+    news_from          varchar(200)   default ''                 comment '新闻真实来源',
+    original_url       varchar(200)   default ''                 comment '新闻来源url，为空则本平台新闻',
     create_time        datetime                                  comment '创建时间',
     update_by          varchar(64)    default ''                 comment '更新者',
     update_time        datetime                                  comment '更新时间',
     remark             varchar(255)   default ''                 comment '备注',
-    primary key (news_id)
-) engine=innodb auto_increment=10 comment = '虚假新闻知识库表';
+    primary key (news_index)
+) engine=innodb auto_increment=0 comment = '虚假新闻知识库表';
 
 
 
