@@ -28,7 +28,7 @@ public class SysKnowledgeController extends BaseController {
     /**
      * 获取知识库列表
      */
-    @PreAuthorize("@ss.hasPermi('system:news:list')")
+    @PreAuthorize("@ss.hasPermi('news:knowledge:list')")
     @GetMapping("/list")
     public TableDataInfo knowledgeList(SysNewsKnowledge news) {
         startPage();

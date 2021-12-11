@@ -29,7 +29,7 @@ public class SysNewsController extends BaseController {
     /**
      * 获取新闻列表
      */
-    @PreAuthorize("@ss.hasPermi('system:news:list')")
+    @PreAuthorize("@ss.hasPermi('news:table:list')")
     @GetMapping("/list")
     public TableDataInfo newsList(SysNews news) {
         startPage();

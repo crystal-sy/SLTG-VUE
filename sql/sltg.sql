@@ -446,17 +446,21 @@ insert into sys_notice values('2', '维护通知：2021-05-01 谣言检测系统
 -- ----------------------------
 drop table if exists sys_news;
 create table sys_news (
-    news_id            bigint(20)     not null auto_increment    comment '新闻ID',
+    news_index         bigint(20)     not null auto_increment    comment '新闻序列号',
+    news_id            varchar(100)   not null                   comment '新闻ID',
     news_title         varchar(100)   not null                   comment '新闻标题',
+    news_url           varchar(200)   not null                   comment '新闻url',
     news_type          char(2)        not null                   comment '新闻分类',
     detection_percent  char(10)       default ''                 comment '虚假检测百分比',
     detection_type     char(1)        default ''                 comment '检测类型',
-    news_path          varchar(200)   default ''                 comment '新闻内容路径',
+    news_date          varchar(10)    not null                   comment '新闻日期',
+    news_spider        varchar(200)   not null                   comment '新闻获取来源',
+    news_from          varchar(200)   default ''                 comment '新闻真实来源',
     create_time        datetime                                  comment '创建时间',
     update_by          varchar(64)    default ''                 comment '更新者',
     update_time        datetime                                  comment '更新时间',
     remark             varchar(255)   default ''                 comment '备注',
-    primary key (news_id)
+    primary key (news_index)
 ) engine=innodb auto_increment=10 comment = '新闻信息表';
 
 
