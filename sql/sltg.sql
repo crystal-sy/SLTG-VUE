@@ -450,18 +450,20 @@ create table sys_news (
     news_id            varchar(100)   not null                   comment '新闻ID',
     news_title         varchar(100)   not null                   comment '新闻标题',
     news_url           varchar(200)   not null                   comment '新闻url',
+    news_text          varchar(5000)  default ''                 comment '新闻正文',
     news_type          char(2)        not null                   comment '新闻分类',
     detection_percent  char(10)       default ''                 comment '虚假检测百分比',
     detection_type     char(1)        default ''                 comment '检测类型',
     news_date          varchar(10)    not null                   comment '新闻日期',
     news_spider        varchar(200)   not null                   comment '新闻获取来源',
     news_from          varchar(200)   default ''                 comment '新闻真实来源',
+    is_file            char(1)        default 0                  comment '新闻内容是否存为文件（0-是 1-否）',
     create_time        datetime                                  comment '创建时间',
     update_by          varchar(64)    default ''                 comment '更新者',
     update_time        datetime                                  comment '更新时间',
     remark             varchar(255)   default ''                 comment '备注',
     primary key (news_index)
-) engine=innodb auto_increment=10 comment = '新闻信息表';
+) engine=innodb auto_increment=0 comment = '新闻信息表';
 
 
 -- ----------------------------
@@ -507,6 +509,6 @@ create table sys_user_news (
     remark             varchar(255)   default ''                 comment '备注',
     primary key (news_id),
     foreign key (user_id) references sys_user(user_id)
-) engine=innodb auto_increment=10 comment = '用户新闻信息表';
+) engine=innodb auto_increment=0 comment = '用户新闻信息表';
 
 
