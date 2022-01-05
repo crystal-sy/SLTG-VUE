@@ -15,11 +15,14 @@ import java.util.Date;
 public class SysNewsKnowledge extends BaseEntity {
     private static final long serialVersionUID = -579668501089482074L;
 
-    @Excel(name = "新闻编号", cellType = ColumnType.NUMERIC, prompt = "新闻编号")
-    private Long newsId;
+    @Excel(name = "新闻编号")
+    private String newsId;
 
     @Excel(name = "新闻标题")
     private String newsTitle;
+
+    @Excel(name = "新闻链接")
+    private String newsUrl;
 
     @Excel(name = "新闻分类")
     private String newsType;
@@ -27,11 +30,20 @@ public class SysNewsKnowledge extends BaseEntity {
     @Excel(name = "检测类型")
     private String detectionType;
 
-    @Excel(name = "新闻内容")
-    private String newsInfo;
+    @Excel(name = "检测结果")
+    private String detectionResult;
 
-    @Excel(name = "新闻内容路径")
-    private String newsPath;
+    @Excel(name = "新闻时间")
+    private String newsDate;
+
+    @Excel(name = "新闻获取来源")
+    private String newsSpider;
+
+    @Excel(name = "新闻真实来源")
+    private String newsFrom;
+
+    @Excel(name = "新闻原始链接")
+    private String originalUrl;
 
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -39,15 +51,15 @@ public class SysNewsKnowledge extends BaseEntity {
 
     public SysNewsKnowledge() {}
 
-    public SysNewsKnowledge(Long newsId) {
+    public SysNewsKnowledge(String newsId) {
         this.newsId = newsId;
     }
 
-    public Long getNewsId() {
+    public String getNewsId() {
         return newsId;
     }
 
-    public void setNewsId(Long newsId) {
+    public void setNewsId(String newsId) {
         this.newsId = newsId;
     }
 
@@ -57,6 +69,14 @@ public class SysNewsKnowledge extends BaseEntity {
 
     public void setNewsTitle(String newsTitle) {
         this.newsTitle = newsTitle;
+    }
+
+    public String getNewsUrl() {
+        return newsUrl;
+    }
+
+    public void setNewsUrl(String newsUrl) {
+        this.newsUrl = newsUrl;
     }
 
     public String getNewsType() {
@@ -75,12 +95,44 @@ public class SysNewsKnowledge extends BaseEntity {
         this.detectionType = detectionType;
     }
 
-    public String getNewsInfo() {
-        return newsInfo;
+    public String getDetectionResult() {
+        return detectionResult;
     }
 
-    public void setNewsInfo(String newsInfo) {
-        this.newsInfo = newsInfo;
+    public void setDetectionResult(String detectionResult) {
+        this.detectionResult = detectionResult;
+    }
+
+    public String getNewsDate() {
+        return newsDate;
+    }
+
+    public void setNewsDate(String newsDate) {
+        this.newsDate = newsDate;
+    }
+
+    public String getNewsSpider() {
+        return newsSpider;
+    }
+
+    public void setNewsSpider(String newsSpider) {
+        this.newsSpider = newsSpider;
+    }
+
+    public String getNewsFrom() {
+        return newsFrom;
+    }
+
+    public void setNewsFrom(String newsFrom) {
+        this.newsFrom = newsFrom;
+    }
+
+    public String getOriginalUrl() {
+        return originalUrl;
+    }
+
+    public void setOriginalUrl(String originalUrl) {
+        this.originalUrl = originalUrl;
     }
 
     @Override
@@ -91,13 +143,5 @@ public class SysNewsKnowledge extends BaseEntity {
     @Override
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public String getNewsPath() {
-        return newsPath;
-    }
-
-    public void setNewsPath(String newsPath) {
-        this.newsPath = newsPath;
     }
 }

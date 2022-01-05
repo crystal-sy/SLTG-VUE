@@ -6,9 +6,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="SysNewsKnowledge" id="NewsKnowledgeResult">
         <result property="newsId"            column="news_id"       />
         <result property="newsTitle"         column="news_title"    />
+        <result property="newsUrl"           column="news_url"      />
         <result property="newsType"          column="news_type"     />
         <result property="detectionType"     column="detection_type"  />
-        <result property="newsPath"          column="news_path"       />
+        <result property="detectionResult"   column="detection_result"  />
+        <result property="newsDate"          column="news_date"      />
+        <result property="newsSpider"        column="news_spider"    />
+        <result property="newsFrom"          column="news_from"      />
+        <result property="originalUrl"       column="original_url"      />
         <result property="createTime"        column="create_time"     />
         <result property="updateBy"          column="update_by"       />
         <result property="updateTime"        column="update_time"     />
@@ -16,7 +21,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
     
     <sql id="selectNewsKnowledgeVo">
-        select news_id, news_title, news_type, detection_type, news_path, create_time, update_by, update_time, remark
+        select news_id, news_title, news_url, news_type, detection_type, detection_result, news_date, news_spider,
+               news_from, original_url, create_time, update_by, update_time, remark
 		from sys_news_knowledge
     </sql>
     

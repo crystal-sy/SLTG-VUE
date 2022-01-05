@@ -6,18 +6,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="SysNews" id="SysNewsResult">
         <result property="newsId"            column="news_id"       />
         <result property="newsTitle"         column="news_title"    />
+        <result property="newsUrl"           column="news_url"      />
+        <result property="newsText"          column="news_text"     />
         <result property="newsType"          column="news_type"     />
         <result property="detectionPercent"  column="detection_percent" />
-        <result property="detectionType"     column="detection_type"  />
-        <result property="newsPath"          column="news_path"       />
-        <result property="createTime"        column="create_time"     />
-        <result property="updateBy"          column="update_by"       />
-        <result property="updateTime"        column="update_time"     />
-        <result property="remark"            column="remark"          />
+        <result property="detectionType"     column="detection_type" />
+        <result property="newsDate"          column="news_date"      />
+        <result property="newsSpider"        column="news_spider"    />
+        <result property="newsFrom"          column="news_from"      />
+        <result property="isFile"            column="is_file"        />
+        <result property="createTime"        column="create_time"    />
+        <result property="updateBy"          column="update_by"      />
+        <result property="updateTime"        column="update_time"    />
+        <result property="remark"            column="remark"         />
     </resultMap>
     
     <sql id="selectNewsVo">
-        select news_id, news_title, news_type, detection_percent, detection_type, news_path, create_time, update_by, update_time, remark
+        select news_id, news_title, news_url, news_text, news_type, detection_percent, detection_type, news_date,
+               news_spider, news_from, is_file, create_time, update_by, update_time, remark
 		from sys_news
     </sql>
     
@@ -25,7 +31,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectNewsVo"/>
         <where>
 			<if test="newsTitle != null and newsTitle != ''">
-				AND news_title like concat('%', #{newsTitle}, '%')
+				AND ( news_title like concat('%', #{newsTitle}, '%')
+				    OR (is_file = 1 AND news_text like concat('%', #{newsTitle}, '%') ) )
 			</if>
 			<if test="newsType != null and newsType != ''">
 				AND news_type = #{newsType}

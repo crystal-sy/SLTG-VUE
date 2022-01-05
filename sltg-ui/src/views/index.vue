@@ -3,7 +3,7 @@
     <h3 class="title">新闻检索</h3>
     <el-row :gutter="20" style="margin-left: 180px;">
       <el-col :span="12" style="width: 70%;">
-        <el-input v-model="searchValue"/>
+        <el-input v-model="searchValue" @keyup.enter.native="click"/>
         <svg-icon class-name="search-icon" icon-class="search" @click.stop="click" />
       </el-col>
     </el-row>
@@ -20,9 +20,8 @@
     },
     methods: {
       click() {
-        console.info(this.searchValue);
         this.$router.push("/news/table");
-      },
+      }
     }
   }
 </script>
