@@ -20,7 +20,7 @@
     },
     methods: {
       click() {
-        this.$router.push("/news/table");
+        this.$router.push("/news/table?" + encodeURI(this.searchValue));
       }
     }
   }

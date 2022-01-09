@@ -158,7 +158,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        newsTitle: undefined,
+        newsTitle: this.getUrlSearch(),
         newsType: undefined,
         detectionType: undefined
       },
@@ -184,6 +184,15 @@ export default {
     });
   },
   methods: {
+    getUrlSearch() {
+      const url = window.location.href;
+      const index = url.lastIndexOf('?')
+      if (index === -1) {
+        return undefined;
+      } else {
+        return decodeURIComponent(url.substring(index + 1));
+      }
+    },
     /** 查询新闻列表 */
     getList() {
       this.loading = true;
