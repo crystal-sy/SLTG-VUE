@@ -186,7 +186,7 @@ export default {
   methods: {
     getUrlSearch() {
       const url = window.location.href;
-      const index = url.lastIndexOf('?')
+      const index = url.lastIndexOf('?');
       if (index === -1) {
         return undefined;
       } else {
@@ -221,7 +221,9 @@ export default {
     resetQuery() {
       this.dateRange = [];
       this.resetForm("queryForm");
-      this.handleQuery();
+      this.queryParams.pageNum = 1;
+      this.queryParams.newsTitle = undefined;
+      this.getList();
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
