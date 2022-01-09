@@ -1,11 +1,15 @@
 package com.sltg.quartz.controller;
 
 import java.util.List;
+
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.sltg.common.annotation.Log;
@@ -79,6 +83,17 @@ public class SysJobLogController extends BaseController {
     @DeleteMapping("/clean")
     public AjaxResult clean() {
         jobLogService.cleanJobLog();
+        return AjaxResult.success();
+    }
+
+    /**
+     * 定时任务重新执行一次
+     */
+    @PreAuthorize("@ss.hasPermi('monitor:job:changeStatus')")
+    @Log(title = "定时任务", businessType = BusinessType.UPDATE)
+    @PutMapping("/re-run")
+    public AjaxResult reRun(@RequestBody SysJobLog job) throws SchedulerException {
+        jobLogService.reRun(job);
         return AjaxResult.success();
     }
 }

@@ -115,6 +115,13 @@
           <el-button
             size="mini"
             type="text"
+            icon="el-icon-caret-right"
+            @click="handleReRun(scope.row)"
+            v-hasPermi="['monitor:job:changeStatus']"
+          >重新执行</el-button>
+          <el-button
+            size="mini"
+            type="text"
             icon="el-icon-view"
             @click="handleView(scope.row)"
             v-hasPermi="['monitor:job:query']"
@@ -168,7 +175,7 @@
 </template>
 
 <script>
-import { listJobLog, delJobLog, exportJobLog, cleanJobLog } from "@/api/monitor/jobLog";
+import { listJobLog, delJobLog, exportJobLog, cleanJobLog, reRunJob } from "@/api/monitor/jobLog";
 
 export default {
   name: "JobLog",
@@ -251,6 +258,18 @@ export default {
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.jobLogId);
       this.multiple = !selection.length;
+    },
+    /* 重新执行一次 */
+    handleReRun(row) {
+      this.$confirm('确认要重新执行一次"' + row.jobName + '"任务吗?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return reRunJob(row.jobLogId);
+      }).then(() => {
+        this.msgSuccess("执行成功");
+      }).catch(() => {});
     },
     /** 详细按钮操作 */
     handleView(row) {

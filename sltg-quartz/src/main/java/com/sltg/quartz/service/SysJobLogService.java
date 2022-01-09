@@ -1,7 +1,9 @@
 package com.sltg.quartz.service;
 
 import java.util.List;
+
 import com.sltg.quartz.domain.SysJobLog;
+import org.quartz.SchedulerException;
 
 /**
  * 定时任务调度日志信息信息 服务层
@@ -52,4 +54,11 @@ public interface SysJobLogService {
      * 清空任务日志
      */
     void cleanJobLog();
+
+    /**
+     * 重新运行任务
+     *
+     * @param jobLog 调度日志信息
+     */
+    void reRun(SysJobLog jobLog) throws SchedulerException;
 }

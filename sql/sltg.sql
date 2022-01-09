@@ -405,6 +405,7 @@ insert into sys_job values(3, '系统默认（多参）', 'DEFAULT', 'sltgTask.s
 drop table if exists sys_job_log;
 create table sys_job_log (
   job_log_id          bigint(20)     not null auto_increment    comment '任务日志ID',
+  original_job_id     bigint(20)     not null                   comment '原始任务ID',
   job_name            varchar(64)    not null                   comment '任务名称',
   job_group           varchar(64)    not null                   comment '任务组名',
   invoke_target       varchar(500)   not null                   comment '调用目标字符串',

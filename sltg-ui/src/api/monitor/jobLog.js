@@ -33,3 +33,15 @@ export function exportJobLog(query) {
     params: query
   })
 }
+
+// 定时任务重新执行一次
+export function reRunJob(jobLogId) {
+  const data = {
+    jobLogId
+  }
+  return request({
+    url: '/monitor/jobLog/re-run',
+    method: 'put',
+    data: data
+  })
+}

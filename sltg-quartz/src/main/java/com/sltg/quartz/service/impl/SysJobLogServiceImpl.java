@@ -1,11 +1,20 @@
 package com.sltg.quartz.service.impl;
 
 import java.util.List;
+
+import com.sltg.common.constant.ScheduleConstants;
+import com.sltg.quartz.domain.SysJob;
+import com.sltg.quartz.mapper.SysJobMapper;
+import com.sltg.quartz.util.ScheduleUtils;
+import org.quartz.JobDataMap;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.sltg.quartz.domain.SysJobLog;
 import com.sltg.quartz.mapper.SysJobLogMapper;
 import com.sltg.quartz.service.SysJobLogService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 定时任务调度日志信息 服务层
@@ -16,6 +25,12 @@ import com.sltg.quartz.service.SysJobLogService;
 public class SysJobLogServiceImpl implements SysJobLogService {
     @Autowired
     private SysJobLogMapper jobLogMapper;
+
+    @Autowired
+    private SysJobMapper jobMapper;
+
+    @Autowired
+    private Scheduler scheduler;
 
     /**
      * 获取quartz调度器日志的计划任务
@@ -76,5 +91,24 @@ public class SysJobLogServiceImpl implements SysJobLogService {
     @Override
     public void cleanJobLog() {
         jobLogMapper.cleanJobLog();
+    }
+
+    /**
+     * 重新运行任务
+     *
+     * @param jobLog 调度日志信息
+     */
+    @Override
+    @Transactional
+    public void reRun(SysJobLog jobLog) throws SchedulerException {
+        Long jobLogId = jobLog.getJobLogId();
+        SysJobLog sysJobLog = selectJobLogById(jobLogId);
+        SysJob properties = jobMapper.selectJobById(sysJobLog.getOriginalJobId());
+        properties.setInvokeTarget(sysJobLog.getInvokeTarget());
+
+        // 参数
+        JobDataMap dataMap = new JobDataMap();
+        dataMap.put(ScheduleConstants.TASK_PROPERTIES, properties);
+        scheduler.triggerJob(ScheduleUtils.getJobKey(properties.getJobId(), properties.getJobGroup()), dataMap);
     }
 }
