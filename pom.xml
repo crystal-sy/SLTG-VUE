@@ -42,6 +42,7 @@
     <swagger.version>3.0.0</swagger.version>
     <bitwalker.version>1.21</bitwalker.version>
     <jna.version>5.8.0</jna.version>
+    <python.version>2.7.2</python.version>
   </properties>
 
   <dependencyManagement>
@@ -176,6 +177,13 @@
         <groupId>net.java.dev.jna</groupId>
         <artifactId>jna-platform</artifactId>
         <version>${jna.version}</version>
+      </dependency>
+
+      <!-- python模块-->
+      <dependency>
+        <groupId>org.python</groupId>
+        <artifactId>jython-standalone</artifactId>
+        <version>${python.version}</version>
       </dependency>
 
     </dependencies>
