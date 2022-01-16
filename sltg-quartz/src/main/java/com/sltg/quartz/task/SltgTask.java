@@ -21,32 +21,35 @@ import java.nio.charset.StandardCharsets;
 public class SltgTask {
     private static final Logger LOGGER = LoggerFactory.getLogger(SltgTask.class);
 
+    private static final String EXECUTE_SUCCESS = "执行成功";
+
     @Value("${sltg.python.lib-path}")
     private String pythonLibPath;
 
     @Value("${sltg.python.script-path}")
     private String pythonScriptPath;
 
-    public void sltgMultipleParams(String s, Boolean b, Long l, Double d, Integer i) {
+    public String sltgMultipleParams(String s, Boolean b, Long l, Double d, Integer i) {
         LOGGER.info(StringUtils.format("执行多参方法： 字符串类型{}，布尔类型{}，长整型{}，浮点型{}，整形{}", s, b, l, d, i));
+        return EXECUTE_SUCCESS;
     }
 
-    public void sltgParams(String params) {
+    public String sltgParams(String params) {
         LOGGER.info("执行有参方法：" + params);
-        executeScript(params);
+        return executePythonScript(params);
     }
 
-    public void sltgNoParams() {
+    public String sltgNoParams() {
         LOGGER.info("执行无参方法");
-        executeScript("");
+        return EXECUTE_SUCCESS;
     }
 
-    private void executeScript(String scriptName) {
+    private String executePythonScript(String scriptName) {
+        // 记录dos命令的返回信息
+        StringBuilder resStr = new StringBuilder();
         try {
-            String[] cmd = new String[] { "cmd", "/c", pythonScriptPath + scriptName };
+            String[] cmd = new String[] { "cmd", "/c", "python " + pythonScriptPath + scriptName };
             Process process = Runtime.getRuntime().exec(cmd, null, new File(pythonLibPath));
-            // 记录dos命令的返回信息
-            StringBuilder resStr = new StringBuilder();
             // 获取返回信息的流
             BufferedReader bReader = new BufferedReader(new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8));
             String res;
@@ -56,8 +59,14 @@ public class SltgTask {
             LOGGER.info(resStr.toString());
             bReader.close();
             process.getOutputStream().close();
+
+            if (resStr.length() < 1) {
+                return EXECUTE_SUCCESS;
+            }
         } catch (Exception e) {
             LOGGER.error("" + e);
+            resStr.append(e);
         }
+        return resStr.toString();
     }
 }

@@ -34,6 +34,10 @@ public class SysJobLog extends BaseEntity {
     @Excel(name = "调用目标字符串")
     private String invokeTarget;
 
+    /** 执行时间 */
+    @Excel(name = "执行时间")
+    private String jobRuntime;
+
     /** 日志信息 */
     @Excel(name = "日志信息")
     private String jobMessage;
@@ -92,6 +96,14 @@ public class SysJobLog extends BaseEntity {
         this.invokeTarget = invokeTarget;
     }
 
+    public String getJobRuntime() {
+        return jobRuntime;
+    }
+
+    public void setJobRuntime(String jobRuntime) {
+        this.jobRuntime = jobRuntime;
+    }
+
     public String getJobMessage() {
         return jobMessage;
     }
@@ -144,6 +156,7 @@ public class SysJobLog extends BaseEntity {
             .append("exceptionInfo", getExceptionInfo())
             .append("startTime", getStartTime())
             .append("stopTime", getStopTime())
+            .append("jobRuntime", getJobRuntime())
             .toString();
     }
 }

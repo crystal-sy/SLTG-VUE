@@ -53,6 +53,8 @@ public class SysJob extends BaseEntity {
     @Excel(name = "任务状态", readConverterExp = "0-正常,1-暂停")
     private String status;
 
+    private String message;
+
     public Long getJobId() {
         return jobId;
     }
@@ -131,6 +133,18 @@ public class SysJob extends BaseEntity {
         this.status = status;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
@@ -147,6 +161,7 @@ public class SysJob extends BaseEntity {
             .append("updateBy", getUpdateBy())
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
+            .append("message", getMessage())
             .toString();
     }
 }
