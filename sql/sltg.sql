@@ -392,12 +392,13 @@ create table sys_job (
   update_time         datetime                                 comment '更新时间',
   remark              varchar(500)  default ''                 comment '备注信息',
   primary key (job_id, job_name, job_group)
-) engine=innodb auto_increment=100 comment = '定时任务调度表';
+) engine=innodb auto_increment=1 comment = '定时任务调度表';
 
-insert into sys_job values(1, '系统默认（无参）', 'DEFAULT', 'sltgTask.sltgNoParams',        '0/10 * * * * ?', '3', '1', '1', 'admin', sysdate(), '', null, '');
-insert into sys_job values(2, '系统默认（有参）', 'DEFAULT', 'sltgTask.sltgParams(\'sltg\')',  '0/15 * * * * ?', '3', '1', '1', 'admin', sysdate(), '', null, '');
-insert into sys_job values(3, '系统默认（多参）', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'sltg\', true, 2000L, 316.50D, 100)',  '0/20 * * * * ?', '3', '1', '1', 'admin', sysdate(), '', null, '');
-
+insert into sys_job values (1, '网易新闻爬虫', 'DEFAULT', 'sltgTask.sltgParams(\'wy-news-spider.py\')', '0 0 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
+insert into sys_job values (2, '新浪新闻爬虫', 'DEFAULT', 'sltgTask.sltgParams(\'sina-news-spider.py\')', '0 10 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
+insert into sys_job values (3, '微博新闻爬虫', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'weibo-news-spider.py\', \'currentDate\')', '0 20 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
+insert into sys_job values (4, '腾讯较真平台新闻爬虫', 'DEFAULT', 'sltgTask.sltgParams(\'tencentFactSpider.py\')', '0 30 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
+insert into sys_job values (5, '辟谣官方平台新闻爬虫', 'DEFAULT', 'sltgTask.sltgParams(\'piyao-org-news-spider.py\')', '0 40 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
 
 -- ----------------------------
 -- 定时任务调度日志表
