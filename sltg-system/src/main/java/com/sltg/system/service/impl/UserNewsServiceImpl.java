@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Service
 public class UserNewsServiceImpl implements UserNewsService {
-    private static final Logger logger = LoggerFactory.getLogger(UserNewsServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserNewsServiceImpl.class);
 
     @Autowired
     private UserNewsMapper userNewsMapper;
@@ -87,7 +87,7 @@ public class UserNewsServiceImpl implements UserNewsService {
                 failureNum++;
                 String msg = "<br/>" + failureNum + "、新闻 " + news.getNewsTitle() + " 导入失败：";
                 failureMsg.append(msg).append(e.getMessage());
-                logger.error(msg, e);
+                 LOGGER.error(msg, e);
             }
         }
         if (failureNum > 0) {

@@ -41,7 +41,7 @@ import com.sltg.system.domain.SysOperateLog;
 @Aspect
 @Component
 public class LogAspect {
-    private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(LogAspect.class);
 
     // 配置织入点
     @Pointcut("@annotation(com.sltg.common.annotation.Log)")
@@ -109,8 +109,8 @@ public class LogAspect {
             AsyncManager.me().execute(AsyncFactory.recordOperate(operateLog));
         } catch (Exception exp) {
             // 记录本地异常日志
-            log.error("==前置通知异常==");
-            log.error("异常信息:{}", exp.getMessage());
+            LOGGER.error("==前置通知异常==");
+            LOGGER.error("异常信息:{}", exp.getMessage());
             exp.printStackTrace();
         }
     }

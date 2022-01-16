@@ -28,7 +28,7 @@ import com.sltg.system.service.SysUserService;
  */
 @Service
 public class SysUserServiceImpl implements SysUserService {
-    private static final Logger log = LoggerFactory.getLogger(SysUserServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
     @Autowired
     private SysUserMapper userMapper;
@@ -400,7 +400,7 @@ public class SysUserServiceImpl implements SysUserService {
                 failureNum++;
                 String msg = "<br/>" + failureNum + "、账号 " + user.getUserName() + " 导入失败：";
                 failureMsg.append(msg).append(e.getMessage());
-                log.error(msg, e);
+                LOGGER.error(msg, e);
             }
         }
         if (failureNum > 0) {

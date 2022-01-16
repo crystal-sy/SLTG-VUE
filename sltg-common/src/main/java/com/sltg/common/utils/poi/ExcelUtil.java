@@ -64,7 +64,7 @@ import com.sltg.common.utils.reflect.ReflectUtils;
  * @author styra~
  */
 public class ExcelUtil<T> {
-    private static final Logger log = LoggerFactory.getLogger(ExcelUtil.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExcelUtil.class);
 
     /**
      * Excel sheet最大行数，默认65536
@@ -326,7 +326,7 @@ public class ExcelUtil<T> {
             wb.write(out);
             return AjaxResult.success(filename);
         } catch (Exception e) {
-            log.error("导出Excel异常{}", e.getMessage());
+            LOGGER.error("导出Excel异常{}", e.getMessage());
             throw new CustomException("导出Excel失败，请联系网站管理员！");
         } finally {
             if (wb != null) {
@@ -555,7 +555,7 @@ public class ExcelUtil<T> {
                 addStatisticsData(column, Convert.toStr(value), attr);
             }
         } catch (Exception e) {
-            log.error("导出Excel失败", e);
+            LOGGER.error("导出Excel失败", e);
         }
     }
 

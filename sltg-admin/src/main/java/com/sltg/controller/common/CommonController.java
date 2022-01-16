@@ -25,7 +25,7 @@ import com.sltg.framework.config.ServerConfig;
  */
 @RestController
 public class CommonController {
-    private static final Logger log = LoggerFactory.getLogger(CommonController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommonController.class);
 
     @Autowired
     private ServerConfig serverConfig;
@@ -53,7 +53,7 @@ public class CommonController {
                 FileUtils.deleteFile(filePath);
             }
         } catch (Exception e) {
-            log.error("下载文件失败", e);
+            LOGGER.error("下载文件失败", e);
         }
     }
 
@@ -97,7 +97,7 @@ public class CommonController {
             FileUtils.setAttachmentResponseHeader(response, downloadName);
             FileUtils.writeBytes(downloadPath, response.getOutputStream());
         } catch (Exception e) {
-            log.error("下载文件失败", e);
+            LOGGER.error("下载文件失败", e);
         }
     }
 }

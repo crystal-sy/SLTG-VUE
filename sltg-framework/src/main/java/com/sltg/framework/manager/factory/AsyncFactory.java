@@ -21,7 +21,7 @@ import eu.bitwalker.useragentutils.UserAgent;
  * @author styra~
  */
 public class AsyncFactory {
-    private static final Logger sys_user_logger = LoggerFactory.getLogger("sys-user");
+    private static final Logger LOGGER = LoggerFactory.getLogger("sys-user");
 
     /**
      * 记录登录信息
@@ -45,7 +45,7 @@ public class AsyncFactory {
                     LogUtils.getBlock(username) +
                     LogUtils.getBlock(status) +
                     LogUtils.getBlock(message);
-                sys_user_logger.info(stringBuilder, args);
+                LOGGER.info(stringBuilder, args);
                 // 获取客户端操作系统
                 String os = userAgent.getOperatingSystem().getName();
                 // 获取客户端浏览器

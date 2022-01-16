@@ -16,7 +16,7 @@ sltg:
   captchaType: math
   # python运行配置
   python:
-    lib-path: D:/Program Files/anaconda/envs/paperTest/Lib/site-packages
+    lib-path: D:/Program Files/anaconda/envs/sycode
     script-path: D:/sycode/SLTG/src/main/spider/
 
 # 开发环境配置

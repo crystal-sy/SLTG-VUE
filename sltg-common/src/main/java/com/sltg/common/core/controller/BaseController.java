@@ -24,7 +24,7 @@ import com.sltg.common.utils.sql.SqlUtil;
  * @author styra~
  */
 public class BaseController {
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    protected final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     /**
      * 将前台传递过来的日期格式的字符串，自动转化为Date类型
@@ -35,7 +35,7 @@ public class BaseController {
         binder.registerCustomEditor(Date.class, new PropertyEditorSupport() {
             @Override
             public void setAsText(String text) {
-                setValue(DateUtils.parseDate(text));
+            setValue(DateUtils.parseDate(text));
             }
         });
     }

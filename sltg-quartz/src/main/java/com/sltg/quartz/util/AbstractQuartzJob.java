@@ -23,7 +23,7 @@ import com.sltg.common.utils.spring.SpringUtils;
  * @author styra~
  */
 public abstract class AbstractQuartzJob implements Job {
-    private static final Logger log = LoggerFactory.getLogger(AbstractQuartzJob.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractQuartzJob.class);
 
     /**
      * 线程本地变量
@@ -39,7 +39,7 @@ public abstract class AbstractQuartzJob implements Job {
             doExecute(context, sysJob);
             after(context, sysJob, null);
         } catch (Exception e) {
-            log.error("任务执行异常  - ：", e);
+             LOGGER.error("任务执行异常  - ：", e);
             after(context, sysJob, e);
         }
     }

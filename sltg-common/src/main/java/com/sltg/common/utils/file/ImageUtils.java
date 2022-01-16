@@ -19,7 +19,7 @@ import com.sltg.common.utils.StringUtils;
  * @author styra~
  */
 public class ImageUtils {
-    private static final Logger log = LoggerFactory.getLogger(ImageUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ImageUtils.class);
 
     public static byte[] getImage(String imagePath) {
         InputStream fileStream = getFile(imagePath);
@@ -31,7 +31,7 @@ public class ImageUtils {
 
             return IOUtils.toByteArray(fileStream);
         } catch (Exception e) {
-            log.error("图片加载异常", e);
+            LOGGER.error("图片加载异常", e);
             return null;
         } finally {
             IOUtils.closeQuietly(fileStream);
@@ -48,7 +48,7 @@ public class ImageUtils {
             result = Arrays.copyOf(result, result.length);
             return new ByteArrayInputStream(result);
         } catch (Exception e) {
-            log.error("获取图片异常", e);
+            LOGGER.error("获取图片异常", e);
         }
         return null;
     }
@@ -78,7 +78,7 @@ public class ImageUtils {
             }
             return IOUtils.toByteArray(in);
         } catch (Exception e) {
-            log.error("获取文件路径异常", e);
+            LOGGER.error("获取文件路径异常", e);
             return null;
         } finally {
             IOUtils.closeQuietly(in);

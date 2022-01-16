@@ -3,6 +3,7 @@ package com.sltg.framework.aspectj;
 import java.util.Objects;
 
 import com.sltg.framework.datasource.DynamicDataSourceContextHolder;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -25,7 +26,7 @@ import com.sltg.common.utils.StringUtils;
 @Order(1)
 @Component
 public class DataSourceAspect {
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+    protected Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Pointcut("@annotation(com.sltg.common.annotation.DataSource)"
         + "|| @within(com.sltg.common.annotation.DataSource)")

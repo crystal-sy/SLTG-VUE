@@ -26,7 +26,7 @@ import java.util.Objects;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
      * 基础异常
@@ -49,31 +49,31 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoHandlerFoundException.class)
     public AjaxResult handlerNoFoundException(Exception e) {
-        log.error(e.getMessage(), e);
+        LOGGER.error(e.getMessage(), e);
         return AjaxResult.error(HttpStatus.NOT_FOUND, "路径不存在，请检查路径是否正确");
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     public AjaxResult handleAuthorizationException(AccessDeniedException e) {
-        log.error(e.getMessage());
+        LOGGER.error(e.getMessage());
         return AjaxResult.error(HttpStatus.FORBIDDEN, "没有权限，请联系管理员授权");
     }
 
     @ExceptionHandler(AccountExpiredException.class)
     public AjaxResult handleAccountExpiredException(AccountExpiredException e) {
-        log.error(e.getMessage(), e);
+        LOGGER.error(e.getMessage(), e);
         return AjaxResult.error(e.getMessage());
     }
 
     @ExceptionHandler(UsernameNotFoundException.class)
     public AjaxResult handleUsernameNotFoundException(UsernameNotFoundException e) {
-        log.error(e.getMessage(), e);
+        LOGGER.error(e.getMessage(), e);
         return AjaxResult.error(e.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
     public AjaxResult handleException(Exception e) {
-        log.error(e.getMessage(), e);
+        LOGGER.error(e.getMessage(), e);
         return AjaxResult.error(e.getMessage());
     }
 
@@ -82,7 +82,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     public AjaxResult validatedBindException(BindException e) {
-        log.error(e.getMessage(), e);
+        LOGGER.error(e.getMessage(), e);
         String message = e.getAllErrors().get(0).getDefaultMessage();
         return AjaxResult.error(message);
     }
@@ -92,7 +92,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Object validExceptionHandler(MethodArgumentNotValidException e) {
-        log.error(e.getMessage(), e);
+        LOGGER.error(e.getMessage(), e);
         String message = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
         return AjaxResult.error(message);
     }

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * @author styra~
  */
 public class Md5Utils {
-    private static final Logger log = LoggerFactory.getLogger(Md5Utils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Md5Utils.class);
 
     private static byte[] md5(String s) {
         MessageDigest algorithm;
@@ -21,7 +21,7 @@ public class Md5Utils {
             algorithm.update(s.getBytes(StandardCharsets.UTF_8));
             return algorithm.digest();
         } catch (Exception e) {
-            log.error("MD5 Error...", e);
+            LOGGER.error("MD5 Error...", e);
         }
         return null;
     }
@@ -46,7 +46,7 @@ public class Md5Utils {
         try {
             return new String(toHex(md5(s)).getBytes(StandardCharsets.UTF_8), StandardCharsets.UTF_8);
         } catch (Exception e) {
-            log.error("not supported charset...", e);
+            LOGGER.error("not supported charset...", e);
             return s;
         }
     }

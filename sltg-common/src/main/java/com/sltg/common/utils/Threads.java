@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author styra~
  */
 public class Threads {
-    private static final Logger logger = LoggerFactory.getLogger(Threads.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Threads.class);
 
     /**
      * sleep等待,单位为毫秒
@@ -23,7 +23,7 @@ public class Threads {
         try {
             Thread.sleep(milliseconds);
         } catch (InterruptedException e) {
-            logger.error(e.getMessage());
+             LOGGER.error(e.getMessage());
         }
     }
 
@@ -41,7 +41,7 @@ public class Threads {
                 if (!pool.awaitTermination(120, TimeUnit.SECONDS)) {
                     pool.shutdownNow();
                     if (!pool.awaitTermination(120, TimeUnit.SECONDS)) {
-                        logger.info("Pool did not terminate");
+                         LOGGER.info("Pool did not terminate");
                     }
                 }
             } catch (InterruptedException ie) {
@@ -70,7 +70,7 @@ public class Threads {
             }
         }
         if (t != null) {
-            logger.error(t.getMessage(), t);
+             LOGGER.error(t.getMessage(), t);
         }
     }
 }
