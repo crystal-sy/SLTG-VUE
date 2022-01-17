@@ -41,9 +41,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 AND detection_type = #{detectionType}
             </if>
 		</where>
+        order by create_time desc
     </select>
 
-    <select id="queryNewsById" parameterType="Long" resultMap="SysNewsResult">
+    <select id="queryNewsById" parameterType="String" resultMap="SysNewsResult">
         <include refid="selectNewsVo"/>
         where news_id = #{newsId}
     </select>

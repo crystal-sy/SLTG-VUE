@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </if>
     </select>
 
-    <select id="queryUserNewsById" parameterType="Long" resultMap="UserNewsResult">
+    <select id="queryUserNewsById" parameterType="String" resultMap="UserNewsResult">
         <include refid="selectUserNewsVo"/>
         where news_id = #{newsId}
     </select>

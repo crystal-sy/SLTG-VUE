@@ -40,9 +40,9 @@ public class SysNewsController extends BaseController {
     /**
      * 根据新闻编号获取详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:news:query')")
-    @GetMapping(value = { "/detail", "/{newsId}" })
-    public AjaxResult getNewsInfo(@PathVariable(value = "newsId", required = false) Long newsId) {
+    @PreAuthorize("@ss.hasPermi('news:table:list')")
+    @GetMapping(value = "/detail/{newsId}")
+    public AjaxResult getNewsInfo(@PathVariable(value = "newsId", required = false) String newsId) {
         AjaxResult ajax = AjaxResult.success();
         ajax.put(AjaxResult.DATA_TAG, newsService.queryNewsById(newsId));
         return ajax;

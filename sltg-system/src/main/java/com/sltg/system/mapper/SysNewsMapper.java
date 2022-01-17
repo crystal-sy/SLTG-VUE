@@ -25,6 +25,6 @@ public interface SysNewsMapper {
      * @param newsId 新闻ID
      * @return 新闻信息
      */
-    SysNews queryNewsById(Long newsId);
+    SysNews queryNewsById(String newsId);
 
 }

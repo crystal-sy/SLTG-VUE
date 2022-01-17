@@ -66,8 +66,7 @@
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList" :columns="columns"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="newsList" @selection-change="handleSelectionChange">
-      <el-table-column type="selection" width="50" align="center" />
+    <el-table v-loading="loading" :data="newsList">
       <el-table-column label="新闻编号" align="center" key="newsId" prop="newsId" v-if="columns[0].visible" />
       <el-table-column label="新闻标题" align="center" key="newsTitle" prop="newsTitle" v-if="columns[1].visible" :show-overflow-tooltip="true" width="400"/>
       <el-table-column label="新闻分类" align="center" key="newsType" prop="newsType" v-if="columns[2].visible" :show-overflow-tooltip="true" >
@@ -96,8 +95,8 @@
             size="mini"
             type="text"
             icon="el-icon-view"
-            @click="handleDetail(scope.row.newsId)"
-            v-hasPermi="['system:user:edit']"
+            @click="handleDetail(scope.row.newsUrl)"
+            v-hasPermi="['news:knowledge:list']"
           >详情</el-button>
         </template>
       </el-table-column>
@@ -205,20 +204,13 @@
         this.resetForm("queryForm");
         this.handleQuery();
       },
-      // 多选框选中数据
-      handleSelectionChange(selection) {
-        this.ids = selection.map(item => item.userId);
-        this.single = selection.length !== 1;
-        this.multiple = !selection.length;
-      },
       /** 搜索按钮操作 */
-      handleDetail(newsId) {
-        this.loading = true;
-        getKnowledgeInfo(newsId).then(response => {
-            this.newsInfo = response.data;
-            this.loading = false;
-          }
-        );
+      handleDetail(newsUrl) {
+        if (newsUrl === undefined || newsUrl === '') {
+          this.$message.error("获取新闻内容失败！");
+        } else {
+          window.open(newsUrl, '_blank');
+        }
       },
     }
   };

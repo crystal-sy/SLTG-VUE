@@ -4,20 +4,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sltg.system.mapper.SysNewsKnowledgeMapper">
     <resultMap type="SysNewsKnowledge" id="NewsKnowledgeResult">
-        <result property="newsId"            column="news_id"       />
-        <result property="newsTitle"         column="news_title"    />
-        <result property="newsUrl"           column="news_url"      />
-        <result property="newsType"          column="news_type"     />
-        <result property="detectionType"     column="detection_type"  />
+        <result property="newsId"            column="news_id"        />
+        <result property="newsTitle"         column="news_title"     />
+        <result property="newsUrl"           column="news_url"       />
+        <result property="newsType"          column="news_type"      />
+        <result property="detectionType"     column="detection_type"    />
         <result property="detectionResult"   column="detection_result"  />
         <result property="newsDate"          column="news_date"      />
         <result property="newsSpider"        column="news_spider"    />
         <result property="newsFrom"          column="news_from"      />
-        <result property="originalUrl"       column="original_url"      />
-        <result property="createTime"        column="create_time"     />
-        <result property="updateBy"          column="update_by"       />
-        <result property="updateTime"        column="update_time"     />
-        <result property="remark"            column="remark"          />
+        <result property="originalUrl"       column="original_url"   />
+        <result property="createTime"        column="create_time"    />
+        <result property="updateBy"          column="update_by"      />
+        <result property="updateTime"        column="update_time"    />
+        <result property="remark"            column="remark"         />
     </resultMap>
     
     <sql id="selectNewsKnowledgeVo">
@@ -39,9 +39,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 AND detection_type = #{detectionType}
             </if>
 		</where>
+		order by create_time desc
     </select>
 
-    <select id="queryNewsKnowledgeById" parameterType="Long" resultMap="NewsKnowledgeResult">
+    <select id="queryNewsKnowledgeById" parameterType="String" resultMap="NewsKnowledgeResult">
         <include refid="selectNewsKnowledgeVo"/>
         where news_id = #{newsId}
     </select>

@@ -24,7 +24,7 @@ public class SysNewsKnowledgeServiceImpl implements SysKnowledgeService {
     }
 
     @Override
-    public SysNewsKnowledge queryKnowledgeById(Long newsId) {
+    public SysNewsKnowledge queryKnowledgeById(String newsId) {
         return newsKnowledgeMapper.queryNewsKnowledgeById(newsId);
     }
 }

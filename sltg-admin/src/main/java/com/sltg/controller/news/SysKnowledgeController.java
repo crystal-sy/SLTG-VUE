@@ -39,9 +39,9 @@ public class SysKnowledgeController extends BaseController {
     /**
      * 根据新闻编号获取详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:news:query')")
-    @GetMapping(value = { "/detail", "/{newsId}" })
-    public AjaxResult getKnowledgeInfo(@PathVariable(value = "newsId", required = false) Long newsId) {
+    @PreAuthorize("@ss.hasPermi('news:knowledge:list')")
+    @GetMapping(value = "/detail/{newsId}")
+    public AjaxResult getKnowledgeInfo(@PathVariable(value = "newsId", required = false) String newsId) {
         AjaxResult ajax = AjaxResult.success();
         ajax.put(AjaxResult.DATA_TAG, knowledgeService.queryKnowledgeById(newsId));
         return ajax;

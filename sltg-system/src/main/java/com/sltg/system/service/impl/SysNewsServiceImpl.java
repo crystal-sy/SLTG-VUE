@@ -24,7 +24,7 @@ public class SysNewsServiceImpl implements SysNewsService {
     }
 
     @Override
-    public SysNews queryNewsById(Long newsId) {
+    public SysNews queryNewsById(String newsId) {
         return newsMapper.queryNewsById(newsId);
     }
 }

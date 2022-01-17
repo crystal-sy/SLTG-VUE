@@ -25,5 +25,5 @@ public interface SysKnowledgeService {
      * @param newsId 新闻ID
      * @return 新闻知识库对象信息
      */
-    SysNewsKnowledge queryKnowledgeById(Long newsId);
+    SysNewsKnowledge queryKnowledgeById(String newsId);
 }

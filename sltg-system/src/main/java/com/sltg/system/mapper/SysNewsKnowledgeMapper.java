@@ -24,6 +24,6 @@ public interface SysNewsKnowledgeMapper {
      * @param newsId 新闻知识库ID
      * @return 新闻知识库信息
      */
-    SysNewsKnowledge queryNewsKnowledgeById(Long newsId);
+    SysNewsKnowledge queryNewsKnowledgeById(String newsId);
 
 }
