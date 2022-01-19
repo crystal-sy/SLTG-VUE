@@ -24,6 +24,15 @@ public class UserNews extends BaseEntity {
     @Excel(name = "新闻标题")
     private String newsTitle;
 
+    @Excel(name = "新闻分类")
+    private String newsType;
+
+    @Excel(name = "新闻日期")
+    private String newsDate;
+
+    @Excel(name = "新闻来源")
+    private String newsFrom;
+
     @Excel(name = "虚假检测百分比")
     private String detectionPercent;
 
@@ -71,6 +80,30 @@ public class UserNews extends BaseEntity {
 
     public void setNewsTitle(String newsTitle) {
         this.newsTitle = newsTitle;
+    }
+
+    public String getNewsType() {
+        return newsType;
+    }
+
+    public void setNewsType(String newsType) {
+        this.newsType = newsType;
+    }
+
+    public String getNewsDate() {
+        return newsDate;
+    }
+
+    public void setNewsDate(String newsDate) {
+        this.newsDate = newsDate;
+    }
+
+    public String getNewsFrom() {
+        return newsFrom;
+    }
+
+    public void setNewsFrom(String newsFrom) {
+        this.newsFrom = newsFrom;
     }
 
     public String getDetectionPercent() {

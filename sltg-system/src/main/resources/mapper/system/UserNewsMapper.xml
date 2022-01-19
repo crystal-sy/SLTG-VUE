@@ -7,29 +7,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="newsId"            column="news_id"       />
         <result property="userId"            column="user_id"       />
         <result property="newsTitle"         column="news_title"    />
+        <result property="news_type"         column="newsType"      />
+        <result property="news_date"         column="newsDate"      />
+        <result property="news_from"         column="newsFrom"      />
         <result property="detectionPercent"  column="detection_percent" />
-        <result property="detectionType"     column="detection_type"  />
-        <result property="newsPath"          column="news_path"       />
-        <result property="createTime"        column="create_time"     />
-        <result property="del_flag"          column="delFlag"     />
-        <result property="updateBy"          column="update_by"       />
-        <result property="updateTime"        column="update_time"     />
-        <result property="remark"            column="remark"          />
+        <result property="detectionType"     column="detection_type"    />
+        <result property="del_flag"          column="delFlag"       />
+        <result property="createTime"        column="create_time"   />
+        <result property="updateBy"          column="update_by"     />
+        <result property="updateTime"        column="update_time"   />
+        <result property="remark"            column="remark"        />
     </resultMap>
     
     <sql id="selectUserNewsVo">
-        select news_id, user_id, news_title, detection_percent, detection_type, news_path, create_time, del_flag, update_by, update_time, remark
+        select news_id, user_id, news_title, news_type, news_date, news_from, detection_percent, detection_type, del_flag, create_time, update_by, update_time, remark
 		from sys_user_news
     </sql>
     
     <select id="selectUserNewsList" parameterType="UserNews" resultMap="UserNewsResult">
         <include refid="selectUserNewsVo"/>
-        where user_id = #{userId}
+        where user_id = #{userId} and del_flag = '0'
         <if test="newsTitle != null and newsTitle != ''">
             AND news_title like concat('%', #{newsTitle}, '%')
         </if>
         <if test="detectionType != null and detectionType != ''">
             AND detection_type = #{detectionType}
+        </if>
+        <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+            and date_format(create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+        </if>
+        <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+            and date_format(create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
         </if>
     </select>
 
