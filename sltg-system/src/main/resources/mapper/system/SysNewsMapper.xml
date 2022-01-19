@@ -6,6 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="SysNews" id="SysNewsResult">
         <result property="newsId"            column="news_id"       />
         <result property="newsTitle"         column="news_title"    />
+        <result property="haveTitle"         column="have_title"    />
         <result property="newsUrl"           column="news_url"      />
         <result property="newsText"          column="news_text"     />
         <result property="newsType"          column="news_type"     />
@@ -22,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
     
     <sql id="selectNewsVo">
-        select news_id, news_title, news_url, news_text, news_type, detection_percent, detection_type, news_date,
+        select news_id, news_title, have_title, news_url, news_text, news_type, detection_percent, detection_type, news_date,
                news_spider, news_from, is_file, create_time, update_by, update_time, remark
 		from sys_news
     </sql>

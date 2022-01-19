@@ -30,6 +30,9 @@ public class SysNews extends BaseEntity {
     @Excel(name = "新闻标题")
     private String newsTitle;
 
+    @Excel(name = "是否有新闻标题")
+    private String haveTitle;
+
     @Excel(name = "新闻链接")
     private String newsUrl;
 
@@ -81,6 +84,14 @@ public class SysNews extends BaseEntity {
 
     public void setNewsTitle(String newsTitle) {
         this.newsTitle = newsTitle;
+    }
+
+    public String getHaveTitle() {
+        return haveTitle;
+    }
+
+    public void setHaveTitle(String haveTitle) {
+        this.haveTitle = haveTitle;
     }
 
     public String getNewsUrl() {

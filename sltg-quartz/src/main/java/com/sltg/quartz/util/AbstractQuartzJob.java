@@ -2,6 +2,7 @@ package com.sltg.quartz.util;
 
 import java.util.Date;
 
+import com.sltg.common.utils.DateUtils;
 import com.sltg.quartz.domain.SysJob;
 import com.sltg.quartz.domain.SysJobLog;
 import com.sltg.quartz.service.SysJobLogService;
@@ -24,6 +25,8 @@ import com.sltg.common.utils.spring.SpringUtils;
  */
 public abstract class AbstractQuartzJob implements Job {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractQuartzJob.class);
+
+    private static final String EXECUTE_CURRENT_DATE = "currentDate";
 
     /**
      * 线程本地变量
@@ -68,7 +71,13 @@ public abstract class AbstractQuartzJob implements Job {
         sysJobLog.setOriginalJobId(sysJob.getJobId());
         sysJobLog.setJobName(sysJob.getJobName());
         sysJobLog.setJobGroup(sysJob.getJobGroup());
-        sysJobLog.setInvokeTarget(sysJob.getInvokeTarget());
+        String invokeTarget = sysJob.getInvokeTarget();
+        if (invokeTarget.contains(EXECUTE_CURRENT_DATE)) {
+            sysJobLog.setInvokeTarget(invokeTarget.replace(EXECUTE_CURRENT_DATE,
+                DateUtils.parseDateBeforeToStr(DateUtils.YYYY_MM_DD)));
+        } else {
+            sysJobLog.setInvokeTarget(invokeTarget);
+        }
         sysJobLog.setStartTime(startTime);
         sysJobLog.setStopTime(new Date());
         long runMs = sysJobLog.getStopTime().getTime() - sysJobLog.getStartTime().getTime();

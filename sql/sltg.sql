@@ -394,11 +394,11 @@ create table sys_job (
   primary key (job_id, job_name, job_group)
 ) engine=innodb auto_increment=1 comment = '定时任务调度表';
 
-insert into sys_job values (1, '网易新闻爬虫', 'DEFAULT', 'sltgTask.sltgParams(\'wy-news-spider.py\')', '0 0 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
-insert into sys_job values (2, '新浪新闻爬虫', 'DEFAULT', 'sltgTask.sltgParams(\'sina-news-spider.py\')', '0 10 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
-insert into sys_job values (3, '微博新闻爬虫', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'weibo-news-spider.py\', \'currentDate\')', '0 20 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
-insert into sys_job values (4, '腾讯较真平台新闻爬虫', 'DEFAULT', 'sltgTask.sltgParams(\'tencentFactSpider.py\')', '0 30 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
-insert into sys_job values (5, '辟谣官方平台新闻爬虫', 'DEFAULT', 'sltgTask.sltgParams(\'piyao-org-news-spider.py\')', '0 40 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
+insert into sys_job values (1, '网易新闻爬虫', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'wy-news-spider.py\', \'currentDate\')', '0 10 0 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
+insert into sys_job values (2, '新浪新闻爬虫', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'sina-news-spider.py\', \'currentDate\')', '0 30 0 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
+insert into sys_job values (3, '腾讯较真平台新闻爬虫', 'DEFAULT', 'sltgTask.sltgParams(\'tencentFactSpider.py\')', '0 50 0 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
+insert into sys_job values (4, '辟谣官方平台新闻爬虫', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'piyao-org-news-spider.py\', \'currentDate\')', '0 10 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
+insert into sys_job values (5, '微博新闻爬虫', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'weibo-news-spider.py\', \'currentDate\')', '0 40 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
 
 -- ----------------------------
 -- 定时任务调度日志表
@@ -452,6 +452,7 @@ create table sys_news (
     news_index         bigint(20)     not null auto_increment    comment '新闻序列号',
     news_id            varchar(100)   not null                   comment '新闻ID',
     news_title         varchar(100)   not null                   comment '新闻标题',
+    have_title         char(1)        default 0                  comment '新闻内容是否有标题（0-是 1-否）',
     news_url           varchar(200)   not null                   comment '新闻url',
     news_text          varchar(5000)  default ''                 comment '新闻正文',
     news_type          char(2)        not null                   comment '新闻分类',

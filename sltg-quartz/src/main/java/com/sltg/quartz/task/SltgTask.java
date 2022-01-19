@@ -12,7 +12,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
 
 /**
  * 定时任务调度测试
@@ -37,7 +36,7 @@ public class SltgTask {
         LOGGER.info(StringUtils.format("执行多参方法： scriptName:{}, 日期:{}", scriptName, scriptDate));
         String date = scriptDate;
         if (EXECUTE_CURRENT_DATE.equals(scriptDate)) {
-            date = DateUtils.parseDateToStr(DateUtils.YYYY_MM_DD, new Date());
+            date = DateUtils.parseDateBeforeToStr(DateUtils.YYYY_MM_DD);
         }
         return executePythonScript(new String[] { "cmd", "/c", "python " + pythonScriptPath + scriptName, date });
     }
