@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -108,22 +107,5 @@ public class UserManagementController extends BaseController {
         List<UserNews> list = userNewsService.selectUserNewsList(news);
         ExcelUtil<UserNews> util = new ExcelUtil<>(UserNews.class);
         return util.exportExcel(list, "用户新闻数据");
-    }
-
-    @Log(title = "新闻管理", businessType = BusinessType.IMPORT)
-    @PreAuthorize("@ss.hasPermi('user:news:import')")
-    @PostMapping("/importData")
-    public AjaxResult importData(MultipartFile file) throws Exception {
-        ExcelUtil<UserNews> util = new ExcelUtil<>(UserNews.class);
-        List<UserNews> newsList = util.importExcel(file.getInputStream());
-        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        String message = userNewsService.importUserNews(newsList, loginUser.getUsername());
-        return AjaxResult.success(message);
-    }
-
-    @GetMapping("/importTemplate")
-    public AjaxResult importTemplate() {
-        ExcelUtil<UserNews> util = new ExcelUtil<>(UserNews.class);
-        return util.importTemplateExcel("用户新闻数据");
     }
 }

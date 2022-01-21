@@ -54,7 +54,7 @@
           icon="el-icon-plus"
           size="mini"
           @click="handleAdd"
-          v-hasPermi="['system:user:add']"
+          v-hasPermi="['user:news:add']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -65,7 +65,7 @@
           size="mini"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['system:user:edit']"
+          v-hasPermi="['user:news:edit']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -76,18 +76,8 @@
           size="mini"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['system:user:remove']"
+          v-hasPermi="['user:news:remove']"
         >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="info"
-          plain
-          icon="el-icon-upload2"
-          size="mini"
-          @click="handleImport"
-          v-hasPermi="['system:user:import']"
-        >导入</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -97,7 +87,7 @@
           size="mini"
           :loading="exportLoading"
           @click="handleExport"
-          v-hasPermi="['system:user:export']"
+          v-hasPermi="['user:news:export']"
         >导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList" :columns="columns"></right-toolbar>
@@ -107,13 +97,14 @@
       <el-table-column type="selection" width="50" align="center" />
       <el-table-column label="新闻编号" align="center" key="newsId" prop="newsId" v-if="columns[0].visible" />
       <el-table-column label="新闻标题" align="center" key="newsTitle" prop="newsTitle" v-if="columns[1].visible" :show-overflow-tooltip="true" width="400" />
-      <el-table-column label="虚假检测百分比" align="center" key="detectionPercent" prop="detectionPercent" v-if="columns[2].visible" />
-      <el-table-column label="检测类型" align="center" key="detectionType" v-if="columns[3].visible" >
+      <el-table-column label="新闻主题" align="center" key="newsTopic" prop="newsTopic" v-if="columns[2].visible" />
+      <el-table-column label="虚假检测百分比" align="center" key="detectionPercent" prop="detectionPercent" v-if="columns[3].visible" />
+      <el-table-column label="检测类型" align="center" key="detectionType" v-if="columns[4].visible" >
         <template slot-scope="scope">
           <dict-tag :options="detectionTypeOptions" :value="scope.row.detectionType"/>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[4].visible" >
+      <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[5].visible" >
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
@@ -130,14 +121,14 @@
             type="text"
             icon="el-icon-view"
             @click="handleDetail(scope.row.newsId)"
-            v-hasPermi="['system:user:edit']"
+            v-hasPermi="['user:news:query']"
           >详情</el-button>
           <el-button v-if="scope.row.detectionType !== '4'"
-                     size="mini"
-                     type="text"
-                     icon="el-icon-search"
-                     @click="handleRelation(scope.row)"
-                     v-hasPermi="['system:user:remove']"
+             size="mini"
+             type="text"
+             icon="el-icon-search"
+             @click="handleRelation(scope.row)"
+             v-hasPermi="['user:news:query']"
           >相关新闻</el-button>
         </template>
       </el-table-column>
@@ -176,8 +167,6 @@
         newsList: null,
         // 日期范围
         dateRange: [],
-        // 新闻类型数据字典
-        typeOptions: [],
         // 新闻检测类型数据字典
         detectionTypeOptions: [],
         // 表单参数
@@ -191,25 +180,22 @@
           pageNum: 1,
           pageSize: 10,
           newsTitle: undefined,
-          newsType: undefined,
           detectionType: undefined
         },
         // 列信息
         columns: [
           { key: 0, label: `新闻编号`, visible: true },
           { key: 1, label: `新闻标题`, visible: true },
-          { key: 2, label: `虚假检测百分比`, visible: true },
-          { key: 3, label: `检测类型`, visible: true },
-          { key: 4, label: `创建时间`, visible: true }
+          { key: 2, label: `新闻主题`, visible: true },
+          { key: 3, label: `虚假检测百分比`, visible: true },
+          { key: 4, label: `检测类型`, visible: true },
+          { key: 5, label: `创建时间`, visible: true }
         ],
         // 表单校验
       };
     },
     created() {
       this.getList();
-      this.getDicts("sys_news_type").then(response => {
-        this.typeOptions = response.data;
-      });
       this.getDicts("sys_detection_type").then(response => {
         this.detectionTypeOptions = response.data;
       });

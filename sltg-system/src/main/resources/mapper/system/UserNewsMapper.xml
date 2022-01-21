@@ -7,12 +7,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="newsId"            column="news_id"       />
         <result property="userId"            column="user_id"       />
         <result property="newsTitle"         column="news_title"    />
-        <result property="news_type"         column="newsType"      />
-        <result property="news_date"         column="newsDate"      />
-        <result property="news_from"         column="newsFrom"      />
+        <result property="newsTopic"         column="news_topic"      />
+        <result property="newsDate"          column="news_date"      />
+        <result property="newsFrom"          column="news_from"      />
         <result property="detectionPercent"  column="detection_percent" />
         <result property="detectionType"     column="detection_type"    />
-        <result property="del_flag"          column="delFlag"       />
+        <result property="delFlag"           column="del_flag"       />
         <result property="createTime"        column="create_time"   />
         <result property="updateBy"          column="update_by"     />
         <result property="updateTime"        column="update_time"   />
@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
     
     <sql id="selectUserNewsVo">
-        select news_id, user_id, news_title, news_type, news_date, news_from, detection_percent, detection_type, del_flag, create_time, update_by, update_time, remark
+        select news_id, user_id, news_title, news_topic, news_date, news_from, detection_percent, detection_type, del_flag, create_time, update_by, update_time, remark
 		from sys_user_news
     </sql>
     
@@ -29,6 +29,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where user_id = #{userId} and del_flag = '0'
         <if test="newsTitle != null and newsTitle != ''">
             AND news_title like concat('%', #{newsTitle}, '%')
+        </if>
+        <if test="newsTopic != null and newsTopic != ''">
+            AND news_topic like concat('%', #{newsTopic}, '%')
         </if>
         <if test="detectionType != null and detectionType != ''">
             AND detection_type = #{detectionType}

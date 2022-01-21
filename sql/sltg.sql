@@ -95,7 +95,7 @@ insert into sys_menu values('4', '系统监控', '0', '4', 'monitor',          n
 insert into sys_menu values('90',  '新闻列表', '1',   '1', 'table',    'news/table/index',        1, 0, 'C', '0', '0', 'news:table:list',        'example',          'admin', sysdate(), '', null, '新闻列表菜单');
 insert into sys_menu values('91',  '新闻预测', '1',   '2', 'forecast',    'news/forecast/index',    1, 0, 'C', '0', '0', 'news:forecast:list',     'search',         'admin', sysdate(), '', null, '新闻预测菜单');
 insert into sys_menu values('92',  '知识库',   '1',   '3', 'knowledge',   'news/knowledge/index',   1, 0, 'C', '0', '0', 'news:knowledge:list',    'redis',          'admin', sysdate(), '', null, '知识库菜单');
-insert into sys_menu values('93',  '新闻管理', '2',   '1', 'management',  'user/management/index',  1, 0, 'C', '0', '0', 'user:management:list',    'nested',         'admin', sysdate(), '', null, '用户中心菜单');
+insert into sys_menu values('93',  '新闻管理', '2',   '1', 'management',  'user/management/index',  1, 0, 'C', '0', '0', 'user:news:list',    'nested',         'admin', sysdate(), '', null, '用户中心菜单');
 insert into sys_menu values('94',  '通知公告', '2',   '2', 'notice',      'system/notice/index',    1, 0, 'C', '0', '0', 'system:notice:list',      'message',        'admin', sysdate(), '', null, '通知公告菜单');
 insert into sys_menu values('100',  '用户管理', '3',   '1', 'user',       'system/user/index',        1, 0, 'C', '0', '0', 'system:user:list',        'user',          'admin', sysdate(), '', null, '用户管理菜单');
 insert into sys_menu values('101',  '角色管理', '3',   '2', 'role',       'system/role/index',        1, 0, 'C', '0', '0', 'system:role:list',        'peoples',       'admin', sysdate(), '', null, '角色管理菜单');
@@ -167,6 +167,12 @@ insert into sys_menu values('1042', '任务修改', '108', '3', '#', '', 1, 0, '
 insert into sys_menu values('1043', '任务删除', '108', '4', '#', '', 1, 0, 'B', '0', '0', 'monitor:job:remove',         '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('1044', '状态修改', '108', '5', '#', '', 1, 0, 'B', '0', '0', 'monitor:job:changeStatus',   '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('1045', '任务导出', '108', '7', '#', '', 1, 0, 'B', '0', '0', 'monitor:job:export',         '#', 'admin', sysdate(), '', null, '');
+-- 用户新闻管理按钮
+insert into sys_menu values('1050', '新闻查询', '93', '1',  '#', '', 1, 0, 'B', '0', '0', 'user:news:query',          '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1051', '新闻新增', '93', '2',  '#', '', 1, 0, 'B', '0', '0', 'user:news:add',            '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1052', '新闻修改', '93', '3',  '#', '', 1, 0, 'B', '0', '0', 'user:news:edit',           '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1053', '新闻删除', '93', '4',  '#', '', 1, 0, 'B', '0', '0', 'user:news:remove',         '#', 'admin', sysdate(), '', null, '');
+insert into sys_menu values('1054', '新闻导出', '93', '5',  '#', '', 1, 0, 'B', '0', '0', 'user:news:export',         '#', 'admin', sysdate(), '', null, '');
 
 -- ----------------------------
 -- 用户和角色关联表  用户N-1角色
@@ -205,6 +211,11 @@ insert into sys_role_menu values ('2', '91');
 insert into sys_role_menu values ('2', '92');
 insert into sys_role_menu values ('2', '93');
 insert into sys_role_menu values ('2', '94');
+insert into sys_role_menu values ('2', '1050');
+insert into sys_role_menu values ('2', '1051');
+insert into sys_role_menu values ('2', '1052');
+insert into sys_role_menu values ('2', '1053');
+insert into sys_role_menu values ('2', '1054');
 
 -- ----------------------------
 -- 操作日志记录
@@ -503,7 +514,7 @@ create table sys_user_news (
     news_id            bigint(20)     not null auto_increment    comment '新闻ID',
     user_id            bigint(20)     not null                   comment '用户ID',
     news_title         varchar(100)   not null                   comment '新闻标题',
-    news_type          char(2)        not null                   comment '新闻分类',
+    news_topic         varchar(100)   not null                   comment '新闻主题',
     news_date          varchar(10)    not null                   comment '新闻日期',
     news_from          varchar(200)   default ''                 comment '新闻来源',
     detection_percent  char(10)       default ''                 comment '虚假检测百分比',
