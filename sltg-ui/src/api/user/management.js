@@ -17,3 +17,22 @@ export function getUserNews(newsId) {
     method: 'get'
   })
 }
+
+// 删除用户新闻
+export function delUserNews(newsIds) {
+  return request({
+    url: '/user/management/' + newsIds,
+    method: 'delete'
+  })
+}
+
+// 导出定时任务调度
+export function exportUserNews(newsIds) {
+  const news = {};
+  news.newsIds = newsIds
+  return request({
+    url: '/user/management/export',
+    method: 'get',
+    params: news
+  })
+}

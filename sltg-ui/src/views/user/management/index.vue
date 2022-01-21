@@ -145,7 +145,7 @@
 </template>
 
 <script>
-  import { userNewsList, getUserNews } from "@/api/user/management";
+  import { userNewsList, getUserNews, delUserNews, exportUserNews } from "@/api/user/management";
 
   export default {
     name: "News",
@@ -153,6 +153,8 @@
       return {
         // 遮罩层
         loading: true,
+        // 导出遮罩层
+        exportLoading: false,
         // 选中数组
         ids: [],
         // 非单个禁用
@@ -233,7 +235,7 @@
       },
       // 多选框选中数据
       handleSelectionChange(selection) {
-        this.ids = selection.map(item => item.userId);
+        this.ids = selection.map(item => item.newsId);
         this.single = selection.length !== 1;
         this.multiple = !selection.length;
       },
@@ -246,6 +248,36 @@
           }
         );
       },
+      /** 删除按钮操作 */
+      handleDelete(row) {
+        const newsIds = row.newsId || this.ids;
+        this.$confirm('是否确认删除新闻编号为"' + newsIds + '"的数据项?', "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function() {
+          return delUserNews(newsIds);
+        }).then(() => {
+          this.getList();
+          this.msgSuccess("删除成功");
+        }).catch(() => {});
+      },
+
+      /** 导出按钮操作 */
+      handleExport(row) {
+        const newsIds = row.newsId || this.ids;
+        this.$confirm("是否确认导出所选的新闻数据项?", "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(() => {
+          this.exportLoading = true;
+          return exportUserNews(newsIds);
+        }).then(response => {
+          this.download(response.msg);
+          this.exportLoading = false;
+        }).catch(() => {});
+      }
     }
   };
 </script>

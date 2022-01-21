@@ -1,6 +1,7 @@
 package com.sltg.system.mapper;
 
 import com.sltg.common.core.domain.entity.UserNews;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -66,5 +67,15 @@ public interface UserNewsMapper {
      * @return 结果
      */
     String importUserNews(List<UserNews> newsList, String operateName);
+
+    /**
+     * 获取用户所选的新闻列表
+     *
+     * @param newsIds 需要导出的新闻ID
+     * @param userId 用户id
+     * @return 新闻列表
+     */
+    List<UserNews> selectUserNewsByIds(@Param("newsIds") Long[] newsIds, @Param("userId") Long userId);
+
 
 }

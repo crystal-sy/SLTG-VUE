@@ -18,7 +18,7 @@ public class UserNews extends BaseEntity {
     @Excel(name = "新闻编号", cellType = ColumnType.NUMERIC, prompt = "新闻编号")
     private Long newsId;
 
-    @Excel(name = "用户编号", cellType = ColumnType.NUMERIC, prompt = "用户编号")
+    /** 用户编号 */
     private Long userId;
 
     @Excel(name = "新闻标题")
@@ -39,18 +39,21 @@ public class UserNews extends BaseEntity {
     @Excel(name = "检测类型")
     private String detectionType;
 
-    @Excel(name = "新闻内容")
+    /** 新闻内容 */
     private String newsInfo;
 
-    @Excel(name = "新闻内容路径")
+    /** 新闻内容路径 */
     private String newsPath;
 
     /** 创建时间 */
+    @Excel(name = "新闻创建时间", dateFormat = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     /** 删除标志（0代表存在 2代表删除） */
     private String delFlag;
+
+    private Long[] newsIds;
 
     public UserNews() {}
 
@@ -154,5 +157,13 @@ public class UserNews extends BaseEntity {
 
     public void setDelFlag(String delFlag) {
         this.delFlag = delFlag;
+    }
+
+    public Long[] getNewsIds() {
+        return newsIds;
+    }
+
+    public void setNewsIds(Long[] newsIds) {
+        this.newsIds = newsIds;
     }
 }

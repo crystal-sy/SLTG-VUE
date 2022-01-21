@@ -103,8 +103,8 @@ public class UserManagementController extends BaseController {
     @GetMapping("/export")
     public AjaxResult export(UserNews news) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        news.setUserId(loginUser.getUser().getUserId());
-        List<UserNews> list = userNewsService.selectUserNewsList(news);
+        Long userId = loginUser.getUser().getUserId();
+        List<UserNews> list = userNewsService.selectUserNewsByIds(news.getNewsIds(), userId);
         ExcelUtil<UserNews> util = new ExcelUtil<>(UserNews.class);
         return util.exportExcel(list, "用户新闻数据");
     }

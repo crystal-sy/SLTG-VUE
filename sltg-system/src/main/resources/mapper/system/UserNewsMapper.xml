@@ -42,10 +42,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
             and date_format(create_time,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
         </if>
+        order by create_time desc
     </select>
 
     <select id="queryUserNewsById" parameterType="String" resultMap="UserNewsResult">
         <include refid="selectUserNewsVo"/>
         where news_id = #{newsId}
+    </select>
+
+    <delete id="deleteUserNewsByIds" parameterType="Long">
+        update sys_user_news set del_flag = '2', update_time = sysdate() where news_id in
+        <foreach collection="array" item="newsId" open="(" separator="," close=")">
+            #{newsId}
+        </foreach>
+    </delete>
+
+    <select id="selectUserNewsByIds" parameterType="map" resultMap="UserNewsResult">
+        <include refid="selectUserNewsVo"/>
+        where user_id = #{userId} and del_flag = '0' and news_id in
+        <foreach collection="newsIds" item="newsId" open="(" separator="," close=")">
+            #{newsId}
+        </foreach>
+        order by create_time desc
     </select>
 </mapper>

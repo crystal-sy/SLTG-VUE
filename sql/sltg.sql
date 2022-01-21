@@ -519,7 +519,7 @@ create table sys_user_news (
     news_from          varchar(200)   default ''                 comment '新闻来源',
     detection_percent  char(10)       default ''                 comment '虚假检测百分比',
     detection_type     char(1)        default ''                 comment '检测类型',
-    del_flag           char(1)        default '0'                comment '删除标志（0-代表存在 1-代表删除）',
+    del_flag           char(1)        default '0'                comment '删除标志（0-代表存在 2-代表删除）',
     create_time        datetime                                  comment '创建时间',
     update_by          varchar(64)    default ''                 comment '更新者',
     update_time        datetime                                  comment '更新时间',

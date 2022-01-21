@@ -66,4 +66,13 @@ public interface UserNewsService {
      * @return 结果
      */
     String importUserNews(List<UserNews> newsList, String operateName);
+
+    /**
+     * 获取用户所选新闻列表
+     *
+     * @param newsIds 新闻id
+     * @param userId 用户id
+     * @return 新闻列表
+     */
+    List<UserNews> selectUserNewsByIds(Long[] newsIds, Long userId);
 }

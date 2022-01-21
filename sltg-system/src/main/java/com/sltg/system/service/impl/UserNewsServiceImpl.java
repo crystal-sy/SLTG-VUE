@@ -2,6 +2,7 @@ package com.sltg.system.service.impl;
 
 import com.sltg.common.constant.UserConstants;
 import com.sltg.common.core.domain.entity.UserNews;
+import com.sltg.common.enums.DetectionType;
 import com.sltg.common.exception.CustomException;
 import com.sltg.common.utils.StringUtils;
 import com.sltg.system.mapper.UserNewsMapper;
@@ -57,6 +58,15 @@ public class UserNewsServiceImpl implements UserNewsService {
     @Override
     public int deleteUserNewsByIds(Long[] newsIds) {
         return userNewsMapper.deleteUserNewsByIds(newsIds);
+    }
+
+    @Override
+    public List<UserNews> selectUserNewsByIds(Long[] newsIds, Long userId) {
+        List<UserNews> userNewsList = userNewsMapper.selectUserNewsByIds(newsIds, userId);
+        for (UserNews userNews: userNewsList) {
+            userNews.setDetectionType(DetectionType.getTypeInfo(userNews.getDetectionType()));
+        }
+        return userNewsList;
     }
 
     @Override
