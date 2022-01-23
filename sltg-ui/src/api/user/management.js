@@ -36,3 +36,21 @@ export function exportUserNews(newsIds) {
     params: news
   })
 }
+
+// 新增用户新闻
+export function addUserNews(data) {
+  return request({
+    url: '/user/management',
+    method: 'post',
+    data: data
+  })
+}
+
+// 修改用户新闻
+export function updateUserNews(data) {
+  return request({
+    url: '/user/management',
+    method: 'put',
+    data: data
+  })
+}

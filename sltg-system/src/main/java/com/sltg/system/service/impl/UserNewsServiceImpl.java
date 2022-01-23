@@ -1,18 +1,22 @@
 package com.sltg.system.service.impl;
 
-import com.sltg.common.constant.UserConstants;
+import com.sltg.common.config.SltgSysConfig;
 import com.sltg.common.core.domain.entity.UserNews;
 import com.sltg.common.enums.DetectionType;
-import com.sltg.common.exception.CustomException;
-import com.sltg.common.utils.StringUtils;
 import com.sltg.system.mapper.UserNewsMapper;
 import com.sltg.system.service.UserNewsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 公告 服务层实现
@@ -37,21 +41,42 @@ public class UserNewsServiceImpl implements UserNewsService {
     }
 
     @Override
-    public String checkUserNewsUnique(String newsTitle) {
-        UserNews userNews = userNewsMapper.checkUserNewsUnique(newsTitle);
-        if (userNews != null) {
-            return UserConstants.NOT_UNIQUE;
+    public String importData(MultipartFile file) throws Exception {
+        String fileId = UUID.randomUUID().toString();
+        File tempDir = new File(SltgSysConfig.getUploadPath() + File.separator + fileId);
+        if (!tempDir.exists() && !tempDir.mkdirs()) {
+            LOGGER.error("mkdirs failed.");
+            throw new IOException("上传失败");
         }
-        return UserConstants.UNIQUE;
+
+        try(FileOutputStream fs = new FileOutputStream(tempDir + File.separator + file.getOriginalFilename());
+            InputStream inputStream = file.getInputStream()) {
+            byte[] buffer = new byte[1024*1024];
+            int byteread;
+            while ((byteread = inputStream.read(buffer)) != -1) {
+                fs.write(buffer, 0, byteread);
+                fs.flush();
+            }
+        }
+        return fileId;
+    }
+
+    @Override
+    public boolean checkUserNewsUnique(String newsTitle, Long userId) {
+        UserNews userNews = userNewsMapper.checkUserNewsUnique(newsTitle, userId);
+        return userNews == null;
     }
 
     @Override
     public int insertUserNews(UserNews news) {
+        // TODO 调python和获取文件内容
+        news.setNewsTopic("test");
         return userNewsMapper.insertUserNews(news);
     }
 
     @Override
     public int updateUserNews(UserNews news) {
+        // TODO 调python和获取文件内容
         return userNewsMapper.updateUserNews(news);
     }
 
@@ -67,45 +92,5 @@ public class UserNewsServiceImpl implements UserNewsService {
             userNews.setDetectionType(DetectionType.getTypeInfo(userNews.getDetectionType()));
         }
         return userNewsList;
-    }
-
-    @Override
-    public String importUserNews(List<UserNews> newsList, String operateName) {
-        if (StringUtils.isNull(newsList) || newsList.size() == 0) {
-            throw new CustomException("导入用户新闻数据不能为空！");
-        }
-        int successNum = 0;
-        int failureNum = 0;
-        StringBuilder successMsg = new StringBuilder();
-        StringBuilder failureMsg = new StringBuilder();
-        for (UserNews news : newsList) {
-            try {
-                // 验证是否存在这个新闻
-                UserNews userNews = userNewsMapper.checkUserNewsUnique(news.getNewsTitle());
-                if (StringUtils.isNull(userNews)) {
-                    news.setCreateBy(operateName);
-                    this.insertUserNews(news);
-                    successNum++;
-                    successMsg.append("<br/>")
-                        .append(successNum).append("、新闻 ").append(news.getNewsTitle()).append(" 导入成功");
-                } else {
-                    failureNum++;
-                    failureMsg.append("<br/>")
-                        .append(failureNum).append("、新闻 ").append(news.getNewsTitle()).append(" 已存在");
-                }
-            } catch (Exception e) {
-                failureNum++;
-                String msg = "<br/>" + failureNum + "、新闻 " + news.getNewsTitle() + " 导入失败：";
-                failureMsg.append(msg).append(e.getMessage());
-                 LOGGER.error(msg, e);
-            }
-        }
-        if (failureNum > 0) {
-            failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
-            throw new CustomException(failureMsg.toString());
-        } else {
-            successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
-        }
-        return successMsg.toString();
     }
 }

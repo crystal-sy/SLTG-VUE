@@ -12,6 +12,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="newsFrom"          column="news_from"      />
         <result property="detectionPercent"  column="detection_percent" />
         <result property="detectionType"     column="detection_type"    />
+        <result property="contentFile"       column="content_file"    />
+        <result property="commentFile"       column="comment_file"    />
         <result property="delFlag"           column="del_flag"       />
         <result property="createTime"        column="create_time"   />
         <result property="updateBy"          column="update_by"     />
@@ -20,7 +22,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
     
     <sql id="selectUserNewsVo">
-        select news_id, user_id, news_title, news_topic, news_date, news_from, detection_percent, detection_type, del_flag, create_time, update_by, update_time, remark
+        select news_id, user_id, news_title, news_topic, news_date, news_from, detection_percent, detection_type,
+               content_file, comment_file, del_flag, create_time, update_by, update_time, remark
 		from sys_user_news
     </sql>
     
@@ -45,9 +48,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         order by create_time desc
     </select>
 
-    <select id="queryUserNewsById" parameterType="String" resultMap="UserNewsResult">
+    <select id="queryUserNewsById" parameterType="Long" resultMap="UserNewsResult">
         <include refid="selectUserNewsVo"/>
         where news_id = #{newsId}
+    </select>
+
+    <select id="checkUserNewsUnique" parameterType="map" resultMap="UserNewsResult">
+        <include refid="selectUserNewsVo"/>
+        where user_id = #{userId} and news_title = #{newsTitle}
     </select>
 
     <delete id="deleteUserNewsByIds" parameterType="Long">
@@ -65,4 +73,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach>
         order by create_time desc
     </select>
+
+    <insert id="insertUserNews" parameterType="UserNews" useGeneratedKeys="true" keyProperty="newsId">
+        insert into sys_user_news (
+        <if test="userId != null and userId != 0">user_id,</if>
+        <if test="newsTitle != null and newsTitle != ''">news_title,</if>
+        <if test="newsTopic != null and newsTopic != ''">news_topic,</if>
+        <if test="newsDate != null and newsDate != ''">news_date,</if>
+        <if test="newsFrom != null and newsFrom != ''">news_from,</if>
+        <if test="detectionPercent != null and detectionPercent != ''">detection_percent,</if>
+        <if test="detectionType != null and detectionType != ''">detection_type,</if>
+        <if test="contentFile != null and contentFile != ''">content_file,</if>
+        <if test="commentFile != null and commentFile != ''">comment_file,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        create_time
+        )values(
+        <if test="userId != null and userId != ''">#{userId},</if>
+        <if test="newsTitle != null and newsTitle != ''">#{newsTitle},</if>
+        <if test="newsTopic != null and newsTopic != ''">#{newsTopic},</if>
+        <if test="newsDate != null and newsDate != ''">#{newsDate},</if>
+        <if test="newsFrom != null and newsFrom != ''">#{newsFrom},</if>
+        <if test="detectionPercent != null and detectionPercent != ''">#{detectionPercent},</if>
+        <if test="detectionType != null and detectionType != ''">#{detectionType},</if>
+        <if test="contentFile != null and contentFile != ''">#{contentFile},</if>
+        <if test="commentFile != null and commentFile != ''">#{commentFile},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        sysdate()
+        )
+    </insert>
+
+    <update id="updateUserNews" parameterType="UserNews">
+        update sys_user_news
+        <set>
+            <if test="newsTitle != null and newsTitle != ''">news_title = #{newsTitle},</if>
+            <if test="newsTopic != null and newsTopic != ''">news_topic = #{newsTopic},</if>
+            <if test="newsDate != null and newsDate != ''">news_date = #{newsDate},</if>
+            <if test="newsFrom != null and newsFrom != ''">news_from = #{newsFrom},</if>
+            <if test="detectionPercent != null and detectionPercent != ''">detection_percent = #{detectionPercent},</if>
+            <if test="detectionType != null and detectionType != ''">detection_type = #{detectionType},</if>
+            <if test="contentFile != null and contentFile != ''">content_file = #{contentFile},</if>
+            <if test="commentFile != null and commentFile != ''">comment_file = #{commentFile},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where news_id = #{newsId}
+    </update>
 </mapper>

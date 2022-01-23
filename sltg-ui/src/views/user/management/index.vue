@@ -85,6 +85,7 @@
           plain
           icon="el-icon-download"
           size="mini"
+          :disabled="multiple"
           :loading="exportLoading"
           @click="handleExport"
           v-hasPermi="['user:news:export']"
@@ -97,14 +98,15 @@
       <el-table-column type="selection" width="50" align="center" />
       <el-table-column label="新闻编号" align="center" key="newsId" prop="newsId" v-if="columns[0].visible" />
       <el-table-column label="新闻标题" align="center" key="newsTitle" prop="newsTitle" v-if="columns[1].visible" :show-overflow-tooltip="true" width="400" />
-      <el-table-column label="新闻主题" align="center" key="newsTopic" prop="newsTopic" v-if="columns[2].visible" />
+      <el-table-column label="新闻日期" align="center" key="newsDate" prop="newsDate" v-if="columns[2].visible" />
       <el-table-column label="虚假检测百分比" align="center" key="detectionPercent" prop="detectionPercent" v-if="columns[3].visible" />
       <el-table-column label="检测类型" align="center" key="detectionType" v-if="columns[4].visible" >
         <template slot-scope="scope">
           <dict-tag :options="detectionTypeOptions" :value="scope.row.detectionType"/>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[5].visible" >
+      <el-table-column label="新闻来源" align="center" key="newsFrom" prop=newsFrom v-if="columns[5].visible" />
+      <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[6].visible" >
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
@@ -141,11 +143,93 @@
       :limit.sync="queryParams.pageSize"
       @pagination="getList"
     />
+
+    <!-- 添加或修改新闻内容对话框 -->
+    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="新闻标题" prop="newsTitle">
+              <el-input v-model="form.newsTitle" type="textarea" placeholder="请输入新闻标题" maxlength="100"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="10">
+            <el-form-item label="新闻日期" prop="newsDate">
+              <el-date-picker
+                v-model="form.newsDate"
+                size="small"
+                style="width: 140px"
+                value-format="yyyy-MM-dd"
+                type="date"
+                placeholder="新闻日期"
+              ></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="14">
+            <el-form-item label="新闻来源" prop="newsFrom">
+              <el-input v-model="form.newsFrom" placeholder="请输入新闻来源" maxlength="50" />
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="内容文件" prop="contentFile">
+              <el-upload
+                ref="contentUpload"
+                accept=".txt"
+                v-model="form.contentFile"
+                :headers="upload.headers"
+                :action="upload.url"
+                :disabled="upload.isUploading"
+                :on-progress="handleFileUploadProgress"
+                :on-success="handleContentFileSuccess"
+                :on-change="onContentExceed"
+                :auto-upload="true"
+                :file-list="contentFileList"
+              >点击上传新闻内容文件</el-upload>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="评论文件" prop="commentFile">
+              <el-upload
+                ref="commentUpload"
+                accept=".txt"
+                v-model="form.commentFile"
+                :headers="upload.headers"
+                :action="upload.url"
+                :disabled="upload.isUploading"
+                :on-progress="handleFileUploadProgress"
+                :on-success="handleCommentFileSuccess"
+                :on-change="onCommentExceed"
+                :auto-upload="true"
+                :file-list="commentFileList"
+              >点击上传新闻评论文件</el-upload>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="">
+              <div style="color:red">提示：仅允许导入“txt”格式文件！</div>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-  import { userNewsList, getUserNews, delUserNews, exportUserNews } from "@/api/user/management";
+  import { userNewsList, getUserNews, delUserNews, exportUserNews, addUserNews, updateUserNews } from "@/api/user/management";
+  import { getToken } from "@/utils/auth";
 
   export default {
     name: "News",
@@ -155,6 +239,10 @@
         loading: true,
         // 导出遮罩层
         exportLoading: false,
+        // 是否显示弹出层
+        open: false,
+        contentFileList:[],
+        commentFileList:[],
         // 选中数组
         ids: [],
         // 非单个禁用
@@ -167,6 +255,8 @@
         total: 0,
         // 新闻表格数据
         newsList: null,
+        // 对话框标题
+        title: "",
         // 日期范围
         dateRange: [],
         // 新闻检测类型数据字典
@@ -184,16 +274,40 @@
           newsTitle: undefined,
           detectionType: undefined
         },
+        // 新闻文件上传参数
+        upload: {
+          // 是否禁用上传
+          isUploading: false,
+          // 设置上传的请求头部
+          headers: { Authorization: "Bearer " + getToken() },
+          // 上传的地址
+          url: process.env.VUE_APP_BASE_API + "/user/management/importData"
+        },
         // 列信息
         columns: [
           { key: 0, label: `新闻编号`, visible: true },
           { key: 1, label: `新闻标题`, visible: true },
-          { key: 2, label: `新闻主题`, visible: true },
+          { key: 2, label: `新闻日期`, visible: true },
           { key: 3, label: `虚假检测百分比`, visible: true },
           { key: 4, label: `检测类型`, visible: true },
-          { key: 5, label: `创建时间`, visible: true }
+          { key: 5, label: `新闻来源`, visible: true },
+          { key: 6, label: `创建时间`, visible: true }
         ],
         // 表单校验
+        rules: {
+          newsTitle: [
+            { required: true, message: "新闻标题不能为空！", trigger: "blur" }
+          ],
+          newsDate: [
+            { required: true, message: "新闻日期不能为空！", trigger: "blur" }
+          ],
+          newsFrom: [
+            { required: true, message: "新闻来源不能为空！", trigger: "blur" }
+          ],
+          contentFile: [
+            { required: true, message: "请上传新闻内容文件！", trigger: "blur" }
+          ]
+        }
       };
     },
     created() {
@@ -248,6 +362,115 @@
           }
         );
       },
+
+      onContentExceed(file, contentFileList) {
+        if (contentFileList.length > 1) {
+          contentFileList.splice(0, 1);
+        }
+      },
+
+      onCommentExceed(file, commentFileList) {
+        if (commentFileList.length > 1) {
+          commentFileList.splice(0, 1);
+        }
+      },
+
+      /** 新增按钮操作 */
+      handleAdd() {
+        this.reset();
+        this.open = true;
+        this.title = "新增新闻";
+      },
+      /** 修改按钮操作 */
+      handleUpdate(row) {
+        this.reset();
+        const newsId = row.newsId || this.ids;
+        getUserNews(newsId).then(response => {
+          this.form = response.data;
+          this.contentFileList.push({name:this.form.contentFile, url:''});//用于显示文件列表
+          if (this.form.commentFile !== '') {
+            this.commentFileList.push({name:this.form.commentFile, url:''});
+          }
+          this.open = true;
+          this.title = "修改新闻";
+        });
+      },
+
+      // 取消按钮
+      cancel() {
+        this.open = false;
+        this.reset();
+        this.$refs.contentUpload.clearFiles();
+        this.$refs.commentUpload.clearFiles();
+      },
+
+      // 表单重置
+      reset() {
+        this.form = {
+          newsId: undefined,
+          newsTitle: undefined,
+          newsDate: undefined,
+          newsFrom: undefined,
+          contentFile: undefined,
+          commentFile: undefined
+        };
+        this.contentFileList = [];
+        this.commentFileList = [];
+        this.resetForm("form");
+      },
+
+      /** 提交按钮 */
+      submitForm: function() {
+        this.$refs["form"].validate(valid => {
+          if (valid) {
+            if (this.form.newsId !== undefined) {
+              updateUserNews(this.form).then(response => {
+                this.msgSuccess("修改成功");
+                this.open = false;
+                this.getList();
+                this.$refs.contentUpload.clearFiles();
+                this.$refs.commentUpload.clearFiles();
+              });
+            } else {
+              addUserNews(this.form).then(response => {
+                this.msgSuccess("新增成功");
+                this.open = false;
+                this.getList();
+                this.$refs.contentUpload.clearFiles();
+                this.$refs.commentUpload.clearFiles();
+              });
+            }
+          }
+        });
+      },
+
+      // 文件上传中处理
+      handleFileUploadProgress(event, file, fileList) {
+        this.upload.isUploading = true;
+      },
+      // 文件上传成功处理
+      handleContentFileSuccess(response, file, fileList) {
+        this.upload.isUploading = false;
+        if (response.code === 200) {
+          this.form.contentFile = response.msg;
+          this.$refs["form"].validate();
+        } else {
+          this.$refs.contentUpload.clearFiles();
+          this.$alert(response.msg, "导入结果", { dangerouslyUseHTMLString: true });
+        }
+      },
+
+      // 文件上传成功处理
+      handleCommentFileSuccess(response, file, fileList) {
+        this.upload.isUploading = false;
+        if (response.code === 200) {
+          this.form.contentFile = response.msg;
+        } else {
+          this.$refs.commentUpload.clearFiles();
+          this.$alert(response.msg, "导入结果", { dangerouslyUseHTMLString: true });
+        }
+      },
+
       /** 删除按钮操作 */
       handleDelete(row) {
         const newsIds = row.newsId || this.ids;

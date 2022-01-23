@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.ArrayUtils;
 import com.sltg.common.utils.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 文件处理工具类
@@ -149,5 +150,24 @@ public class FileUtils {
     public static String percentEncode(String s) throws UnsupportedEncodingException {
         String encode = URLEncoder.encode(s, StandardCharsets.UTF_8.toString());
         return encode.replaceAll("\\+", "%20");
+    }
+
+    /**
+     * 获取上传文件名后缀
+     *
+     * @param file 文件
+     * @return 返回文件后缀
+     */
+    public static String getFileExtension(MultipartFile file) {
+        if (file == null) {
+            return "";
+        }
+
+        String fileName = file.getOriginalFilename();
+        if(fileName.lastIndexOf(".") == -1){
+            return "";
+        }
+
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 }

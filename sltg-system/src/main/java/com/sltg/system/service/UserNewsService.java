@@ -1,6 +1,7 @@
 package com.sltg.system.service;
 
 import com.sltg.common.core.domain.entity.UserNews;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,12 +28,22 @@ public interface UserNewsService {
     UserNews queryUserNewsById(Long newsId);
 
     /**
+     * 上传文件
+     *
+     * @param file 文件
+     * @return 返回文件UUID
+     * @throws Exception 返回异常
+     */
+    String importData(MultipartFile file) throws Exception;
+
+    /**
      * 校验新闻名称是否唯一
      *
      * @param newsTitle 新闻名称
+     * @param userId 用户id
      * @return 结果
      */
-    String checkUserNewsUnique(String newsTitle);
+    boolean checkUserNewsUnique(String newsTitle, Long userId);
 
     /**
      * 新增用户新闻信息
@@ -57,15 +68,6 @@ public interface UserNewsService {
      * @return 结果
      */
     int deleteUserNewsByIds(Long[] newsIds);
-
-    /**
-     * 导入用户新闻数据
-     *
-     * @param newsList 用户新闻数据列表
-     * @param operateName 操作用户
-     * @return 结果
-     */
-    String importUserNews(List<UserNews> newsList, String operateName);
 
     /**
      * 获取用户所选新闻列表

@@ -31,9 +31,10 @@ public interface UserNewsMapper {
      * 校验新闻名称是否唯一
      *
      * @param newsTitle 新闻名称
-     * @return 结果
+     * @param userId 用户id
+     * @return 返回结果
      */
-    UserNews checkUserNewsUnique(String newsTitle);
+    UserNews checkUserNewsUnique(@Param("newsTitle") String newsTitle, @Param("userId") Long userId);
 
     /**
      * 新增用户新闻信息
@@ -58,15 +59,6 @@ public interface UserNewsMapper {
      * @return 结果
      */
     int deleteUserNewsByIds(Long[] newsIds);
-
-    /**
-     * 导入用户新闻数据
-     *
-     * @param newsList 用户新闻数据列表
-     * @param operateName 操作用户
-     * @return 结果
-     */
-    String importUserNews(List<UserNews> newsList, String operateName);
 
     /**
      * 获取用户所选的新闻列表

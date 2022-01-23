@@ -39,11 +39,11 @@ public class UserNews extends BaseEntity {
     @Excel(name = "检测类型")
     private String detectionType;
 
-    /** 新闻内容 */
-    private String newsInfo;
+    /** 新闻内容文件 */
+    private String contentFile;
 
-    /** 新闻内容路径 */
-    private String newsPath;
+    /** 新闻评论文件 */
+    private String commentFile;
 
     /** 创建时间 */
     @Excel(name = "新闻创建时间", dateFormat = "yyyy-MM-dd HH:mm:ss")
@@ -125,14 +125,6 @@ public class UserNews extends BaseEntity {
         this.detectionType = detectionType;
     }
 
-    public String getNewsInfo() {
-        return newsInfo;
-    }
-
-    public void setNewsInfo(String newsInfo) {
-        this.newsInfo = newsInfo;
-    }
-
     @Override
     public Date getCreateTime() {
         return createTime;
@@ -143,12 +135,20 @@ public class UserNews extends BaseEntity {
         this.createTime = createTime;
     }
 
-    public String getNewsPath() {
-        return newsPath;
+    public String getContentFile() {
+        return contentFile;
     }
 
-    public void setNewsPath(String newsPath) {
-        this.newsPath = newsPath;
+    public void setContentFile(String contentFile) {
+        this.contentFile = contentFile;
+    }
+
+    public String getCommentFile() {
+        return commentFile;
+    }
+
+    public void setCommentFile(String commentFile) {
+        this.commentFile = commentFile;
     }
 
     public String getDelFlag() {
