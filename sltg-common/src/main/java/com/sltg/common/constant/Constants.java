@@ -130,4 +130,14 @@ public class Constants {
      * RMI 远程方法调用
      */
     public static final String LOOKUP_RMI = "rmi://";
+
+    /**
+     * TXT文件类型
+     */
+    public static final String FILE_TYPE_TXT = "txt";
+
+    /**
+     * TXT文件后缀
+     */
+    public static final String FILE_EXTENSION_TXT = ".txt";
 }

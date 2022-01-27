@@ -1,7 +1,7 @@
 package com.sltg.controller.news;
 
 import com.sltg.common.annotation.Log;
-import com.sltg.common.constant.UserConstants;
+import com.sltg.common.constant.Constants;
 import com.sltg.common.core.controller.BaseController;
 import com.sltg.common.core.domain.AjaxResult;
 import com.sltg.common.core.domain.entity.UserNews;
@@ -12,7 +12,6 @@ import com.sltg.common.utils.SecurityUtils;
 import com.sltg.common.utils.ServletUtils;
 import com.sltg.common.utils.file.FileUtils;
 import com.sltg.common.utils.poi.ExcelUtil;
-import com.sltg.controller.constant.SystemConstant;
 import com.sltg.framework.web.service.TokenService;
 import com.sltg.system.service.UserNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +68,7 @@ public class UserManagementController extends BaseController {
             return AjaxResult.error(message);
         }
 
-        if (!SystemConstant.NEWS_UPLOAD_FILE_EXTENSION.equals(FileUtils.getFileExtension(file))) {
+        if (!Constants.FILE_TYPE_TXT.equals(FileUtils.getFileExtension(file))) {
             return AjaxResult.error(message);
         }
         return AjaxResult.success(userNewsService.importData(file));

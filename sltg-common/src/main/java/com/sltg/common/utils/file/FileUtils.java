@@ -10,8 +10,13 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.sltg.common.config.SltgSysConfig;
 import org.apache.commons.lang3.ArrayUtils;
 import com.sltg.common.utils.StringUtils;
+import org.apache.logging.log4j.util.Strings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -21,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class FileUtils {
     public static String FILENAME_PATTERN = "[a-zA-Z0-9_\\-\\|\\.\\u4e00-\\u9fa5]+";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
 
     /**
      * 输出指定文件的byte数组
@@ -164,10 +171,53 @@ public class FileUtils {
         }
 
         String fileName = file.getOriginalFilename();
-        if(fileName.lastIndexOf(".") == -1){
+        if(fileName == null || fileName.lastIndexOf(".") == -1){
             return "";
         }
 
         return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
+
+    /**
+     * 从上传临时文件夹中获取文件到用户目录，并返回文件名称
+     *
+     * @param fileId 文件id
+     * @param targetDir 目标文件夹
+     * @return 返回文件名称
+     */
+    public static String saveFile(String fileId, File targetDir) {
+        if (!Strings.isNotBlank(fileId) || targetDir == null) {
+            return "";
+        }
+
+        String uploadPath = SltgSysConfig.getUploadPath();
+        File uploadDir = new File(uploadPath + File.separator + fileId);
+        if (!uploadDir.exists() || !uploadDir.isDirectory()) {
+            LOGGER.error("The dir is error. fileId:{}", fileId);
+            return "";
+        }
+
+        File[] files = uploadDir.listFiles();
+        File uploadFile = files != null && files.length > 0 ? files[0] : null;
+        if (uploadFile == null) {
+            LOGGER.error("The dir is empty. fileId:{}", fileId);
+            return "";
+        }
+
+        // 先删除再创建，保证只有一份文件
+        if (targetDir.exists()) {
+            targetDir.delete(); // TODO 删除文件夹失败，必须是空文件夹才能删除
+        }
+        targetDir.mkdirs();
+
+        String uploadFileName = uploadFile.getName();
+        File targetFile = new File(targetDir + File.separator + uploadFileName);
+        if (uploadFile.renameTo(targetFile)) {
+            uploadDir.delete();
+            return uploadFileName;
+        } else {
+            LOGGER.error("remove file is error. fileId:{}", fileId);
+            return "";
+        }
     }
 }

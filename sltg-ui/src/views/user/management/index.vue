@@ -186,6 +186,7 @@
                 :on-progress="handleFileUploadProgress"
                 :on-success="handleContentFileSuccess"
                 :on-change="onContentExceed"
+                :on-remove="removeContentFile"
                 :auto-upload="true"
                 :file-list="contentFileList"
               >点击上传新闻内容文件</el-upload>
@@ -205,6 +206,7 @@
                 :on-progress="handleFileUploadProgress"
                 :on-success="handleCommentFileSuccess"
                 :on-change="onCommentExceed"
+                :on-remove="removeCommentFile"
                 :auto-upload="true"
                 :file-list="commentFileList"
               >点击上传新闻评论文件</el-upload>
@@ -375,6 +377,14 @@
         }
       },
 
+      removeContentFile() {
+        this.form.contentFile = '';
+      },
+
+      removeCommentFile() {
+        this.form.commentFile = '';
+      },
+
       /** 新增按钮操作 */
       handleAdd() {
         this.reset();
@@ -464,7 +474,7 @@
       handleCommentFileSuccess(response, file, fileList) {
         this.upload.isUploading = false;
         if (response.code === 200) {
-          this.form.contentFile = response.msg;
+          this.form.commentFile = response.msg;
         } else {
           this.$refs.commentUpload.clearFiles();
           this.$alert(response.msg, "导入结果", { dangerouslyUseHTMLString: true });

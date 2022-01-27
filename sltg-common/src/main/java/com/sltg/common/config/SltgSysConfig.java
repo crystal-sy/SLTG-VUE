@@ -26,6 +26,12 @@ public class SltgSysConfig {
     /** 上传路径 */
     private static String profile;
 
+    /** 用户新闻内容路径 */
+    private static String userContent;
+
+    /** 用户新闻评论内容路径 */
+    private static String userComment;
+
     /** 获取地址开关 */
     private static boolean addressEnabled;
 
@@ -67,6 +73,22 @@ public class SltgSysConfig {
 
     public void setProfile(String profile) {
         SltgSysConfig.profile = profile;
+    }
+
+    public static String getUserContent() {
+        return userContent;
+    }
+
+    public void setUserContent(String userContent) {
+        SltgSysConfig.userContent = userContent;
+    }
+
+    public static String getUserComment() {
+        return userComment;
+    }
+
+    public void setUserComment(String userComment) {
+        SltgSysConfig.userComment = userComment;
     }
 
     public static boolean isAddressEnabled() {
