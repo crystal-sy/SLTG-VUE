@@ -39,6 +39,8 @@ public class UserNews extends BaseEntity {
     @Excel(name = "检测类型")
     private String detectionType;
 
+    private String detectionDesc;
+
     /** 新闻内容文件 */
     private String contentFile;
 
@@ -126,6 +128,14 @@ public class UserNews extends BaseEntity {
 
     public void setDetectionType(String detectionType) {
         this.detectionType = detectionType;
+    }
+
+    public String getDetectionDesc() {
+        return detectionDesc;
+    }
+
+    public void setDetectionDesc(String detectionDesc) {
+        this.detectionDesc = detectionDesc;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.sltg.common.config.SltgSysConfig;
 import com.sltg.common.constant.Constants;
 import com.sltg.common.core.domain.entity.UserNews;
 import com.sltg.common.enums.DetectionType;
+import com.sltg.common.utils.PythonUtils;
 import com.sltg.common.utils.file.FileUtils;
 import com.sltg.system.mapper.UserNewsMapper;
 import com.sltg.system.service.UserNewsService;
@@ -11,6 +12,7 @@ import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +31,12 @@ import java.util.UUID;
 @Service
 public class UserNewsServiceImpl implements UserNewsService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserNewsServiceImpl.class);
+
+    @Value("${sltg.python.script-path}")
+    private String pythonScriptPath;
+
+    @Value("${sltg.python.lib-path}")
+    private String pythonLibPath;
 
     @Autowired
     private UserNewsMapper userNewsMapper;
@@ -74,9 +82,8 @@ public class UserNewsServiceImpl implements UserNewsService {
     public int insertUserNews(UserNews news) {
         Long userId = news.getUserId();
         String storeId = UUID.randomUUID().toString();
-        news.setContentFile(FileUtils.saveFile(news.getContentFile(),
-            new File(SltgSysConfig.getUserContent() + File.separator + userId + File.separator + storeId)));
-
+        File contentFile = new File(SltgSysConfig.getUserContent() + File.separator + userId + File.separator + storeId);
+        news.setContentFile(FileUtils.saveFile(news.getContentFile(), contentFile));
         String commentFile = news.getCommentFile();
         if (Strings.isNotBlank(commentFile)) {
             news.setCommentFile(FileUtils.saveFile(commentFile,
@@ -84,8 +91,10 @@ public class UserNewsServiceImpl implements UserNewsService {
         }
 
         news.setStoreId(storeId);
+        news.setNewsTopic(new PythonUtils().executePythonScript(new String[] { "cmd", "/c",
+            "python " + pythonScriptPath + "common-util.py", contentFile + File.separator + news.getContentFile()},
+            pythonLibPath));
         // TODO 调python和获取文件内容
-        news.setNewsTopic("test");
         return userNewsMapper.insertUserNews(news);
     }
 
@@ -95,8 +104,12 @@ public class UserNewsServiceImpl implements UserNewsService {
         String storeId = news.getStoreId();
         String contentFile = news.getContentFile();
         if (!contentFile.contains(Constants.FILE_EXTENSION_TXT)) {
-            news.setContentFile(FileUtils.saveFile(contentFile,
-                new File(SltgSysConfig.getUserContent() + File.separator + userId + File.separator + storeId)));
+            File contentFilePath = new File(SltgSysConfig.getUserContent() + File.separator + userId + File.separator + storeId);
+            news.setContentFile(FileUtils.saveFile(contentFile, contentFilePath));
+            String themes = new PythonUtils().executePythonScript(new String[]{"cmd", "/c",
+                "python " + pythonScriptPath + "common-util.py", contentFilePath + File.separator + news.getContentFile()},
+                pythonLibPath);
+            news.setNewsTopic(themes.replace("/n", ""));
         }
 
         String commentFile = news.getCommentFile();

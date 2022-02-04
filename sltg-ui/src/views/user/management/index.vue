@@ -145,7 +145,7 @@
     />
 
     <!-- 添加或修改新闻内容对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
+    <el-dialog v-loading="loading" :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="24">
@@ -230,7 +230,7 @@
     </el-dialog>
 
     <!-- 新闻内容详细 -->
-    <el-dialog title="新闻内容详细" :visible.sync="openDetail" width="700px" append-to-body>
+    <el-dialog v-loading="loading" title="新闻内容详细" :visible.sync="openDetail" width="700px" append-to-body>
       <el-form ref="form" :model="form" label-width="100px" size="mini">
         <el-row>
           <el-col :span="24">
@@ -255,7 +255,7 @@
             <el-form-item label="检测百分比：">{{ form.detectionPercent }}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="检测类型：">{{ form.detectionType }}</el-form-item>
+            <el-form-item label="检测类型：">{{ form.detectionDesc }}</el-form-item>
           </el-col>
         </el-row>
         <el-row>
@@ -505,6 +505,7 @@
 
       /** 提交按钮 */
       submitForm: function() {
+        this.loading = true;
         this.$refs["form"].validate(valid => {
           if (valid) {
             if (this.form.newsId !== undefined) {
@@ -514,6 +515,7 @@
                 this.getList();
                 this.$refs.contentUpload.clearFiles();
                 this.$refs.commentUpload.clearFiles();
+                this.loading = false;
               });
             } else {
               addUserNews(this.form).then(response => {
@@ -522,6 +524,7 @@
                 this.getList();
                 this.$refs.contentUpload.clearFiles();
                 this.$refs.commentUpload.clearFiles();
+                this.loading = false;
               });
             }
           }
