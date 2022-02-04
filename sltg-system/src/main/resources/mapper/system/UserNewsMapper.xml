@@ -50,8 +50,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="queryUserNewsById" parameterType="Long" resultMap="UserNewsResult">
-        <include refid="selectUserNewsVo"/>
-        where news_id = #{newsId}
+        select news.news_id, news.user_id, news.news_title, news.news_topic, news.news_date, news.news_from, news.detection_percent, dict.dict_label as detection_type,
+               news.content_file, news.comment_file, news.store_id, news.del_flag, news.create_time, news.update_by, news.update_time, news.remark
+        from sys_user_news news
+        left join sys_dict_data dict on dict.dict_type = 'sys_detection_type' and dict.dict_value = news.detection_type
+        where news.news_id = #{newsId}
     </select>
 
     <select id="checkUserNewsUnique" parameterType="map" resultMap="UserNewsResult">

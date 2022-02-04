@@ -228,6 +228,59 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
+
+    <!-- 新闻内容详细 -->
+    <el-dialog title="新闻内容详细" :visible.sync="openDetail" width="700px" append-to-body>
+      <el-form ref="form" :model="form" label-width="100px" size="mini">
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="新闻标题：">{{ form.newsTitle }}</el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="新闻日期：">{{ form.newsDate }}</el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="新闻来源：">{{ form.newsFrom }}</el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24">
+            <el-form-item label="新闻主题：">{{ form.newsTopic }}</el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="检测百分比：">{{ form.detectionPercent }}</el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="检测类型：">{{ form.detectionType }}</el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24" @click.native="handleDetailPreview(form.newsId + '/0')">
+            <el-form-item label="内容文件：" style="color:#00ccff;text-decoration:underline">{{ form.contentFile }}</el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="24" @click.native="handleDetailPreview(form.newsId + '/1')">
+            <el-form-item label="评论文件：" style="color:#00ccff;text-decoration:underline">{{ form.commentFile }}</el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="创建时间：">{{ form.createTime }}</el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="更新时间：">{{ form.updateTime }}</el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="openDetail = false">关 闭</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -245,6 +298,7 @@
         exportLoading: false,
         // 是否显示弹出层
         open: false,
+        openDetail: false,
         contentFileList:[],
         commentFileList:[],
         // 选中数组
@@ -360,8 +414,10 @@
       /** 搜索按钮操作 */
       handleDetail(newsId) {
         this.loading = true;
+        this.reset();
         getUserNews(newsId).then(response => {
-            this.newsInfo = response.data;
+            this.form = response.data;
+            this.openDetail = true;
             this.loading = false;
           }
         );
@@ -416,6 +472,12 @@
             this.download(response.msg);
           });
         }
+      },
+
+      handleDetailPreview(url) {
+        downloadUserNews(url).then(response => {
+          this.download(response.msg);
+        });
       },
 
       // 取消按钮
