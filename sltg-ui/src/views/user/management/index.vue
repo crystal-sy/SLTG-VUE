@@ -189,6 +189,7 @@
                 :on-remove="removeContentFile"
                 :auto-upload="true"
                 :file-list="contentFileList"
+                :on-preview="handlePreview"
               >点击上传新闻内容文件</el-upload>
             </el-form-item>
           </el-col>
@@ -209,6 +210,7 @@
                 :on-remove="removeCommentFile"
                 :auto-upload="true"
                 :file-list="commentFileList"
+                :on-preview="handlePreview"
               >点击上传新闻评论文件</el-upload>
             </el-form-item>
           </el-col>
@@ -230,7 +232,7 @@
 </template>
 
 <script>
-  import { userNewsList, getUserNews, delUserNews, exportUserNews, addUserNews, updateUserNews } from "@/api/user/management";
+  import { userNewsList, getUserNews, delUserNews, exportUserNews, addUserNews, updateUserNews, downloadUserNews } from "@/api/user/management";
   import { getToken } from "@/utils/auth";
 
   export default {
@@ -397,13 +399,23 @@
         const newsId = row.newsId || this.ids;
         getUserNews(newsId).then(response => {
           this.form = response.data;
-          this.contentFileList.push({name:this.form.contentFile, url:''});//用于显示文件列表
+          this.contentFileList.push({name:this.form.contentFile, url:this.form.newsId + '/0'});
           if (this.form.commentFile !== '') {
-            this.commentFileList.push({name:this.form.commentFile, url:''});
+            this.commentFileList.push({name:this.form.commentFile, url:this.form.newsId + '/1'});
           }
           this.open = true;
           this.title = "修改新闻";
         });
+      },
+
+      handlePreview(file) {
+        if (file.url === undefined) {
+          this.msgError("该文件还未提交，不可下载，请本地查找！");
+        } else {
+          downloadUserNews(file.url).then(response => {
+            this.download(response.msg);
+          });
+        }
       },
 
       // 取消按钮

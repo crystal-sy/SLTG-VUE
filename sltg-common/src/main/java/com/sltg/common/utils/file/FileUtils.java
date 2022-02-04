@@ -3,15 +3,20 @@ package com.sltg.common.utils.file;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sltg.common.config.SltgSysConfig;
+import com.sltg.common.core.domain.AjaxResult;
+import com.sltg.common.exception.CustomException;
 import org.apache.commons.lang3.ArrayUtils;
 import com.sltg.common.utils.StringUtils;
 import org.apache.logging.log4j.util.Strings;
@@ -225,5 +230,80 @@ public class FileUtils {
             LOGGER.error("remove file is error. fileId:{}", fileId);
             return "";
         }
+    }
+
+    /**
+     * 下载文件
+     *
+     * @param targetDir 目标文件夹
+     * @return 返回操作结果
+     */
+    public static AjaxResult downloadFile(File targetDir) {
+        if (!targetDir.exists() || targetDir.listFiles() == null) {
+            LOGGER.error("The download file is not exists");
+            return AjaxResult.error("该文件不存在！");
+        }
+
+        File[] targetFiles = targetDir.listFiles();
+        if (targetFiles == null || targetFiles.length != 1) {
+            LOGGER.error("The download dir is empty.");
+            return AjaxResult.error("该文件不存在！");
+        }
+
+        File targetFile = targetFiles[0];
+        String fileName = encodingFilename(targetFile.getName());
+        OutputStream out = null;
+        InputStream fin  = null;
+        try {
+            fin = new FileInputStream(targetFile);
+            out = new FileOutputStream(getAbsoluteFile(fileName));
+            byte[] buffer = new byte[1024];
+            int bytesToRead;
+            // 通过循环将读入的Word文件的内容输出到浏览器中
+            while ((bytesToRead = fin.read(buffer)) != -1) {
+                out.write(buffer, 0, bytesToRead);
+            }
+            return AjaxResult.success(fileName);
+        } catch (Exception e) {
+            LOGGER.error("导出Excel异常{}", e.getMessage());
+            throw new CustomException("导出Excel失败，请联系网站管理员！");
+        } finally {
+            if (fin != null) {
+                try {
+                    fin.close();
+                } catch (IOException e1) {
+                    LOGGER.error("input close is error.");
+                }
+            }
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e1) {
+                    LOGGER.error("out close is error.");
+                }
+            }
+        }
+    }
+
+    /**
+     * 编码文件名
+     */
+    public static String encodingFilename(String filename) {
+        filename = UUID.randomUUID().toString() + "_" + filename;
+        return filename;
+    }
+
+    /**
+     * 获取下载路径
+     *
+     * @param filename 文件名称
+     */
+    public static String getAbsoluteFile(String filename) {
+        String downloadPath = SltgSysConfig.getDownloadPath() + filename;
+        File desc = new File(downloadPath);
+        if (!desc.getParentFile().exists()) {
+            desc.getParentFile().mkdirs();
+        }
+        return downloadPath;
     }
 }

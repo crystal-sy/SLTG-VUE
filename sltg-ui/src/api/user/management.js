@@ -54,3 +54,11 @@ export function updateUserNews(data) {
     data: data
   })
 }
+
+// 下载用户新闻文件
+export function downloadUserNews(url) {
+  return request({
+    url: '/user/management/exportData/' + url,
+    method: 'get'
+  })
+}

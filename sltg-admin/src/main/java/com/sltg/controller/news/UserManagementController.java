@@ -1,6 +1,7 @@
 package com.sltg.controller.news;
 
 import com.sltg.common.annotation.Log;
+import com.sltg.common.config.SltgSysConfig;
 import com.sltg.common.constant.Constants;
 import com.sltg.common.core.controller.BaseController;
 import com.sltg.common.core.domain.AjaxResult;
@@ -14,12 +15,15 @@ import com.sltg.common.utils.file.FileUtils;
 import com.sltg.common.utils.poi.ExcelUtil;
 import com.sltg.framework.web.service.TokenService;
 import com.sltg.system.service.UserNewsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -30,6 +34,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/user/management")
 public class UserManagementController extends BaseController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserManagementController.class);
+
     @Autowired
     private UserNewsService userNewsService;
 
@@ -54,7 +60,7 @@ public class UserManagementController extends BaseController {
      */
     @PreAuthorize("@ss.hasPermi('user:news:query')")
     @GetMapping(value = { "/detail/{newsId}" })
-    public AjaxResult getUserNews(@PathVariable(value = "newsId", required = false) Long newsId) {
+    public AjaxResult getUserNews(@PathVariable(value = "newsId") Long newsId) {
         AjaxResult ajax = AjaxResult.success();
         ajax.put(AjaxResult.DATA_TAG, userNewsService.queryUserNewsById(newsId));
         return ajax;
@@ -72,6 +78,23 @@ public class UserManagementController extends BaseController {
             return AjaxResult.error(message);
         }
         return AjaxResult.success(userNewsService.importData(file));
+    }
+
+    @PreAuthorize("@ss.hasPermi('user:news:export')")
+    @Log(title = "文件下载", businessType = BusinessType.EXPORT)
+    @GetMapping("/exportData/{newsId}/{type}")
+    public AjaxResult exportData(@PathVariable(value = "newsId") Long newsId,
+        @PathVariable(value = "type") String type) {
+        UserNews userNews = userNewsService.queryUserNewsById(newsId);
+        Long userId = userNews.getUserId();
+        String storeId = userNews.getStoreId();
+        String targetDir;
+        if ("0".equals(type)) {
+            targetDir = SltgSysConfig.getUserContent();
+        } else {
+            targetDir = SltgSysConfig.getUserComment();
+        }
+        return FileUtils.downloadFile(new File(targetDir + File.separator + userId + File.separator + storeId));
     }
 
     /**

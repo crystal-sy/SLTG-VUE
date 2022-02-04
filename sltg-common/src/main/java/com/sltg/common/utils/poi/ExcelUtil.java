@@ -1,6 +1,5 @@
 package com.sltg.common.utils.poi;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,8 +15,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 import java.util.stream.Collectors;
+
+import com.sltg.common.utils.file.FileUtils;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -47,7 +47,6 @@ import com.sltg.common.annotation.Excel;
 import com.sltg.common.annotation.Excel.ColumnType;
 import com.sltg.common.annotation.Excel.Type;
 import com.sltg.common.annotation.Excels;
-import com.sltg.common.config.SltgSysConfig;
 import com.sltg.common.core.domain.AjaxResult;
 import com.sltg.common.core.text.Convert;
 import com.sltg.common.exception.CustomException;
@@ -321,8 +320,8 @@ public class ExcelUtil<T> {
                     addStatisticsRow();
                 }
             }
-            String filename = encodingFilename(sheetName);
-            out = new FileOutputStream(getAbsoluteFile(filename));
+            String filename = FileUtils.encodingFilename(sheetName + ".xlsx");
+            out = new FileOutputStream(FileUtils.getAbsoluteFile(filename));
             wb.write(out);
             return AjaxResult.success(filename);
         } catch (Exception e) {
@@ -725,28 +724,6 @@ public class ExcelUtil<T> {
             }
             statistics.clear();
         }
-    }
-
-    /**
-     * 编码文件名
-     */
-    public String encodingFilename(String filename) {
-        filename = UUID.randomUUID().toString() + "_" + filename + ".xlsx";
-        return filename;
-    }
-
-    /**
-     * 获取下载路径
-     * 
-     * @param filename 文件名称
-     */
-    public String getAbsoluteFile(String filename) {
-        String downloadPath = SltgSysConfig.getDownloadPath() + filename;
-        File desc = new File(downloadPath);
-        if (!desc.getParentFile().exists()) {
-            desc.getParentFile().mkdirs();
-        }
-        return downloadPath;
     }
 
     /**
