@@ -72,16 +72,18 @@ public class UserNewsServiceImpl implements UserNewsService {
 
     @Override
     public int insertUserNews(UserNews news) {
-        Long userId = news.getUserId(); // 新闻存在id必须是UUID
+        Long userId = news.getUserId();
+        String storeId = UUID.randomUUID().toString();
         news.setContentFile(FileUtils.saveFile(news.getContentFile(),
-            new File(SltgSysConfig.getUserContent() + File.separator + userId)));
+            new File(SltgSysConfig.getUserContent() + File.separator + userId + File.separator + storeId)));
 
         String commentFile = news.getCommentFile();
         if (Strings.isNotBlank(commentFile)) {
             news.setCommentFile(FileUtils.saveFile(commentFile,
-                new File(SltgSysConfig.getUserComment() + File.separator + userId)));
+                new File(SltgSysConfig.getUserComment() + File.separator + userId + File.separator + storeId)));
         }
 
+        news.setStoreId(storeId);
         // TODO 调python和获取文件内容
         news.setNewsTopic("test");
         return userNewsMapper.insertUserNews(news);
@@ -90,16 +92,17 @@ public class UserNewsServiceImpl implements UserNewsService {
     @Override
     public int updateUserNews(UserNews news) {
         Long userId = news.getUserId();
+        String storeId = news.getStoreId();
         String contentFile = news.getContentFile();
         if (!contentFile.contains(Constants.FILE_EXTENSION_TXT)) {
             news.setContentFile(FileUtils.saveFile(contentFile,
-                new File(SltgSysConfig.getUserContent() + File.separator + userId)));
+                new File(SltgSysConfig.getUserContent() + File.separator + userId + File.separator + storeId)));
         }
 
         String commentFile = news.getCommentFile();
         if (Strings.isNotBlank(commentFile) && !commentFile.contains(Constants.FILE_EXTENSION_TXT)) {
             news.setCommentFile(FileUtils.saveFile(commentFile,
-                new File(SltgSysConfig.getUserComment() + File.separator + userId)));
+                new File(SltgSysConfig.getUserComment() + File.separator + userId + File.separator + storeId)));
         }
 
         // TODO 调python和获取文件内容

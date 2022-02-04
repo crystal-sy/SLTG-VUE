@@ -98,10 +98,12 @@ public class UserManagementController extends BaseController {
     @Log(title = "新闻管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult editUserNews(@Validated @RequestBody UserNews news) {
-        if (userNewsService.queryUserNewsById(news.getNewsId()) == null) {
+        UserNews userNews = userNewsService.queryUserNewsById(news.getNewsId());
+        if (userNews == null) {
             return AjaxResult.error("修改用户新闻失败，该新闻不存在");
         }
 
+        news.setStoreId(userNews.getStoreId());
         news.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(userNewsService.updateUserNews(news));
     }

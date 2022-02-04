@@ -45,6 +45,9 @@ public class UserNews extends BaseEntity {
     /** 新闻评论文件 */
     private String commentFile;
 
+    /** 储存id */
+    private String storeId;
+
     /** 创建时间 */
     @Excel(name = "新闻创建时间", dateFormat = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -149,6 +152,14 @@ public class UserNews extends BaseEntity {
 
     public void setCommentFile(String commentFile) {
         this.commentFile = commentFile;
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
     }
 
     public String getDelFlag() {

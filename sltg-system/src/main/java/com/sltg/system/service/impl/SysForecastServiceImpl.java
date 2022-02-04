@@ -14,7 +14,7 @@ import java.util.List;
  * @author styra
  * @title: SysForecastServiceImpl
  * @projectName SLTG-VUE
- * @description: TODO
+ * @description: 新闻预测
  * @date 2021/10/2623:35
  */
 @Service

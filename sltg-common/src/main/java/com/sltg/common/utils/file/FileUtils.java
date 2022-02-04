@@ -206,9 +206,15 @@ public class FileUtils {
 
         // 先删除再创建，保证只有一份文件
         if (targetDir.exists()) {
-            targetDir.delete(); // TODO 删除文件夹失败，必须是空文件夹才能删除
+            File[] targetFiles = targetDir.listFiles();
+            if (targetFiles != null && targetFiles.length > 0) {
+                for (File targetFile : targetFiles) {
+                    targetFile.delete();
+                }
+            }
+        } else {
+            targetDir.mkdirs();
         }
-        targetDir.mkdirs();
 
         String uploadFileName = uploadFile.getName();
         File targetFile = new File(targetDir + File.separator + uploadFileName);

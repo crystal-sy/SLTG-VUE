@@ -521,6 +521,7 @@ create table sys_user_news (
     detection_type     char(1)        default ''                 comment '检测类型',
     content_file       varchar(100)   not null                   comment '新闻内容文件',
     comment_file       varchar(100)   default ''                 comment '新闻评论文件',
+    store_id           varchar(50)    default ''                 comment '储存id',
     del_flag           char(1)        default '0'                comment '删除标志（0-代表存在 2-代表删除）',
     create_time        datetime                                  comment '创建时间',
     update_by          varchar(64)    default ''                 comment '更新者',

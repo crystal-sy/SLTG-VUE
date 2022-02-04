@@ -7,7 +7,7 @@ import com.sltg.common.core.domain.BaseEntity;
  * @author styra
  * @title: SysNewForecast
  * @projectName SLTG-VUE
- * @description: TODO
+ * @description: 新闻预测数据模型
  * @date 2021/10/3016:10
  */
 public class SysNewForecast extends BaseEntity {
