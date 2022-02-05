@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="newsId"            column="news_id"       />
         <result property="userId"            column="user_id"       />
         <result property="newsTitle"         column="news_title"    />
-        <result property="newsTopic"         column="news_topic"      />
+        <result property="newsTheme"         column="news_theme"      />
         <result property="newsDate"          column="news_date"      />
         <result property="newsFrom"          column="news_from"      />
         <result property="detectionPercent"  column="detection_percent" />
@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
     
     <sql id="selectUserNewsVo">
-        select news_id, user_id, news_title, news_topic, news_date, news_from, detection_percent, detection_type,
+        select news_id, user_id, news_title, news_theme, news_date, news_from, detection_percent, detection_type,
                content_file, comment_file, store_id, del_flag, create_time, update_by, update_time, remark
 		from sys_user_news
     </sql>
@@ -35,8 +35,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <if test="newsTitle != null and newsTitle != ''">
             AND news_title like concat('%', #{newsTitle}, '%')
         </if>
-        <if test="newsTopic != null and newsTopic != ''">
-            AND news_topic like concat('%', #{newsTopic}, '%')
+        <if test="newsTheme != null and newsTheme != ''">
+            AND news_theme like concat('%', #{newsTheme}, '%')
         </if>
         <if test="detectionType != null and detectionType != ''">
             AND detection_type = #{detectionType}
@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="queryUserNewsById" parameterType="Long" resultMap="UserNewsResult">
-        select news.news_id, news.user_id, news.news_title, news.news_topic, news.news_date, news.news_from, news.detection_percent, news.detection_type, dict.dict_label as detection_desc,
+        select news.news_id, news.user_id, news.news_title, news.news_theme, news.news_date, news.news_from, news.detection_percent, news.detection_type, dict.dict_label as detection_desc,
                news.content_file, news.comment_file, news.store_id, news.del_flag, news.create_time, news.update_by, news.update_time, news.remark
         from sys_user_news news
         left join sys_dict_data dict on dict.dict_type = 'sys_detection_type' and dict.dict_value = news.detection_type
@@ -83,7 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into sys_user_news (
         <if test="userId != null and userId != 0">user_id,</if>
         <if test="newsTitle != null and newsTitle != ''">news_title,</if>
-        <if test="newsTopic != null and newsTopic != ''">news_topic,</if>
+        <if test="newsTheme != null and newsTheme != ''">news_theme,</if>
         <if test="newsDate != null and newsDate != ''">news_date,</if>
         <if test="newsFrom != null and newsFrom != ''">news_from,</if>
         <if test="detectionPercent != null and detectionPercent != ''">detection_percent,</if>
@@ -96,7 +96,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         )values(
         <if test="userId != null and userId != ''">#{userId},</if>
         <if test="newsTitle != null and newsTitle != ''">#{newsTitle},</if>
-        <if test="newsTopic != null and newsTopic != ''">#{newsTopic},</if>
+        <if test="newsTheme != null and newsTheme != ''">#{newsTheme},</if>
         <if test="newsDate != null and newsDate != ''">#{newsDate},</if>
         <if test="newsFrom != null and newsFrom != ''">#{newsFrom},</if>
         <if test="detectionPercent != null and detectionPercent != ''">#{detectionPercent},</if>
@@ -113,7 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         update sys_user_news
         <set>
             <if test="newsTitle != null and newsTitle != ''">news_title = #{newsTitle},</if>
-            <if test="newsTopic != null and newsTopic != ''">news_topic = #{newsTopic},</if>
+            <if test="newsTheme != null and newsTheme != ''">news_theme = #{newsTheme},</if>
             <if test="newsDate != null and newsDate != ''">news_date = #{newsDate},</if>
             <if test="newsFrom != null and newsFrom != ''">news_from = #{newsFrom},</if>
             <if test="detectionPercent != null and detectionPercent != ''">detection_percent = #{detectionPercent},</if>

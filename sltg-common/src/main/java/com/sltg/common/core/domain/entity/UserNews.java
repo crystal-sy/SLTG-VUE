@@ -24,8 +24,8 @@ public class UserNews extends BaseEntity {
     @Excel(name = "新闻标题")
     private String newsTitle;
 
-    @Excel(name = "新闻主题")
-    private String newsTopic;
+    @Excel(name = "新闻关键词")
+    private String newsTheme;
 
     @Excel(name = "新闻日期")
     private String newsDate;
@@ -90,12 +90,12 @@ public class UserNews extends BaseEntity {
         this.newsTitle = newsTitle;
     }
 
-    public String getNewsTopic() {
-        return newsTopic;
+    public String getNewsTheme() {
+        return newsTheme;
     }
 
-    public void setNewsTopic(String newsTopic) {
-        this.newsTopic = newsTopic;
+    public void setNewsTheme(String newsTheme) {
+        this.newsTheme = newsTheme;
     }
 
     public String getNewsDate() {

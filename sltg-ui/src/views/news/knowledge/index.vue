@@ -12,21 +12,15 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="新闻分类" prop="newsType">
-        <el-select
-          v-model="queryParams.newsType"
-          placeholder="新闻分类"
+      <el-form-item label="新闻关键词" prop="newsTheme">
+        <el-input
+          v-model="queryParams.newsTheme"
+          placeholder="请输入新闻关键词"
           clearable
           size="small"
           style="width: 240px"
-        >
-          <el-option
-            v-for="dict in typeOptions"
-            :key="dict.dictValue"
-            :label="dict.dictLabel"
-            :value="dict.dictValue"
-          />
-        </el-select>
+          @keyup.enter.native="handleQuery"
+        />
       </el-form-item>
       <el-form-item label="检测类型" prop="detectionType">
         <el-select
@@ -69,11 +63,7 @@
     <el-table v-loading="loading" :data="newsList">
       <el-table-column label="新闻编号" align="center" key="newsId" prop="newsId" v-if="columns[0].visible" />
       <el-table-column label="新闻标题" align="center" key="newsTitle" prop="newsTitle" v-if="columns[1].visible" :show-overflow-tooltip="true" width="400"/>
-      <el-table-column label="新闻分类" align="center" key="newsType" prop="newsType" v-if="columns[2].visible" :show-overflow-tooltip="true" >
-        <template slot-scope="scope">
-          <dict-tag :options="typeOptions" :value="scope.row.newsType"/>
-        </template>
-      </el-table-column>
+      <el-table-column label="新闻关键词" align="center" key="newsTheme" prop="newsTheme" v-if="columns[2].visible" :show-overflow-tooltip="true" />
       <el-table-column label="检测类型" align="center" key="detectionType" v-if="columns[3].visible" >
         <template slot-scope="scope">
           <dict-tag :options="detectionTypeOptions" :value="scope.row.detectionType"/>
@@ -135,8 +125,6 @@
         newsList: null,
         // 日期范围
         dateRange: [],
-        // 新闻类型数据字典
-        typeOptions: [],
         // 新闻检测类型数据字典
         detectionTypeOptions: [],
         // 表单参数
@@ -150,14 +138,14 @@
           pageNum: 1,
           pageSize: 10,
           newsTitle: undefined,
-          newsType: undefined,
+          newsTheme: undefined,
           detectionType: undefined
         },
         // 列信息
         columns: [
           { key: 0, label: `新闻编号`, visible: true },
           { key: 1, label: `新闻标题`, visible: true },
-          { key: 2, label: `新闻分类`, visible: true },
+          { key: 2, label: `新闻关键词`, visible: true },
           { key: 3, label: `检测类型`, visible: true },
           { key: 4, label: `创建时间`, visible: true }
         ],
@@ -166,9 +154,6 @@
     },
     created() {
       this.getList();
-      this.getDicts("sys_news_type").then(response => {
-        this.typeOptions = response.data;
-      });
       this.getDicts("sys_detection_type").then(response => {
         this.detectionTypeOptions = response.data;
       });

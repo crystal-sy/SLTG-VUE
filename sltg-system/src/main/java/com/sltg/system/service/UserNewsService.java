@@ -43,7 +43,7 @@ public interface UserNewsService {
      * @param userId 用户id
      * @return 结果
      */
-    boolean checkUserNewsUnique(String newsTitle, Long userId);
+    UserNews checkUserNewsUnique(String newsTitle, Long userId);
 
     /**
      * 新增用户新闻信息

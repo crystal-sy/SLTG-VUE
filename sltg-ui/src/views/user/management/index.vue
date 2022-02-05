@@ -247,7 +247,7 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="新闻主题：">{{ form.newsTopic }}</el-form-item>
+            <el-form-item label="新闻关键词：">{{ form.newsTheme }}</el-form-item>
           </el-col>
         </el-row>
         <el-row>
@@ -259,12 +259,12 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="24" @click.native="handleDetailPreview(form.newsId + '/0')">
+          <el-col :span="24" @click.native="handleDetailPreview(form.contentFile, form.newsId + '/0')">
             <el-form-item label="内容文件：" style="color:#00ccff;text-decoration:underline">{{ form.contentFile }}</el-form-item>
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="24" @click.native="handleDetailPreview(form.newsId + '/1')">
+          <el-col :span="24" @click.native="handleDetailPreview(form.commentFile, form.newsId + '/1')">
             <el-form-item label="评论文件：" style="color:#00ccff;text-decoration:underline">{{ form.commentFile }}</el-form-item>
           </el-col>
         </el-row>
@@ -474,7 +474,11 @@
         }
       },
 
-      handleDetailPreview(url) {
+      handleDetailPreview(file, url) {
+        if (file === '') {
+          return;
+        }
+
         downloadUserNews(url).then(response => {
           this.download(response.msg);
         });

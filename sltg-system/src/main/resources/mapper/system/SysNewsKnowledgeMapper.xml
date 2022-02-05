@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="newsId"            column="news_id"        />
         <result property="newsTitle"         column="news_title"     />
         <result property="newsUrl"           column="news_url"       />
-        <result property="newsType"          column="news_type"      />
+        <result property="newsTheme"          column="news_theme"      />
         <result property="detectionType"     column="detection_type"    />
         <result property="detectionResult"   column="detection_result"  />
         <result property="newsDate"          column="news_date"      />
@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
     
     <sql id="selectNewsKnowledgeVo">
-        select news_id, news_title, news_url, news_type, detection_type, detection_result, news_date, news_spider,
+        select news_id, news_title, news_url, news_theme, detection_type, detection_result, news_date, news_spider,
                news_from, original_url, create_time, update_by, update_time, remark
 		from sys_news_knowledge
     </sql>
@@ -32,8 +32,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="newsTitle != null and newsTitle != ''">
 				AND news_title like concat('%', #{newsTitle}, '%')
 			</if>
-			<if test="newsType != null and newsType != ''">
-				AND news_type = #{newsType}
+			<if test="newsTheme != null and newsTheme != ''">
+				AND news_theme = #{newsTheme}
 			</if>
             <if test="detectionType != null and detectionType != ''">
                 AND detection_type = #{detectionType}

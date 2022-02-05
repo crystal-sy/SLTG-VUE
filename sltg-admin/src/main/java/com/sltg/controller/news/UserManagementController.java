@@ -106,7 +106,7 @@ public class UserManagementController extends BaseController {
     public AjaxResult addUserNews(@Validated @RequestBody UserNews news) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         news.setUserId(loginUser.getUser().getUserId());
-        if (!userNewsService.checkUserNewsUnique(news.getNewsTitle(), news.getUserId())) {
+        if (userNewsService.checkUserNewsUnique(news.getNewsTitle(), news.getUserId()) != null) {
             return AjaxResult.error("新增用户新闻'" + news.getNewsTitle() + "'失败，该新闻已存在");
         }
 
@@ -126,7 +126,8 @@ public class UserManagementController extends BaseController {
             return AjaxResult.error("修改用户新闻失败，该新闻不存在");
         }
 
-        if (!userNewsService.checkUserNewsUnique(news.getNewsTitle(), userNews.getUserId())) {
+        UserNews queryNews = userNewsService.checkUserNewsUnique(news.getNewsTitle(), userNews.getUserId());
+        if (queryNews != null && !queryNews.getNewsId().equals(news.getNewsId())) {
             return AjaxResult.error("修改用户新闻'" + news.getNewsTitle() + "'失败，该新闻已存在");
         }
 

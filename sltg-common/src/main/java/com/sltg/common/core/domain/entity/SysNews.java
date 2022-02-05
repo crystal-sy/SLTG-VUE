@@ -39,8 +39,8 @@ public class SysNews extends BaseEntity {
     @Excel(name = "新闻内容")
     private String newsText;
 
-    @Excel(name = "新闻分类")
-    private String newsType;
+    @Excel(name = "新闻关键词")
+    private String newsTheme;
 
     @Excel(name = "虚假检测百分比")
     private String detectionPercent;
@@ -110,12 +110,12 @@ public class SysNews extends BaseEntity {
         this.newsText = newsText;
     }
 
-    public String getNewsType() {
-        return newsType;
+    public String getNewsTheme() {
+        return newsTheme;
     }
 
-    public void setNewsType(String newsType) {
-        this.newsType = newsType;
+    public void setNewsTheme(String newsTheme) {
+        this.newsTheme = newsTheme;
     }
 
     public String getDetectionPercent() {
