@@ -69,9 +69,9 @@
           <dict-tag :options="detectionTypeOptions" :value="scope.row.detectionType"/>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[4].visible" >
+      <el-table-column label="创建时间" align="center" prop="newsDate" v-if="columns[4].visible" >
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createTime) }}</span>
+          <span>{{ scope.row.newsDate }}</span>
         </template>
       </el-table-column>
       <el-table-column

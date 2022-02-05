@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				    OR (is_file = 1 AND news_text like concat('%', #{newsTitle}, '%') ) )
 			</if>
 			<if test="newsTheme != null and newsTheme != ''">
-				AND news_theme = #{newsTheme}
+                AND news_theme like concat('%', #{newsTheme}, '%')
 			</if>
             <if test="detectionType != null and detectionType != ''">
                 AND detection_type = #{detectionType}

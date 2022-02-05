@@ -522,6 +522,7 @@
                 this.loading = false;
               }).catch(() => {
                 this.loading = false;
+                this.open = false;
               });
             } else {
               addUserNews(this.form).then(response => {
@@ -533,6 +534,7 @@
                 this.loading = false;
               }).catch(() => {
                 this.loading = false;
+                this.open = false;
               });
             }
           }

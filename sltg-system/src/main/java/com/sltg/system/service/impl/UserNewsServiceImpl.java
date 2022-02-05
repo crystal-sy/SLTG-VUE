@@ -96,7 +96,7 @@ public class UserNewsServiceImpl implements UserNewsService {
 
         contentFilePath += File.separator + news.getContentFile();
         String themes = new PythonUtils().executePythonScript(new String[]{"cmd", "/c",
-            "python " + pythonScriptPath + "common/common-util.py", contentFilePath}, pythonLibPath);
+            "python " + pythonScriptPath + "util/common.py", contentFilePath}, pythonLibPath);
         news.setNewsTheme(themes.replace("/n", ""));
 
         String detectionPercent = new PythonUtils().executePythonScript(new String[]{"cmd", "/c",
@@ -117,7 +117,7 @@ public class UserNewsServiceImpl implements UserNewsService {
 
             contentFilePath += File.separator + news.getContentFile();
             String themes = new PythonUtils().executePythonScript(new String[]{"cmd", "/c",
-                "python " + pythonScriptPath + "common/common-util.py", contentFilePath}, pythonLibPath);
+                "python " + pythonScriptPath + "util/common.py", contentFilePath}, pythonLibPath);
             news.setNewsTheme(themes.replace("/n", ""));
         } else {
             contentFilePath += File.separator + news.getContentFile();
