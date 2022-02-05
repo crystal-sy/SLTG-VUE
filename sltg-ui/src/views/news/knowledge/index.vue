@@ -38,7 +38,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="创建时间">
+      <el-form-item label="新闻时间">
         <el-date-picker
           v-model="dateRange"
           size="small"
@@ -69,7 +69,7 @@
           <dict-tag :options="detectionTypeOptions" :value="scope.row.detectionType"/>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="newsDate" v-if="columns[4].visible" >
+      <el-table-column label="新闻时间" align="center" prop="newsDate" v-if="columns[4].visible" >
         <template slot-scope="scope">
           <span>{{ scope.row.newsDate }}</span>
         </template>
@@ -147,7 +147,7 @@
           { key: 1, label: `新闻标题`, visible: true },
           { key: 2, label: `新闻关键词`, visible: true },
           { key: 3, label: `检测类型`, visible: true },
-          { key: 4, label: `创建时间`, visible: true }
+          { key: 4, label: `新闻时间`, visible: true }
         ],
         // 表单校验
       };
