@@ -126,6 +126,10 @@ public class UserManagementController extends BaseController {
             return AjaxResult.error("修改用户新闻失败，该新闻不存在");
         }
 
+        if (!userNewsService.checkUserNewsUnique(news.getNewsTitle(), userNews.getUserId())) {
+            return AjaxResult.error("修改用户新闻'" + news.getNewsTitle() + "'失败，该新闻已存在");
+        }
+
         news.setStoreId(userNews.getStoreId());
         news.setUpdateBy(SecurityUtils.getUsername());
         return toAjax(userNewsService.updateUserNews(news));

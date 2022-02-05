@@ -405,11 +405,11 @@ create table sys_job (
   primary key (job_id, job_name, job_group)
 ) engine=innodb auto_increment=1 comment = '定时任务调度表';
 
-insert into sys_job values (1, '网易新闻爬虫', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'wy-news-spider.py\', \'currentDate\')', '0 10 0 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
-insert into sys_job values (2, '新浪新闻爬虫', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'sina-news-spider.py\', \'currentDate\')', '0 30 0 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
-insert into sys_job values (3, '腾讯较真平台新闻爬虫', 'DEFAULT', 'sltgTask.sltgParams(\'tencentFactSpider.py\')', '0 50 0 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
-insert into sys_job values (4, '辟谣官方平台新闻爬虫', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'piyao-org-news-spider.py\', \'currentDate\')', '0 10 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
-insert into sys_job values (5, '微博新闻爬虫', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'weibo-news-spider.py\', \'currentDate\')', '0 40 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
+insert into sys_job values (1, '网易新闻爬虫', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'spider/wy-news-spider.py\', \'currentDate\')', '0 10 0 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
+insert into sys_job values (2, '新浪新闻爬虫', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'spider/sina-news-spider.py\', \'currentDate\')', '0 30 0 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
+insert into sys_job values (3, '腾讯较真平台新闻爬虫', 'DEFAULT', 'sltgTask.sltgParams(\'spider/tencentFactSpider.py\')', '0 50 0 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
+insert into sys_job values (4, '辟谣官方平台新闻爬虫', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'spider/piyao-org-news-spider.py\', \'currentDate\')', '0 10 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
+insert into sys_job values (5, '微博新闻爬虫', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'spider/weibo-news-spider.py\', \'currentDate\')', '0 40 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
 
 -- ----------------------------
 -- 定时任务调度日志表

@@ -516,6 +516,8 @@
                 this.$refs.contentUpload.clearFiles();
                 this.$refs.commentUpload.clearFiles();
                 this.loading = false;
+              }).catch(() => {
+                this.loading = false;
               });
             } else {
               addUserNews(this.form).then(response => {
@@ -524,6 +526,8 @@
                 this.getList();
                 this.$refs.contentUpload.clearFiles();
                 this.$refs.commentUpload.clearFiles();
+                this.loading = false;
+              }).catch(() => {
                 this.loading = false;
               });
             }

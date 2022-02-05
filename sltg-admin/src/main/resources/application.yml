@@ -21,7 +21,7 @@ sltg:
   # python运行配置
   python:
     lib-path: D:/Program Files/anaconda/envs/sycode
-    script-path: D:/sycode/SLTG/src/main/spider/
+    script-path: D:/sycode/SLTG/src/main/
 
 # 开发环境配置
 server:

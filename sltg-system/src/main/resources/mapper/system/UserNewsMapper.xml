@@ -60,7 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="checkUserNewsUnique" parameterType="map" resultMap="UserNewsResult">
         <include refid="selectUserNewsVo"/>
-        where user_id = #{userId} and news_title = #{newsTitle}
+        where user_id = #{userId} and news_title = #{newsTitle} and del_flag = '0'
     </select>
 
     <delete id="deleteUserNewsByIds" parameterType="Long">

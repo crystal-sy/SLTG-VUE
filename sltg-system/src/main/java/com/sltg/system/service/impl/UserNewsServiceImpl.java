@@ -74,8 +74,7 @@ public class UserNewsServiceImpl implements UserNewsService {
 
     @Override
     public boolean checkUserNewsUnique(String newsTitle, Long userId) {
-        UserNews userNews = userNewsMapper.checkUserNewsUnique(newsTitle, userId);
-        return userNews == null;
+        return userNewsMapper.checkUserNewsUnique(newsTitle, userId) == null;
     }
 
     @Override
@@ -92,7 +91,7 @@ public class UserNewsServiceImpl implements UserNewsService {
 
         news.setStoreId(storeId);
         news.setNewsTopic(new PythonUtils().executePythonScript(new String[] { "cmd", "/c",
-            "python " + pythonScriptPath + "common-util.py", contentFile + File.separator + news.getContentFile()},
+            "python " + pythonScriptPath + "common/common-util.py", contentFile + File.separator + news.getContentFile()},
             pythonLibPath));
         // TODO 调python和获取文件内容
         return userNewsMapper.insertUserNews(news);
@@ -107,7 +106,7 @@ public class UserNewsServiceImpl implements UserNewsService {
             File contentFilePath = new File(SltgSysConfig.getUserContent() + File.separator + userId + File.separator + storeId);
             news.setContentFile(FileUtils.saveFile(contentFile, contentFilePath));
             String themes = new PythonUtils().executePythonScript(new String[]{"cmd", "/c",
-                "python " + pythonScriptPath + "common-util.py", contentFilePath + File.separator + news.getContentFile()},
+                "python " + pythonScriptPath + "common/common-util.py", contentFilePath + File.separator + news.getContentFile()},
                 pythonLibPath);
             news.setNewsTopic(themes.replace("/n", ""));
         }
