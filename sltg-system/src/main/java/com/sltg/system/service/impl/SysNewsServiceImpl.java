@@ -3,6 +3,7 @@ package com.sltg.system.service.impl;
 import com.sltg.common.core.domain.entity.SysNews;
 import com.sltg.system.mapper.SysNewsMapper;
 import com.sltg.system.service.SysNewsService;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,10 @@ public class SysNewsServiceImpl implements SysNewsService {
 
     @Override
     public List<SysNews> selectNewsList(SysNews news) {
+        String newsTheme = news.getNewsTheme();
+        if (Strings.isNotBlank(newsTheme)) {
+            news.setNewsThemes(newsTheme.replace("，", ",").split(","));
+        }
         return newsMapper.selectNewsList(news);
     }
 

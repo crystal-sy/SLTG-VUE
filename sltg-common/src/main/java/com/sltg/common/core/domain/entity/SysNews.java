@@ -64,6 +64,8 @@ public class SysNews extends BaseEntity {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
+    private String[] newsThemes;
+
     public SysNews() {}
 
     public SysNews(String newsId) {
@@ -176,4 +178,11 @@ public class SysNews extends BaseEntity {
         this.createTime = createTime;
     }
 
+    public String[] getNewsThemes() {
+        return newsThemes;
+    }
+
+    public void setNewsThemes(String[] newsThemes) {
+        this.newsThemes = newsThemes;
+    }
 }

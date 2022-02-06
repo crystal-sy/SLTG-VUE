@@ -129,7 +129,7 @@
              size="mini"
              type="text"
              icon="el-icon-search"
-             @click="handleRelation(scope.row)"
+             @click="handleRelation(scope.row.newsTheme)"
              v-hasPermi="['user:news:query']"
           >相关新闻</el-button>
         </template>
@@ -597,6 +597,11 @@
           this.download(response.msg);
           this.exportLoading = false;
         }).catch(() => {});
+      },
+
+      /** 相关新闻 */
+      handleRelation(newsTheme) {
+        this.$router.push("/news/knowledge?" + encodeURI(newsTheme));
       }
     }
   };

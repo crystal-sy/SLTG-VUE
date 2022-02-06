@@ -35,8 +35,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				AND ( news_title like concat('%', #{newsTitle}, '%')
 				    OR (is_file = 1 AND news_text like concat('%', #{newsTitle}, '%') ) )
 			</if>
-			<if test="newsTheme != null and newsTheme != ''">
-                AND news_theme like concat('%', #{newsTheme}, '%')
+			<if test="newsThemes != null and newsThemes != ''">
+                AND
+                <foreach collection="newsThemes" item="newsTheme" open="(" separator=" OR " close=")">
+                    news_theme like concat('%', #{newsTheme}, '%')
+                </foreach>
 			</if>
             <if test="detectionType != null and detectionType != ''">
                 AND detection_type = #{detectionType}

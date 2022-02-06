@@ -6,6 +6,7 @@ import com.sltg.common.annotation.Excel.ColumnType;
 import com.sltg.common.core.domain.BaseEntity;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 新闻知识库信息 sys_news_knowledge
@@ -48,6 +49,8 @@ public class SysNewsKnowledge extends BaseEntity {
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
+
+    private String[] newsThemes;
 
     public SysNewsKnowledge() {}
 
@@ -143,5 +146,13 @@ public class SysNewsKnowledge extends BaseEntity {
     @Override
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String[] getNewsThemes() {
+        return newsThemes;
+    }
+
+    public void setNewsThemes(String[] newsThemes) {
+        this.newsThemes = newsThemes;
     }
 }

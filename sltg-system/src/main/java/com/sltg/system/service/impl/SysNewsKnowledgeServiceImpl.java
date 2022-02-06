@@ -3,6 +3,7 @@ package com.sltg.system.service.impl;
 import com.sltg.common.core.domain.entity.SysNewsKnowledge;
 import com.sltg.system.mapper.SysNewsKnowledgeMapper;
 import com.sltg.system.service.SysKnowledgeService;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,10 @@ public class SysNewsKnowledgeServiceImpl implements SysKnowledgeService {
 
     @Override
     public List<SysNewsKnowledge> selectKnowledgeList(SysNewsKnowledge news) {
+        String newsTheme = news.getNewsTheme();
+        if (Strings.isNotBlank(newsTheme)) {
+            news.setNewsThemes(newsTheme.replace("，", ",").split(","));
+        }
         return newsKnowledgeMapper.selectNewsKnowledgeList(news);
     }
 

@@ -94,7 +94,7 @@
             size="mini"
             type="text"
             icon="el-icon-search"
-            @click="handleRelation(scope.row)"
+            @click="handleRelation(scope.row.newsTheme)"
             v-hasPermi="['news:table:list']"
           >相关新闻</el-button>
         </template>
@@ -219,6 +219,11 @@ export default {
         window.open(newsUrl, '_blank');
       }
     },
+
+    /** 相关新闻 */
+    handleRelation(newsTheme) {
+      this.$router.push("/news/knowledge?" + encodeURI(newsTheme));
+    }
   }
 };
 </script>

@@ -32,9 +32,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="newsTitle != null and newsTitle != ''">
 				AND news_title like concat('%', #{newsTitle}, '%')
 			</if>
-			<if test="newsTheme != null and newsTheme != ''">
-                AND news_theme like concat('%', #{newsTheme}, '%')
-			</if>
+			<if test="newsThemes != null and newsThemes != ''">
+			    AND
+                <foreach collection="newsThemes" item="newsTheme" open="(" separator=" OR " close=")">
+                    news_theme like concat('%', #{newsTheme}, '%')
+                </foreach>
+            </if>
             <if test="detectionType != null and detectionType != ''">
                 AND detection_type = #{detectionType}
             </if>
