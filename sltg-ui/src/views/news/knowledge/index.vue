@@ -148,8 +148,7 @@
           { key: 2, label: `新闻关键词`, visible: true },
           { key: 3, label: `检测类型`, visible: true },
           { key: 4, label: `新闻时间`, visible: true }
-        ],
-        // 表单校验
+        ]
       };
     },
     created() {

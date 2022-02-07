@@ -93,7 +93,7 @@ insert into sys_menu values('3', '系统管理', '0', '3', 'system',           n
 insert into sys_menu values('4', '系统监控', '0', '4', 'monitor',          null,   1, 0, 'M', '0', '0', '', 'monitor',         'admin', sysdate(), '', null, '系统监控目录');
 -- 二级菜单
 insert into sys_menu values('90',  '新闻列表', '1',   '1', 'table',    'news/table/index',        1, 0, 'C', '0', '0', 'news:table:list',        'example',          'admin', sysdate(), '', null, '新闻列表菜单');
-insert into sys_menu values('91',  '新闻预测', '1',   '2', 'forecast',    'news/forecast/index',    1, 0, 'C', '0', '0', 'news:forecast:list',     'search',         'admin', sysdate(), '', null, '新闻预测菜单');
+insert into sys_menu values('91',  '新闻分析', '1',   '2', 'analysis',    'news/analysis/index',    1, 0, 'C', '0', '0', 'news:analysis:list',     'swagger',         'admin', sysdate(), '', null, '新闻分析菜单');
 insert into sys_menu values('92',  '知识库',   '1',   '3', 'knowledge',   'news/knowledge/index',   1, 0, 'C', '0', '0', 'news:knowledge:list',    'redis',          'admin', sysdate(), '', null, '知识库菜单');
 insert into sys_menu values('93',  '新闻管理', '2',   '1', 'management',  'user/management/index',  1, 0, 'C', '0', '0', 'user:news:list',    'nested',         'admin', sysdate(), '', null, '用户中心菜单');
 insert into sys_menu values('94',  '通知公告', '2',   '2', 'notice',      'system/notice/index',    1, 0, 'C', '0', '0', 'system:notice:list',      'message',        'admin', sysdate(), '', null, '通知公告菜单');
