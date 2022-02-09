@@ -45,6 +45,16 @@
       </el-col>
     </el-row>
     <el-row>
+      <el-col :span="24" class="card-box">
+        <el-card>
+          <div slot="header"><span>虚假新闻趋势图</span></div>
+          <div class="el-table el-table--enable-row-hover el-table--medium">
+            <div ref="fakeNewsTrend" style="height: 420px" />
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row>
       <el-col :span="12" class="card-box">
         <el-card>
           <div slot="header"><span>真实新闻词云</span></div>
@@ -74,43 +84,86 @@
     data() {
       return {
         // 新闻总数
-        newsTotalNum: 10256,
+        newsTotalNum: 0,
         // 真实新闻数
-        newsRealNum: 956,
+        newsRealNum: 0,
         // 虚假新闻数
-        newsFakeNum: 51,
+        newsFakeNum: 0,
         // 用户新闻数
-        newsUserNum: 201,
+        newsUserNum: 0,
         // 新闻趋势信息
         newsTrend: null,
+        // 虚假新闻趋势
+        fakeNewsTrend: null,
+        newsTrendDate: [],
+        newsTrendNews: [],
+        newsTrendFakeNews: [],
         // 词云
         studentImg: require('@/assets/img.jpg')
       };
     },
     mounted(){
-      this.getList();
+      this.getNewsTotalInfo();
     },
     methods: {
-      /** 查询趋势信息 */
-      getList() {
+      getNewsTotalInfo() {
+        getNewsTotalInfo().then(response => {
+            var result = response.data;
+            this.newsTotalNum = result.newsTotalNum;
+            this.newsRealNum = result.newsRealNum;
+            this.newsFakeNum = result.newsFakeNum;
+            this.newsUserNum = result.newsUserNum;
+            this.newsTrendDate = result.newsTrendDate;
+            this.newsTrendNews = result.newsTrendNews;
+            this.newsTrendFakeNews = result.newsTrendFakeNews;
+            this.initChart();
+          }
+        );
+      },
+
+      /** 趋势信息 */
+      initChart() {
         this.newsTrend = echarts.init(this.$refs.newsTrend, "newsTrend");
         this.newsTrend.setOption({
           //x轴
           xAxis:{
-            data:["1-9","1-10","1-11","1-12","1-13","1-14","1-15","1-16","1-17","1-18","1-19","1-20","1-21","1-22","1-23",
-              "1-24","1-25","1-26","1-27","1-28","1-29","1-30","1-31","2-1","2-2","2-3","2-4","2-5","2-6","2-7"]
+            data: this.newsTrendDate
           },
           //y轴没有显式设置，根据值自动生成y轴
           yAxis:{},
           //数据-data是最终要显示的数据
           series:[{
-            name:'新闻数',
-            type:'line',
-            data:[61, 100, 65, 89, 63, 76, 64, 68, 69, 89, 65, 61, 58, 65, 84, 62, 68, 65, 69, 67, 68, 65, 84, 62, 68, 65, 69, 67, 68, 86]
-          },{
-            name:'虚假新闻数',
-            type:'line',
-            data:[10, 13, 15, 14, 22, 13, 5, 7, 9, 15, 20, 10, 13, 15, 14, 22, 13, 5, 7, 9, 15, 20, 15, 14, 22, 13, 5, 7, 9, 15]
+            name: '新闻数',
+            type: 'line',
+            symbolSize: 8, //折线圆点的大小
+            data: this.newsTrendNews,
+            itemStyle: {
+              normal: {
+                label: { show: true } //是否在折线点上显示数字
+              }
+            }
+          }]
+        });
+
+        this.fakeNewsTrend = echarts.init(this.$refs.fakeNewsTrend, "fakeNewsTrend");
+        this.fakeNewsTrend.setOption({
+          //x轴
+          xAxis:{
+            data: this.newsTrendDate
+          },
+          //y轴没有显式设置，根据值自动生成y轴
+          yAxis:{},
+          //数据-data是最终要显示的数据
+          series:[{
+            name: '虚假新闻数',
+            type: 'line',
+            symbolSize: 8, //折线圆点的大小
+            data: this.newsTrendFakeNews,
+            itemStyle: {
+              normal: {
+                label: { show: true } //是否在折线点上显示数字
+              }
+            }
           }]
         });
       },

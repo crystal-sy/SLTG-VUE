@@ -18,6 +18,12 @@ public class SysNewsAnalysis extends BaseEntity {
 
     private int newsUserNum;
 
+    private String[] newsTrendDate;
+
+    private Integer[] newsTrendNews;
+
+    private Integer[] newsTrendFakeNews;
+
     public int getNewsTotalNum() {
         return newsTotalNum;
     }
@@ -48,5 +54,29 @@ public class SysNewsAnalysis extends BaseEntity {
 
     public void setNewsUserNum(int newsUserNum) {
         this.newsUserNum = newsUserNum;
+    }
+
+    public String[] getNewsTrendDate() {
+        return newsTrendDate;
+    }
+
+    public void setNewsTrendDate(String[] newsTrendDate) {
+        this.newsTrendDate = newsTrendDate;
+    }
+
+    public Integer[] getNewsTrendNews() {
+        return newsTrendNews;
+    }
+
+    public void setNewsTrendNews(Integer[] newsTrendNews) {
+        this.newsTrendNews = newsTrendNews;
+    }
+
+    public Integer[] getNewsTrendFakeNews() {
+        return newsTrendFakeNews;
+    }
+
+    public void setNewsTrendFakeNews(Integer[] newsTrendFakeNews) {
+        this.newsTrendFakeNews = newsTrendFakeNews;
     }
 }
