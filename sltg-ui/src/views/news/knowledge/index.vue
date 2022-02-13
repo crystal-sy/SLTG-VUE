@@ -196,6 +196,7 @@
       resetQuery() {
         this.dateRange = [];
         this.resetForm("queryForm");
+        this.queryParams.newsTheme = undefined;
         this.handleQuery();
       },
       /** 搜索按钮操作 */

@@ -8,11 +8,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="queryRealNewsTotal" resultType="Integer">
-        select count(1) from sys_news where detection_percent &lt;= '50%'
+        select count(1) from sys_news where detection_percent &lt;= '70%'
     </select>
 
     <select id="queryFakeNewsTotal" resultType="Integer">
-        select count(1) from sys_news where detection_percent &gt; '50%'
+        select count(1) from sys_news where detection_percent &gt; '70%'
     </select>
 
     <select id="queryUserNewsTotal" resultType="Integer">
@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="queryRealNewsTrend" resultType="Integer">
         select tmp.newsTrend_real_news
         from (select news_date as newsTrend_date, count(1) as newsTrend_real_news from sys_news
-            where detection_percent &lt;= '50%' GROUP BY news_date order by news_date desc limit 30 )tmp
+            where detection_percent &lt;= '70%' GROUP BY news_date order by news_date desc limit 30 )tmp
         ORDER BY tmp.newsTrend_date ASC
     </select>
 </mapper>
