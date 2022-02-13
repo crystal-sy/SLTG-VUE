@@ -28,7 +28,10 @@ public class PythonUtils {
             BufferedReader bReader = new BufferedReader(new InputStreamReader(process.getInputStream(), "gbk"));
             String res;
             while ((res = bReader.readLine()) != null) {
-                resStr.append(res).append("\n");
+                if (resStr.length() != 0) {
+                    resStr.append("\n");
+                }
+                resStr.append(res);
             }
             LOGGER.info(resStr.toString());
             bReader.close();

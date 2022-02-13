@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -97,12 +98,12 @@ public class UserNewsServiceImpl implements UserNewsService {
         contentFilePath += File.separator + news.getContentFile();
         String themes = new PythonUtils().executePythonScript(new String[]{"cmd", "/c",
             "python " + pythonScriptPath + "util/common.py", contentFilePath}, pythonLibPath);
-        news.setNewsTheme(themes.replace("/n", ""));
+        news.setNewsTheme(themes);
 
         String detectionPercent = new PythonUtils().executePythonScript(new String[]{"cmd", "/c",
             "python " + pythonScriptPath + "news_detection.py", contentFilePath, commentFilePath}, pythonLibPath);
         news.setDetectionPercent(detectionPercent);
-        // TODO 根据百分比标注类型
+        news.setDetectionType(getDetectionType(detectionPercent));
         return userNewsMapper.insertUserNews(news);
     }
 
@@ -118,7 +119,7 @@ public class UserNewsServiceImpl implements UserNewsService {
             contentFilePath += File.separator + news.getContentFile();
             String themes = new PythonUtils().executePythonScript(new String[]{"cmd", "/c",
                 "python " + pythonScriptPath + "util/common.py", contentFilePath}, pythonLibPath);
-            news.setNewsTheme(themes.replace("/n", ""));
+            news.setNewsTheme(themes);
         } else {
             contentFilePath += File.separator + news.getContentFile();
         }
@@ -134,8 +135,7 @@ public class UserNewsServiceImpl implements UserNewsService {
         String detectionPercent = new PythonUtils().executePythonScript(new String[]{"cmd", "/c",
             "python " + pythonScriptPath + "news_detection.py", contentFilePath, commentFilePath}, pythonLibPath);
         news.setDetectionPercent(detectionPercent);
-
-        // TODO 根据百分比标注类型
+        news.setDetectionType(getDetectionType(detectionPercent));
         return userNewsMapper.updateUserNews(news);
     }
 
@@ -151,5 +151,24 @@ public class UserNewsServiceImpl implements UserNewsService {
             userNews.setDetectionType(DetectionType.getTypeInfo(userNews.getDetectionType()));
         }
         return userNewsList;
+    }
+
+    private String getDetectionType(String detectionPercent) {
+        if (Strings.isBlank(detectionPercent) || !detectionPercent.contains("%")) {
+            return "5"; // 其他
+        }
+
+        BigDecimal coverData = new BigDecimal(detectionPercent.replace("%",""));
+        if (coverData.compareTo(new BigDecimal(90)) > 0) {
+            return "0"; // 虚假
+        } else if (coverData.compareTo(new BigDecimal(70)) > 0) {
+            return "1"; // 疑似诈骗
+        } else if (coverData.compareTo(new BigDecimal(50)) > 0) {
+            return "4"; // 分情况
+        } else if (coverData.compareTo(new BigDecimal(30)) > 0) {
+            return "3"; // 待定
+        } else {
+            return "2"; // 真实
+        }
     }
 }
