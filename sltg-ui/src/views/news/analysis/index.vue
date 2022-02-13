@@ -59,7 +59,7 @@
         <el-card>
           <div slot="header"><span>真实新闻词云</span></div>
           <div class="el-table el-table--enable-row-hover el-table--medium">
-            <img :src="studentImg"  style="height: 420px">
+            <img :src="realNewsImg"  style="height: 420px">
           </div>
         </el-card>
       </el-col>
@@ -67,7 +67,7 @@
         <el-card>
           <div slot="header"><span>虚假新闻词云</span></div>
           <div class="el-table el-table--enable-row-hover el-table--medium">
-            <img :src="studentImg"  style="height: 420px">
+            <img :src="detectNewsImg"  style="height: 420px">
           </div>
         </el-card>
       </el-col>
@@ -99,7 +99,8 @@
         newsTrendNews: [],
         newsTrendFakeNews: [],
         // 词云
-        studentImg: require('@/assets/img.jpg')
+        realNewsImg: require('@/assets/images/real.jpg'),
+        detectNewsImg: require('@/assets/images/detect.jpg')
       };
     },
     mounted(){
