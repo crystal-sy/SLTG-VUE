@@ -19,7 +19,7 @@
       </el-col>
       <el-col :span="6" class="card-box">
         <el-card>
-          <div slot="header"><span>虚假新闻数</span></div>
+          <div slot="header"><span>检测虚假新闻数</span></div>
           <div class="el-table el-table--enable-row-hover el-table--medium">
             <div ref="newsFakeNum" class="news_show" >{{ newsFakeNum }}</div>
           </div>
@@ -47,7 +47,7 @@
     <el-row>
       <el-col :span="24" class="card-box">
         <el-card>
-          <div slot="header"><span>虚假新闻趋势图</span></div>
+          <div slot="header"><span>检测虚假新闻趋势图</span></div>
           <div class="el-table el-table--enable-row-hover el-table--medium">
             <div ref="fakeNewsTrend" style="height: 420px" />
           </div>
@@ -65,7 +65,7 @@
       </el-col>
       <el-col :span="12" class="card-box">
         <el-card>
-          <div slot="header"><span>虚假新闻词云</span></div>
+          <div slot="header"><span>检测虚假新闻词云</span></div>
           <div class="el-table el-table--enable-row-hover el-table--medium">
             <img :src="detectNewsImg"  style="height: 420px">
           </div>
@@ -87,13 +87,13 @@
         newsTotalNum: 0,
         // 真实新闻数
         newsRealNum: 0,
-        // 虚假新闻数
+        // 检测虚假新闻数
         newsFakeNum: 0,
         // 用户新闻数
         newsUserNum: 0,
         // 新闻趋势信息
         newsTrend: null,
-        // 虚假新闻趋势
+        // 检测虚假新闻趋势
         fakeNewsTrend: null,
         newsTrendDate: [],
         newsTrendNews: [],
@@ -156,7 +156,7 @@
           yAxis:{},
           //数据-data是最终要显示的数据
           series:[{
-            name: '虚假新闻数',
+            name: '检测虚假新闻数',
             type: 'line',
             symbolSize: 8, //折线圆点的大小
             data: this.newsTrendFakeNews,
