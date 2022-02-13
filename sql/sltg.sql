@@ -410,6 +410,7 @@ insert into sys_job values (2, '新浪新闻爬虫', 'DEFAULT', 'sltgTask.sltgMu
 insert into sys_job values (3, '腾讯较真平台新闻爬虫', 'DEFAULT', 'sltgTask.sltgParams(\'spider/tencentFactSpider.py\')', '0 50 0 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
 insert into sys_job values (4, '辟谣官方平台新闻爬虫', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'spider/piyao-org-news-spider.py\', \'currentDate\')', '0 10 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
 insert into sys_job values (5, '微博新闻爬虫', 'DEFAULT', 'sltgTask.sltgMultipleParams(\'spider/weibo-news-spider.py\', \'currentDate\')', '0 40 1 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
+insert into sys_job values (6, '新闻词云', 'DEFAULT', 'sltgTask.sltgParams(\'spider/gjc_cp.py\')', '0 0 2 * * ? *', '3', '1', '1', 'admin', sysdate(), '', null, '');
 
 -- ----------------------------
 -- 定时任务调度日志表
