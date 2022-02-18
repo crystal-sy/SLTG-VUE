@@ -326,7 +326,7 @@ export default {
       // 是否显示弹出层
       open: false,
       // 默认密码
-      initPassword: undefined,
+      initPassword: "admin123",
       // 日期范围
       dateRange: [],
       // 状态数据字典
@@ -411,9 +411,6 @@ export default {
     });
     this.getDicts("sys_user_sex").then(response => {
       this.sexOptions = response.data;
-    });
-    this.getConfigKey("sys.user.initPassword").then(response => {
-      this.initPassword = response.msg;
     });
   },
   methods: {

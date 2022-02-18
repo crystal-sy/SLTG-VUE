@@ -28,7 +28,7 @@ public class SysOperateLogController extends BaseController {
     @Autowired
     private SysOperateLogService operateLogService;
 
-    @PreAuthorize("@ss.hasPermi('monitor:operlog:list')")
+    @PreAuthorize("@ss.hasPermi('monitor:operateLog:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysOperateLog operateLog) {
         startPage();
@@ -37,23 +37,23 @@ public class SysOperateLogController extends BaseController {
     }
 
     @Log(title = "操作日志", businessType = BusinessType.EXPORT)
-    @PreAuthorize("@ss.hasPermi('monitor:operlog:export')")
+    @PreAuthorize("@ss.hasPermi('monitor:operateLog:export')")
     @GetMapping("/export")
-    public AjaxResult export(SysOperateLog operLog) {
-        List<SysOperateLog> list = operateLogService.selectOperateLogList(operLog);
+    public AjaxResult export(SysOperateLog operateLog) {
+        List<SysOperateLog> list = operateLogService.selectOperateLogList(operateLog);
         ExcelUtil<SysOperateLog> util = new ExcelUtil<>(SysOperateLog.class);
         return util.exportExcel(list, "操作日志");
     }
 
     @Log(title = "操作日志", businessType = BusinessType.DELETE)
-    @PreAuthorize("@ss.hasPermi('monitor:operlog:remove')")
+    @PreAuthorize("@ss.hasPermi('monitor:operateLog:remove')")
     @DeleteMapping("/{operateIds}")
     public AjaxResult remove(@PathVariable Long[] operateIds) {
         return toAjax(operateLogService.deleteOperateLogByIds(operateIds));
     }
 
     @Log(title = "操作日志", businessType = BusinessType.CLEAN)
-    @PreAuthorize("@ss.hasPermi('monitor:operlog:remove')")
+    @PreAuthorize("@ss.hasPermi('monitor:operateLog:remove')")
     @DeleteMapping("/clean")
     public AjaxResult clean() {
         operateLogService.cleanOperateLog();

@@ -2,6 +2,8 @@ package com.sltg.system.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.sltg.common.constant.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,6 @@ import com.sltg.system.domain.SysUserRole;
 import com.sltg.system.mapper.SysRoleMapper;
 import com.sltg.system.mapper.SysUserMapper;
 import com.sltg.system.mapper.SysUserRoleMapper;
-import com.sltg.system.service.SysConfigService;
 import com.sltg.system.service.SysUserService;
 
 /**
@@ -38,9 +39,6 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
     private SysUserRoleMapper userRoleMapper;
-
-    @Autowired
-    private SysConfigService configService;
 
     /**
      * 根据条件分页查询用户列表
@@ -373,13 +371,12 @@ public class SysUserServiceImpl implements SysUserService {
         int failureNum = 0;
         StringBuilder successMsg = new StringBuilder();
         StringBuilder failureMsg = new StringBuilder();
-        String password = configService.selectConfigByKey("sys.user.initPassword");
         for (SysUser user : userList) {
             try {
                 // 验证是否存在这个用户
                 SysUser u = userMapper.selectUserByUserName(user.getUserName());
                 if (StringUtils.isNull(u)) {
-                    user.setPassword(SecurityUtils.encryptPassword(password));
+                    user.setPassword(SecurityUtils.encryptPassword(Constants.INIT_PASSWORD));
                     user.setCreateBy(operName);
                     this.insertUser(user);
                     successNum++;

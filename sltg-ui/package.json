@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "虚假新闻管理系统",
   "author": "styra",
-  "license": "MIT",
+  "license": "",
   "scripts": {
     "dev": "vue-cli-service serve",
     "build:prod": "vue-cli-service build",

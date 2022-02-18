@@ -122,7 +122,7 @@
 import { list, delLoginInfo, cleanLoginInfo, exportLoginInfo } from "@/api/monitor/loginInfo";
 
 export default {
-  name: "Logininfor",
+  name: "LoginInfo",
   data() {
     return {
       // 遮罩层
