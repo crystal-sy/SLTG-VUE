@@ -33,7 +33,7 @@ public class SysNoticeController extends BaseController {
     private SysNoticeService noticeService;
 
     /**
-     * 获取通知公告列表
+     * 获取消息公告列表
      */
     @PreAuthorize("@ss.hasPermi('system:notice:list')")
     @GetMapping("/list")
@@ -44,7 +44,7 @@ public class SysNoticeController extends BaseController {
     }
 
     /**
-     * 根据通知公告编号获取详细信息
+     * 根据消息公告编号获取详细信息
      */
     @PreAuthorize("@ss.hasPermi('system:notice:query')")
     @GetMapping(value = "/{noticeId}")
@@ -53,10 +53,10 @@ public class SysNoticeController extends BaseController {
     }
 
     /**
-     * 新增通知公告
+     * 新增消息公告
      */
     @PreAuthorize("@ss.hasPermi('system:notice:add')")
-    @Log(title = "通知公告", businessType = BusinessType.INSERT)
+    @Log(title = "消息公告", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysNotice notice) {
         notice.setCreateBy(SecurityUtils.getUsername());
@@ -64,10 +64,10 @@ public class SysNoticeController extends BaseController {
     }
 
     /**
-     * 修改通知公告
+     * 修改消息公告
      */
     @PreAuthorize("@ss.hasPermi('system:notice:edit')")
-    @Log(title = "通知公告", businessType = BusinessType.UPDATE)
+    @Log(title = "消息公告", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysNotice notice) {
         notice.setUpdateBy(SecurityUtils.getUsername());
@@ -75,10 +75,10 @@ public class SysNoticeController extends BaseController {
     }
 
     /**
-     * 删除通知公告
+     * 删除消息公告
      */
     @PreAuthorize("@ss.hasPermi('system:notice:remove')")
-    @Log(title = "通知公告", businessType = BusinessType.DELETE)
+    @Log(title = "消息公告", businessType = BusinessType.DELETE)
     @DeleteMapping("/{noticeIds}")
     public AjaxResult remove(@PathVariable Long[] noticeIds) {
         return toAjax(noticeService.deleteNoticeByIds(noticeIds));

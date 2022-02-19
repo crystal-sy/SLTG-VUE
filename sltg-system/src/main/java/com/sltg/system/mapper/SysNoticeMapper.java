@@ -4,16 +4,16 @@ import java.util.List;
 import com.sltg.system.domain.SysNotice;
 
 /**
- * 通知公告表 数据层
+ * 消息公告表 数据层
  * 
  * @author styra~
  */
 public interface SysNoticeMapper {
     /**
-     * 查询公告信息
+     * 查询消息信息
      * 
      * @param noticeId 公告ID
-     * @return 公告信息
+     * @return 消息信息
      */
     SysNotice selectNoticeById(Long noticeId);
 

@@ -87,12 +87,4 @@ public interface SysJobService {
      * @return 结果
      */
     int updateJob(SysJob job) throws SchedulerException, TaskException;
-
-    /**
-     * 校验cron表达式是否有效
-     * 
-     * @param cronExpression 表达式
-     * @return 结果
-     */
-    boolean checkCronExpressionIsValid(String cronExpression);
 }

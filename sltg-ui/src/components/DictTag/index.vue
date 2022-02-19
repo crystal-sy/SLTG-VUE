@@ -3,7 +3,7 @@
     <template v-for="(item, index) in options">
       <template v-if="values.includes(item.dictValue)">
         <span
-          v-if="item.listClass == 'default' || item.listClass == ''"
+          v-if="item.listClass === 'default' || item.listClass === ''"
           :key="item.dictValue"
           :index="index"
           :class="item.cssClass"
@@ -13,7 +13,7 @@
           v-else
           :key="item.dictValue"
           :index="index"
-          :type="item.listClass == 'primary' ? '' : item.listClass"
+          :type="item.listClass === 'primary' ? '' : item.listClass"
           :class="item.cssClass"
         >
           {{ item.dictLabel }}
@@ -44,8 +44,3 @@ export default {
   },
 };
 </script>
-<style scoped>
-.el-tag + .el-tag {
-  margin-left: 10px;
-}
-</style>

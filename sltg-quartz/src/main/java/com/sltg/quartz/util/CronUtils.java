@@ -17,23 +17,8 @@ public class CronUtils {
      * @param cronExpression Cron表达式
      * @return boolean 表达式是否有效
      */
-    public static boolean isValid(String cronExpression) {
-        return CronExpression.isValidExpression(cronExpression);
-    }
-
-    /**
-     * 返回一个字符串值,表示该消息无效Cron表达式给出有效性
-     *
-     * @param cronExpression Cron表达式
-     * @return String 无效时返回表达式错误描述,如果有效返回null
-     */
-    public static String getInvalidMessage(String cronExpression) {
-        try {
-            new CronExpression(cronExpression);
-            return null;
-        } catch (ParseException pe) {
-            return pe.getMessage();
-        }
+    public static boolean invalid(String cronExpression) {
+        return !CronExpression.isValidExpression(cronExpression);
     }
 
     /**

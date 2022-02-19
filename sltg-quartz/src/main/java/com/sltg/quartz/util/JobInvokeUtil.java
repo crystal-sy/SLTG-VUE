@@ -29,11 +29,10 @@ public class JobInvokeUtil {
         Object result;
         if (!isValidClassName(beanName)) {
             bean = SpringUtils.getBean(beanName);
-            result = invokeMethod(bean, methodName, methodParams);
         } else {
             bean = Class.forName(beanName).newInstance();
-            result =invokeMethod(bean, methodName, methodParams);
         }
+        result = invokeMethod(bean, methodName, methodParams);
 
         if (result != null) {
             sysJob.setMessage(result.toString());

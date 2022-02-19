@@ -7,7 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.sltg.common.core.domain.BaseEntity;
 
 /**
- * 通知公告表 sys_notice
+ * 消息公告表 sys_notice
  * 
  * @author styra~
  */

@@ -1,7 +1,6 @@
 package com.sltg.system.service;
 
 import com.sltg.common.core.domain.entity.SysNews;
-import com.sltg.common.core.domain.entity.SysUser;
 
 import java.util.List;
 

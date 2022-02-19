@@ -76,16 +76,6 @@ public class SysJobLogServiceImpl implements SysJobLogService {
     }
 
     /**
-     * 删除任务日志
-     * 
-     * @param jobId 调度日志ID
-     */
-    @Override
-    public int deleteJobLogById(Long jobId) {
-        return jobLogMapper.deleteJobLogById(jobId);
-    }
-
-    /**
      * 清空任务日志
      */
     @Override

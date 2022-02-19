@@ -27,9 +27,9 @@ public enum BusinessType {
     DELETE,
 
     /**
-     * 授权
+     * 导入
      */
-    GRANT,
+    IMPORT,
 
     /**
      * 导出
@@ -37,22 +37,12 @@ public enum BusinessType {
     EXPORT,
 
     /**
-     * 导入
-     */
-    IMPORT,
-
-    /**
-     * 强退
-     */
-    FORCE,
-
-    /**
-     * 生成代码
-     */
-    GENCODE,
-    
-    /**
      * 清空数据
      */
     CLEAN,
+
+    /**
+     * 授权
+     */
+    GRANT,
 }

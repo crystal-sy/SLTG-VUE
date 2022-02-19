@@ -99,19 +99,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/auth',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: 'user/:roleId(\\d+)',
-        component: (resolve) => require(['@/views/system/role/authUser'], resolve),
-        name: 'AuthUser',
-        meta: { title: '分配用户'}
-      }
-    ]
-  },
-  {
     path: '/job',
     component: Layout,
     hidden: true,

@@ -17,16 +17,6 @@ public class Constants {
     public static final String GBK = "GBK";
 
     /**
-     * http请求
-     */
-    public static final String HTTP = "http://";
-
-    /**
-     * https请求
-     */
-    public static final String HTTPS = "https://";
-
-    /**
      * 通用成功标识
      */
     public static final String SUCCESS = "0";
@@ -35,11 +25,6 @@ public class Constants {
      * 通用失败标识
      */
     public static final String FAIL = "1";
-
-    /**
-     * 初始密码
-     */
-    public static final String INIT_PASSWORD = "admin123";
 
     /**
      * 登录成功
@@ -90,11 +75,6 @@ public class Constants {
      * 令牌前缀
      */
     public static final String LOGIN_USER_KEY = "login_user_key";
-
-    /**
-     * 参数管理 cache key
-     */
-    public static final String SYS_CONFIG_KEY = "sys_config:";
 
     /**
      * 字典管理 cache key

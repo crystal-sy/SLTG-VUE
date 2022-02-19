@@ -14,7 +14,6 @@ import com.sltg.common.exception.job.TaskException;
 import com.sltg.quartz.domain.SysJob;
 import com.sltg.quartz.mapper.SysJobMapper;
 import com.sltg.quartz.service.SysJobService;
-import com.sltg.quartz.util.CronUtils;
 import com.sltg.quartz.util.ScheduleUtils;
 
 /**
@@ -46,7 +45,7 @@ public class SysJobServiceImpl implements SysJobService {
      * 获取quartz调度器的计划任务列表
      * 
      * @param job 调度信息
-     * @return
+     * @return job list
      */
     @Override
     public List<SysJob> selectJobList(SysJob job) {
@@ -212,16 +211,5 @@ public class SysJobServiceImpl implements SysJobService {
             scheduler.deleteJob(jobKey);
         }
         ScheduleUtils.createScheduleJob(scheduler, job);
-    }
-
-    /**
-     * 校验cron表达式是否有效
-     * 
-     * @param cronExpression 表达式
-     * @return 结果
-     */
-    @Override
-    public boolean checkCronExpressionIsValid(String cronExpression) {
-        return CronUtils.isValid(cronExpression);
     }
 }

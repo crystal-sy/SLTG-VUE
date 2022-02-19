@@ -18,22 +18,6 @@ public interface SysUserService {
     List<SysUser> selectUserList(SysUser user);
 
     /**
-     * 根据条件分页查询已分配用户角色列表
-     * 
-     * @param user 用户信息
-     * @return 用户信息集合信息
-     */
-    List<SysUser> selectAllocatedList(SysUser user);
-
-    /**
-     * 根据条件分页查询未分配用户角色列表
-     * 
-     * @param user 用户信息
-     * @return 用户信息集合信息
-     */
-    List<SysUser> selectUnallocatedList(SysUser user);
-
-    /**
      * 通过用户名查询用户
      * 
      * @param userName 用户名
@@ -155,28 +139,10 @@ public interface SysUserService {
     int resetUserPwd(String userName, String password);
 
     /**
-     * 通过用户ID删除用户
-     * 
-     * @param userId 用户ID
-     * @return 结果
-     */
-    int deleteUserById(Long userId);
-
-    /**
      * 批量删除用户信息
      * 
      * @param userIds 需要删除的用户ID
      * @return 结果
      */
     int deleteUserByIds(Long[] userIds);
-
-    /**
-     * 导入用户数据
-     * 
-     * @param userList 用户数据列表
-     * @param isUpdateSupport 是否更新支持，如果已存在，则进行更新数据
-     * @param operName 操作用户
-     * @return 结果
-     */
-    String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName);
 }

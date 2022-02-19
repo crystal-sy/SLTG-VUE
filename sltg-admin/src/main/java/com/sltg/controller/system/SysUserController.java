@@ -21,17 +21,14 @@ import com.sltg.common.core.controller.BaseController;
 import com.sltg.common.core.domain.AjaxResult;
 import com.sltg.common.core.domain.entity.SysRole;
 import com.sltg.common.core.domain.entity.SysUser;
-import com.sltg.common.core.domain.model.LoginUser;
 import com.sltg.common.core.page.TableDataInfo;
 import com.sltg.common.enums.BusinessType;
 import com.sltg.common.utils.SecurityUtils;
 import com.sltg.common.utils.ServletUtils;
 import com.sltg.common.utils.StringUtils;
 import com.sltg.common.utils.poi.ExcelUtil;
-import com.sltg.framework.web.service.TokenService;
 import com.sltg.system.service.SysRoleService;
 import com.sltg.system.service.SysUserService;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 用户信息
@@ -46,9 +43,6 @@ public class SysUserController extends BaseController {
 
     @Autowired
     private SysRoleService roleService;
-
-    @Autowired
-    private TokenService tokenService;
 
     /**
      * 获取用户列表
@@ -68,24 +62,6 @@ public class SysUserController extends BaseController {
         List<SysUser> list = userService.selectUserList(user);
         ExcelUtil<SysUser> util = new ExcelUtil<>(SysUser.class);
         return util.exportExcel(list, "用户数据");
-    }
-
-    @Log(title = "用户管理", businessType = BusinessType.IMPORT)
-    @PreAuthorize("@ss.hasPermi('system:user:import')")
-    @PostMapping("/importData")
-    public AjaxResult importData(MultipartFile file, boolean updateSupport) throws Exception {
-        ExcelUtil<SysUser> util = new ExcelUtil<>(SysUser.class);
-        List<SysUser> userList = util.importExcel(file.getInputStream());
-        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        String operName = loginUser.getUsername();
-        String message = userService.importUser(userList, updateSupport, operName);
-        return AjaxResult.success(message);
-    }
-
-    @GetMapping("/importTemplate")
-    public AjaxResult importTemplate() {
-        ExcelUtil<SysUser> util = new ExcelUtil<>(SysUser.class);
-        return util.importTemplateExcel("用户数据");
     }
 
     /**

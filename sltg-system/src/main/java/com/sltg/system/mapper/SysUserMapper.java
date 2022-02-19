@@ -19,22 +19,6 @@ public interface SysUserMapper {
     List<SysUser> selectUserList(SysUser sysUser);
 
     /**
-     * 根据条件分页查询已配用户角色列表
-     * 
-     * @param user 用户信息
-     * @return 用户信息集合信息
-     */
-    List<SysUser> selectAllocatedList(SysUser user);
-
-    /**
-     * 根据条件分页查询未分配用户角色列表
-     * 
-     * @param user 用户信息
-     * @return 用户信息集合信息
-     */
-    List<SysUser> selectUnallocatedList(SysUser user);
-
-    /**
      * 通过用户名查询用户
      * 
      * @param userName 用户名
@@ -83,14 +67,6 @@ public interface SysUserMapper {
      * @return 结果
      */
     int resetUserPwd(@Param("userName") String userName, @Param("password") String password);
-
-    /**
-     * 通过用户ID删除用户
-     * 
-     * @param userId 用户ID
-     * @return 结果
-     */
-    int deleteUserById(Long userId);
 
     /**
      * 批量删除用户信息

@@ -8,7 +8,6 @@ import com.sltg.quartz.domain.SysJobLog;
 import com.sltg.quartz.service.SysJobLogService;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.sltg.common.constant.Constants;
@@ -34,36 +33,33 @@ public abstract class AbstractQuartzJob implements Job {
     private static final ThreadLocal<Date> threadLocal = new ThreadLocal<>();
 
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    public void execute(JobExecutionContext context) {
         SysJob sysJob = new SysJob();
         BeanUtils.copyBeanProp(sysJob, context.getMergedJobDataMap().get(ScheduleConstants.TASK_PROPERTIES));
         try {
-            before(context, sysJob);
+            before();
             doExecute(context, sysJob);
-            after(context, sysJob, null);
+            after(sysJob, null);
         } catch (Exception e) {
              LOGGER.error("任务执行异常  - ：", e);
-            after(context, sysJob, e);
+            after(sysJob, e);
         }
     }
 
     /**
      * 执行前
      *
-     * @param context 工作执行上下文对象
-     * @param sysJob 系统计划任务
      */
-    protected void before(JobExecutionContext context, SysJob sysJob) {
+    protected void before() {
         threadLocal.set(new Date());
     }
 
     /**
      * 执行后
      *
-     * @param context 工作执行上下文对象
      * @param sysJob 系统计划任务
      */
-    protected void after(JobExecutionContext context, SysJob sysJob, Exception e) {
+    protected void after(SysJob sysJob, Exception e) {
         Date startTime = threadLocal.get();
         threadLocal.remove();
 

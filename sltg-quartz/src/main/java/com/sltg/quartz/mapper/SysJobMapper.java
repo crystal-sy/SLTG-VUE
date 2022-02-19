@@ -41,14 +41,6 @@ public interface SysJobMapper {
     int deleteJobById(Long jobId);
 
     /**
-     * 批量删除调度任务信息
-     * 
-     * @param ids 需要删除的数据ID
-     * @return 结果
-     */
-    int deleteJobByIds(Long[] ids);
-
-    /**
      * 修改调度任务信息
      * 
      * @param job 调度任务信息

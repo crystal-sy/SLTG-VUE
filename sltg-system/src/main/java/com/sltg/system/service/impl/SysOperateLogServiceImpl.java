@@ -50,17 +50,6 @@ public class SysOperateLogServiceImpl implements SysOperateLogService {
     }
 
     /**
-     * 查询操作日志详细
-     * 
-     * @param operateId 操作ID
-     * @return 操作日志对象
-     */
-    @Override
-    public SysOperateLog selectOperateLogById(Long operateId) {
-        return operateLogMapper.selectOperateLogById(operateId);
-    }
-
-    /**
      * 清空操作日志
      */
     @Override

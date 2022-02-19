@@ -69,11 +69,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			#{operateId}
         </foreach> 
  	</delete>
- 	
- 	<select id="selectOperateLogById" parameterType="Long" resultMap="SysOperateLogResult">
-		<include refid="selectOperateLogVo"/>
-		where operate_id = #{operateId}
-	</select>
 	
 	<update id="cleanOperateLog">
         truncate table sys_operate_log

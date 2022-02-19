@@ -76,7 +76,7 @@ public class SysJobController extends BaseController {
     @Log(title = "定时任务", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody SysJob sysJob) throws SchedulerException, TaskException {
-        if (!CronUtils.isValid(sysJob.getCronExpression())) {
+        if (CronUtils.invalid(sysJob.getCronExpression())) {
             return AjaxResult.error("新增任务'" + sysJob.getJobName() + "'失败，Cron表达式不正确");
         } else if (StringUtils.containsIgnoreCase(sysJob.getInvokeTarget(), Constants.LOOKUP_RMI)) {
             return AjaxResult.error("新增任务'" + sysJob.getJobName() + "'失败，目标字符串不允许'rmi://'调用");
@@ -92,7 +92,7 @@ public class SysJobController extends BaseController {
     @Log(title = "定时任务", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody SysJob sysJob) throws SchedulerException, TaskException {
-        if (!CronUtils.isValid(sysJob.getCronExpression())) {
+        if (CronUtils.invalid(sysJob.getCronExpression())) {
             return AjaxResult.error("修改任务'" + sysJob.getJobName() + "'失败，Cron表达式不正确");
         } else if (StringUtils.containsIgnoreCase(sysJob.getInvokeTarget(), Constants.LOOKUP_RMI)) {
             return AjaxResult.error("修改任务'" + sysJob.getJobName() + "'失败，目标字符串不允许'rmi://'调用");
@@ -130,7 +130,7 @@ public class SysJobController extends BaseController {
     @PreAuthorize("@ss.hasPermi('monitor:job:remove')")
     @Log(title = "定时任务", businessType = BusinessType.DELETE)
     @DeleteMapping("/{jobIds}")
-    public AjaxResult remove(@PathVariable Long[] jobIds) throws SchedulerException, TaskException {
+    public AjaxResult remove(@PathVariable Long[] jobIds) throws SchedulerException {
         jobService.deleteJobByIds(jobIds);
         return AjaxResult.success();
     }

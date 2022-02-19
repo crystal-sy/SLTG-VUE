@@ -3,9 +3,6 @@ package com.sltg.system.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sltg.common.constant.Constants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +11,6 @@ import com.sltg.common.constant.UserConstants;
 import com.sltg.common.core.domain.entity.SysRole;
 import com.sltg.common.core.domain.entity.SysUser;
 import com.sltg.common.exception.CustomException;
-import com.sltg.common.utils.SecurityUtils;
 import com.sltg.common.utils.StringUtils;
 import com.sltg.system.domain.SysUserRole;
 import com.sltg.system.mapper.SysRoleMapper;
@@ -29,8 +25,6 @@ import com.sltg.system.service.SysUserService;
  */
 @Service
 public class SysUserServiceImpl implements SysUserService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SysUserServiceImpl.class);
-
     @Autowired
     private SysUserMapper userMapper;
 
@@ -50,30 +44,6 @@ public class SysUserServiceImpl implements SysUserService {
     @DataScope(userAlias = "u")
     public List<SysUser> selectUserList(SysUser user) {
         return userMapper.selectUserList(user);
-    }
-
-    /**
-     * 根据条件分页查询已分配用户角色列表
-     * 
-     * @param user 用户信息
-     * @return 用户信息集合信息
-     */
-    @Override
-    @DataScope(userAlias = "u")
-    public List<SysUser> selectAllocatedList(SysUser user) {
-        return userMapper.selectAllocatedList(user);
-    }
-
-    /**
-     * 根据条件分页查询未分配用户角色列表
-     * 
-     * @param user 用户信息
-     * @return 用户信息集合信息
-     */
-    @Override
-    @DataScope(userAlias = "u")
-    public List<SysUser> selectUnallocatedList(SysUser user) {
-        return userMapper.selectUnallocatedList(user);
     }
 
     /**
@@ -324,20 +294,6 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     /**
-     * 通过用户ID删除用户
-     * 
-     * @param userId 用户ID
-     * @return 结果
-     */
-    @Override
-    @Transactional
-    public int deleteUserById(Long userId) {
-        // 删除用户与角色关联
-        userRoleMapper.deleteUserRoleByUserId(userId);
-        return userMapper.deleteUserById(userId);
-    }
-
-    /**
      * 批量删除用户信息
      * 
      * @param userIds 需要删除的用户ID
@@ -352,60 +308,5 @@ public class SysUserServiceImpl implements SysUserService {
         // 删除用户与角色关联
         userRoleMapper.deleteUserRole(userIds);
         return userMapper.deleteUserByIds(userIds);
-    }
-
-    /**
-     * 导入用户数据
-     * 
-     * @param userList 用户数据列表
-     * @param isUpdateSupport 是否更新支持，如果已存在，则进行更新数据
-     * @param operName 操作用户
-     * @return 结果
-     */
-    @Override
-    public String importUser(List<SysUser> userList, Boolean isUpdateSupport, String operName) {
-        if (StringUtils.isNull(userList) || userList.size() == 0) {
-            throw new CustomException("导入用户数据不能为空！");
-        }
-        int successNum = 0;
-        int failureNum = 0;
-        StringBuilder successMsg = new StringBuilder();
-        StringBuilder failureMsg = new StringBuilder();
-        for (SysUser user : userList) {
-            try {
-                // 验证是否存在这个用户
-                SysUser u = userMapper.selectUserByUserName(user.getUserName());
-                if (StringUtils.isNull(u)) {
-                    user.setPassword(SecurityUtils.encryptPassword(Constants.INIT_PASSWORD));
-                    user.setCreateBy(operName);
-                    this.insertUser(user);
-                    successNum++;
-                    successMsg.append("<br/>")
-                        .append(successNum).append("、账号 ").append(user.getUserName()).append(" 导入成功");
-                } else if (isUpdateSupport) {
-                    user.setUpdateBy(operName);
-                    this.updateUser(user);
-                    successNum++;
-                    successMsg.append("<br/>")
-                        .append(successNum).append("、账号 ").append(user.getUserName()).append(" 更新成功");
-                } else {
-                    failureNum++;
-                    failureMsg.append("<br/>")
-                        .append(failureNum).append("、账号 ").append(user.getUserName()).append(" 已存在");
-                }
-            } catch (Exception e) {
-                failureNum++;
-                String msg = "<br/>" + failureNum + "、账号 " + user.getUserName() + " 导入失败：";
-                failureMsg.append(msg).append(e.getMessage());
-                LOGGER.error(msg, e);
-            }
-        }
-        if (failureNum > 0) {
-            failureMsg.insert(0, "很抱歉，导入失败！共 " + failureNum + " 条数据格式不正确，错误如下：");
-            throw new CustomException(failureMsg.toString());
-        } else {
-            successMsg.insert(0, "恭喜您，数据已全部导入成功！共 " + successNum + " 条，数据如下：");
-        }
-        return successMsg.toString();
     }
 }
