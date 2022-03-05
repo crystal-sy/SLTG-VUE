@@ -10,6 +10,9 @@ npm install
 # 启动服务
 npm run dev
 
+# 在线生成公私钥
+http://web.chacuo.net/netrsakeypair
+
 # 浏览器访问 
 http://localhost:80
 ```

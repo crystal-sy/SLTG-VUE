@@ -10,8 +10,7 @@ const name = process.env.VUE_APP_TITLE // 系统标题
 const port = process.env.port || process.env.npm_config_port || 80 // 端口
 
 // vue.config.js 配置说明
-//官方vue.config.js 参考文档 https://cli.vuejs.org/zh/config/#css-loaderoptions
-// 这里只列一部分，具体配置参考文档
+// 官方vue.config.js 参考文档 https://cli.vuejs.org/zh/config/#css-loaderoptions
 module.exports = {
   // 部署生产环境和开发环境下的URL。
   // 默认情况下，Vue CLI 会假设你的应用是被部署在一个域名的根路径上
@@ -30,7 +29,6 @@ module.exports = {
     port: port,
     open: true,
     proxy: {
-      // detail: https://cli.vuejs.org/config/#devserver-proxy
       [process.env.VUE_APP_BASE_API]: {
         target: `http://localhost:8080`,
         changeOrigin: true,
