@@ -42,11 +42,11 @@ const routes = [{
     },
     {
         path: '*',
-        redirect: '/home/news?type=news'
+        redirect: '/home/all?type=__all__'
     },
     {
         path: '',
-        redirect: '/home/news?type=news'
+        redirect: '/home/all?type=__all__'
     }
 ];
 const scrollBehavior = (to, from, savedPosition) => {

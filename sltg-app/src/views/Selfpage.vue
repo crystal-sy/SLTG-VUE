@@ -9,7 +9,7 @@
     </headerBar>
     <div class="self-info clearfix">
         <div class="leftInfo fl">
-            <img src="../assets/imgs/head.jpg" alt="" class="fl self_top_head">
+            <img src="../assets/imgs/profile.jpg" alt="" class="fl self_top_head">
             <p class="fl">{{userName}}</p>
             <div class="fl clearfix carefans">
                 <div class="fl">{{vitality.follow}} <br> 关注</div>
@@ -30,7 +30,7 @@
     <div class="myActive">
         <div class="self_con">
             <div class="self_items clearfix" v-for="(item,index) in selfComment">
-                <img src="../assets/imgs/head.jpg" alt="" class="fl self_head">
+                <img src="../assets/imgs/profile.jpg" alt="" class="fl self_head">
                 <div class="rightInfo">
                     <p class="self_name">{{userName}}</p>
                     <p class="self_time">{{item.datetime}}</p>

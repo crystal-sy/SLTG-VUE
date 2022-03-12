@@ -9,7 +9,7 @@
     <div class="container">
         <h2 class="detail-title">{{$route.params.title}}</h2>
         <div class="media_name">
-            <img src="../assets/imgs/head.jpg" height="360" width="360" alt="" class="avatar_url">
+            <img src="../assets/imgs/profile.jpg" height="360" width="360" alt="" class="avatar_url">
             <span class="name">{{media_name}}</span><br>
             <span class="date">{{datetime}}</span>
         </div>

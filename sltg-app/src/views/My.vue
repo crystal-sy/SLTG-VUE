@@ -1,8 +1,8 @@
 <template>
     <div id="my">
-        <div class="my-header" v-if="logined">
+        <div class="my-header" v-if="!logined">
             <router-link to="/selfpage" class="my-info">
-                <img src="../assets/imgs/head.jpg" alt="" class="my-head-portrait fl">
+                <img src="../assets/imgs/profile.jpg" alt="" class="my-head-portrait fl">
                 <span class="my-name fl">{{userName}}</span>
                 <Icon type="ios-arrow-right" size="26" color="#fff" class="fr toMyself"></Icon>
             </router-link>

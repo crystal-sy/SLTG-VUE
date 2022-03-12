@@ -29,11 +29,16 @@
                         :to="{
                     name:'newsDetail',
                     params:
-                        {   id:val.newsId,
-                            title:val.newsTitle,
-                            newsFrom:val.newsFrom,
-                            datetime:val.newsDate,
-                            comment_count:0
+                        {   id:val.tag_id,
+                            title:val.title,
+                            media_info:val.media_info,
+                            media_name:val.media_name,
+                            datetime:val.datetime,
+                            abstract:val.abstract,
+                            image_list:val.image_list,
+                            repin_count:val.repin_count,
+                            comment_count:val.comment_count,
+                            keywords:val.keywords
                         }
                 }"
                         class="newsDetail"
@@ -41,11 +46,10 @@
                 >
                     <p class="title">{{val.title}}</p>
                     <div>
-                        <img alt="加载出错" v-for="(img,index) in val.image_list" :key="index" v-lazy="img.url">
                         <div class="bottomInfo clearfix">
-                            <span class="writer">{{val.newsFrom}}</span> &nbsp;&nbsp;
+                            <span class="writer">{{val.media_name}}</span> &nbsp;&nbsp;
                             <span class="comment_count">评论&nbsp;{{val.comment_count}}</span>
-                            <span class="datetime">{{val.datetime}}</span>
+                            <span class="datetime">{{val.datetime.substring(0, 10)}}</span>
                         </div>
                     </div>
                 </router-link>
@@ -146,7 +150,6 @@
                     return ''
                 }
                 var time = moment(input).startOf('minute').fromNow();
-                return time;
                 return time;
             }
         },

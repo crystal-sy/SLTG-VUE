@@ -11,7 +11,7 @@
             <div class="editprofile_item">
                 头像
                 <Icon type="ios-arrow-right" size="26" color="#ccc" class="fr toEdit"></Icon>
-                <img src="../assets/imgs/head.jpg" alt="" class="fr headPic">
+                <img src="../assets/imgs/profile.jpg" alt="" class="fr headPic">
                 <input type="file" class="file">
             </div>
             <!-- <div class="editprofile_item"  @click="edit">

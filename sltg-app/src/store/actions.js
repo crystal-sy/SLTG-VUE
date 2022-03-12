@@ -2,7 +2,6 @@ import axios from 'axios'
 import jsonp from 'jsonp'
 
 import * as type from './mutation-types.js'
-import request from '../utils/request'
 
 export default {
     getNews({            //首页的数据请求
@@ -10,22 +9,19 @@ export default {
         state
     }, pay) {
         if (pay.kind && pay.flag) {
-            request({
-                url: 'http://localhost:8080/system/news/list?pageNum=1&pageSize=10',
-                method: 'get',
-                params: ''
-            }).then(res => {
-                commit(type.GET_NEWSLIST, {
-                    data: res.rows,
-                    kind: pay.kind
-                });
-                commit(type.CHANGE_LOADING_STATE, false);
-                if (res.total) {
-                    commit(type.RETURN, true);
-                } else {
-                    commit(type.RETURN, false);
-                }
-            });
+            jsonp('http://m.toutiao.com/list/?tag=' + pay.kind + '&ac=wap&count=20&format=json_raw&as=A125A8CEDCF8987&cp=58EC18F948F79E1&min_behot_time=' + parseInt((new Date().getTime()) / 1000),
+                function(err, res) {
+                    commit(type.GET_NEWSLIST, {
+                        data: res.data,
+                        kind: pay.kind
+                    });
+                    commit(type.CHANGE_LOADING_STATE, false);
+                    if (res.return_count) {
+                        commit(type.RETURN, true);
+                    } else {
+                        commit(type.RETURN, false);
+                    }
+                })
         }
     },
     pulldownloadmore({    //下拉点击后加载数据
