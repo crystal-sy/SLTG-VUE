@@ -26,7 +26,7 @@ module.exports = {
   // webpack-dev-server 相关配置
   devServer: {
     host: '0.0.0.0',
-    port: port,
+    port: 8091,
     open: true,
     proxy: {
       [process.env.VUE_APP_BASE_API]: {

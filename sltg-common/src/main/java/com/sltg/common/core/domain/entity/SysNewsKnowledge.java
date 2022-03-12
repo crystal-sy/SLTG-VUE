@@ -2,11 +2,9 @@ package com.sltg.common.core.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.sltg.common.annotation.Excel;
-import com.sltg.common.annotation.Excel.ColumnType;
 import com.sltg.common.core.domain.BaseEntity;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 新闻知识库信息 sys_news_knowledge

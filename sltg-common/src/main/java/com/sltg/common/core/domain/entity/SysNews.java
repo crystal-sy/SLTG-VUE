@@ -1,20 +1,10 @@
 package com.sltg.common.core.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sltg.common.annotation.Excel;
-import com.sltg.common.annotation.Excel.ColumnType;
-import com.sltg.common.annotation.Excel.Type;
 import com.sltg.common.core.domain.BaseEntity;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 新闻信息 sys_news
