@@ -1,0 +1,77 @@
+{
+    "return_count": 8,
+    "has_more": false,
+    "page_id": "/__all__/",
+    "_ck": {},
+    "html": null,
+    "data": [{
+            "media_name": "新京报政事儿",
+            "ban_comment": 0,
+            "abstract": "4月14日，著名法学家、新中国马克思主义法理学科奠基人之一、中国人民大学荣誉一级教授孙国华在北京因病去世，享年92岁。请点击此处输入图片描述“政事儿”（微信ID：gcxxjgzh）注意到，早在1986年，孙国华就受邀前往中南海给中央领导讲法律课，被称为“中南海讲课第一人”。",
+            "image_list": [{
+                    "url": "http://p1.pstatp.com/list/1b840005bc59cc3e1308",
+                    "width": 600,
+                    "height": 337
+                },
+                {
+                    "url": "http://p3.pstatp.com/list/1c5c00003b81959a932b",
+                    "width": 640,
+                    "height": 360
+                },
+                {
+                    "url": "http://p3.pstatp.com/list/1c5b00019cab7eb2a363",
+                    "width": 400,
+                    "height": 225
+                }
+            ],
+            "collected": true,
+            "datetime": "2017-04-16 16:41",
+            "article_type": 0,
+            "more_mode": true,
+            "tag": "news_politics",
+            "has_m3u8_video": 0,
+            "keywords": "朝阳大学,茶花女,梦幻曲,法理学,法学研究,共和国部长访谈录,致艾丽丝,胡耀邦,孙国华,邹瑜",
+            "display_dt": 1492330955,
+            "has_mp4_video": 0,
+            "aggr_type": 1,
+            "cell_type": 0,
+            "article_sub_type": 0,
+            "bury_count": 0,
+            "title": "在中南海讲课的第一人为何是他？",
+            "source_icon_style": 5,
+            "tip": 1,
+            "has_video": false,
+            "share_url": "http://toutiao.com/a6409509712958210305/?iid=0&app=news_article",
+            "source": "新京报政事儿",
+            "comment_count": 0,
+            "article_url": "http://toutiao.com/group/6409509712958210305/",
+            "publish_time": 1492330955,
+            "group_flags": 0,
+            "gallary_image_count": 5,
+            "tag_id": "6409509712958210305",
+            "source_url": "/i6409512644834755074/",
+            "display_url": "http://toutiao.com/group/6409509712958210305/",
+            "is_stick": false,
+            "item_id": "6409512644834755074",
+            "repin_count": 0,
+            "cell_flag": 11,
+            "source_open_url": "sslocal://profile?uid=4644596221",
+            "level": 0,
+            "digg_count": 0,
+            "behot_time": 1492332115,
+            "hot": 1,
+            "cursor": 1492332115999,
+            "url": "http://toutiao.com/group/6409509712958210305/",
+            "user_repin": 0,
+            "has_image": true,
+            "video_style": 0,
+            "media_info": {
+                "avatar_url": "http://p1.pstatp.com/large/5677/4633951464",
+                "media_id": 4644596221,
+                "name": "新京报政事儿",
+                "user_verified": true
+            },
+            "group_id": "6409509712958210305"
+        }
+    ]
+}
