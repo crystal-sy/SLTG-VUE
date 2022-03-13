@@ -20,7 +20,9 @@ public class ScheduleConfig {
 
         // quartz参数
         Properties prop = new Properties();
+        // Schedule调度器的实体名字
         prop.put("org.quartz.scheduler.instanceName", "SltgScheduler");
+        // 设置为AUTO时使用，默认的实现org.quartz.scheduler.SimpleInstanceGenerator是基于主机名称和时间戳生成。
         prop.put("org.quartz.scheduler.instanceId", "AUTO");
         // 线程池配置
         prop.put("org.quartz.threadPool.class", "org.quartz.simpl.SimpleThreadPool");
@@ -30,12 +32,15 @@ public class ScheduleConfig {
         prop.put("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreTX");
         // 集群配置
         prop.put("org.quartz.jobStore.isClustered", "true");
+        // 最大任务时间延迟15s
         prop.put("org.quartz.jobStore.clusterCheckinInterval", "15000");
+        // 设置一个频度(毫秒)，用于实例报告给集群中的其他实例
         prop.put("org.quartz.jobStore.maxMisfiresToHandleAtATime", "1");
-        prop.put("org.quartz.jobStore.txIsolationLevelSerializable", "true");
 
-        // sqlserver 启用
+        // 触发器触发失败后再次触犯的时间间隔
         prop.put("org.quartz.jobStore.misfireThreshold", "12000");
+        // sqlserver 启用
+        prop.put("org.quartz.jobStore.txIsolationLevelSerializable", "true");
         prop.put("org.quartz.jobStore.tablePrefix", "QRTZ_");
         factory.setQuartzProperties(prop);
 
