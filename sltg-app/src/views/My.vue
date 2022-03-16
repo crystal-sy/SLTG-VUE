@@ -3,26 +3,32 @@
         <div class="my-header" v-if="!logined">
             <router-link to="/selfpage" class="my-info">
                 <img src="../assets/imgs/profile.jpg" alt="" class="my-head-portrait fl">
-                <span class="my-name fl">{{userName}}</span>
-                <Icon type="ios-arrow-right" size="26" color="#fff" class="fr toMyself"></Icon>
+                <span class="my-name fl">sltg</span>
             </router-link>
             <ul class="info-bar clearfix">
                 <router-link to="/selfpage" class="info-bar-item">
-                    <p>1</p>动态</router-link>
+                    <p>106</p>评论</router-link>
                 <router-link to="/care" class="info-bar-item">
-                    <p>{{vitality.follow}}</p>关注</router-link>
-                <router-link to="/care" class="info-bar-item">
-                    <p>{{vitality.fans}}</p>粉丝</router-link>
-                <router-link to="/care" class="info-bar-item">
-                    <p>{{vitality.visitor}}</p>7天访量</router-link>
+                    <p>{{vitality.follow}}</p>收藏</router-link>
             </ul>
         </div>
         <div v-else class="loginBox">
-            <h2 class="loginTitle">虚假新闻管理系统</h2>
-            <Input class="admin loginInfo" placeholder="请输入登录账号" v-model="admin"></Input>
-            <Input class="password loginInfo" placeholder="请输入登录密码" type="password" v-model="password"></Input>
+            <h2 class="loginTitl">登录你的头条，精彩永不丢失</h2>
+            <Input class="admin loginInfo" placeholder="账号" v-model="admin"></Input>
+            <Input class="password loginInfo" placeholder="密码" type="password" v-model="password"></Input>
             <br>
-            <Button @click="login" @keyup.enter="login" type="ghost" shape="circle" class="submit">登录</Button>
+            <Button @click="login" @keyup.enter="login" type="ghost" shape="circle" class="submit">进入头条</Button>
+        </div>
+        <router-link to="/setup" class="tipItems">
+            消息通知
+            <Icon type="ios-arrow-right" size="26" color="#ccc" class="fr toSetup"></Icon>
+        </router-link>
+        <router-link to="/setup" class="tipItems">
+            账户设置
+            <Icon type="ios-arrow-right" size="26" color="#ccc" class="fr toSetup"></Icon>
+        </router-link>
+        <div class="tipItems" style="text-align: center;margin-top: 7rem;color:#fff;background-color: #1890ff;">
+            退出登录
         </div>
         <bottom-nav></bottom-nav>
     </div>
@@ -36,6 +42,7 @@
     } from 'vuex'
     import bottomNav from '../components/Bottom-nav.vue'
     export default {
+
         components: {
             bottomNav
         },
@@ -52,6 +59,11 @@
             ]),
             login() {
                 if (this.admin === 'admin' && this.password === 'admin') {
+                    // this.$store.commit(type.LOGINING, {
+                    //     username: this.admin,
+                    //     sign: true
+                    // });
+                    // this.$store.dispatch(setUserInfo,this.admin);
                     this.setUserInfo(this.admin);
                     this.$store.commit(type.LOGOFF, true);
                     this.admin = '';
@@ -88,7 +100,17 @@
                 admin: '',
                 password: ''
             }
-        }
+        },
+        // beforeRouteLeave (to, from, next) {
+        //     if(to.path == '/setup'){
+        //         console.log(this.logined)
+        //         if(this.logined == true){
+        //             next();
+        //         }else{
+        //             next({path:'/my'});
+        //         }
+        //     }
+        // }
     }
 </script>
 
@@ -123,7 +145,7 @@
         height: 1.5rem;
         .info-bar-item {
             float: left;
-            width: 25%;
+            width: 50%;
             height: 1.2rem;
             box-sizing: border-box;
             border-left: 1px solid #666;
@@ -141,13 +163,14 @@
     }
 }
 .loginBox {
-    height: 26rem;
+    height: 5.5rem;
     width: 100%;
+    background: #d43d3d;
     text-align: center;
-    vertical-align: middle;
-    margin-top: 5rem;
-    .loginTitle {
+    color: #fff;
+    .loginTitl {
         font-size: 20px;
+        color: #fff;
         padding-top: 0.7rem;
         margin-bottom: 0.4rem;
     }
@@ -157,9 +180,57 @@
         height: 1.2rem;
     }
     .submit {
-        background: #1890ff;
         color: #fff;
         width: 70%;
+    }
+}
+.midBar {
+    height: 1.6rem;
+    position: relative;
+    .borderBottom(1px,#ccc);
+    .isLi {
+        width: 50%;
+        text-align: center;
+        margin-top: 0.2rem;
+        box-sizing: border-box;
+        font-size: 13px;
+        color: #000;
+    }
+    .collect {
+        position: relative;
+        display: block;
+        &::after {
+            content: "";
+            box-sizing: border-box;
+            position: absolute;
+            height: 100%;
+            right: 0;
+            top: 0;
+            border-right: 1px solid #bbb;
+            @media screen and (-webkit-min-device-pixel-ratio: 3) {
+                transform: scaleY(0.33333);
+            }
+            @media screen and (-webkit-min-device-pixel-ratio: 2) {
+                transform: scaleY(0.5);
+            }
+        }
+    }
+}
+.tipItems {
+    display: block;
+    height: 1.1rem;
+    width: 100%;
+    margin-top: 0.3rem;
+    color: #000;
+    font-size: 16px;
+    line-height: 1.1rem;
+    font-weight: bold;
+    position: relative;
+    padding-left: 0.3rem;
+    .verticalBorder(1px,#ccc);
+    .toSetup{
+        margin-right: .3rem;
+        margin-top: .2rem;
     }
 }
 </style>

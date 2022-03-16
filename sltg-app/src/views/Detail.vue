@@ -12,6 +12,7 @@
             <img src="../assets/imgs/profile.jpg" height="360" width="360" alt="" class="avatar_url">
             <span class="name">{{media_name}}</span><br>
             <span class="date">{{datetime}}</span>
+            <span class="newsType">真实</span>
         </div>
         <div class="contentNews">
             {{abstract}}
@@ -23,9 +24,6 @@
 			</span>
         </div>
         <hr>
-        <div class="zan">
-            <Button type="ghost" size="large" icon="key" shape="circle">新闻检测</Button>
-        </div>
         <hr>
     </div>
     <comment :comment="comment_count"></comment>
@@ -108,7 +106,7 @@ export default {
             if(this.$route.params.comment_count){
                 return this.$route.params.comment_count
             }else{
-                return ''
+                return '8'
             }
         },
     },
@@ -176,6 +174,16 @@ export default {
                 position: absolute;
                 left: 1.3rem;
                 top: 0.6rem;
+            }
+            .newsType {
+                background-color: #1890ff;
+                color: #fff;
+                float: right;
+                text-align: center;
+                margin-right: 0.3rem;
+                border: 1px solid #ccc;
+                padding: 0 0.2rem;
+                border-radius: 0.4rem;
             }
         }
         .contentNews {

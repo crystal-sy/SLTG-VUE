@@ -1,9 +1,7 @@
 <template>
 	<div id="comment">
 		<el-input class="editComment" placeholder="写评论..." icon="edit"></el-input>
-		<Icon type="android-share" color="#d43d3d" size="30" class="commentInco fr" @click.native="showSharebox"></Icon>
-		<Icon type="ios-cloud-outline" @click.native="t" v-show="!collected" size="30" class="commentInco fr"></Icon>
-		<Icon type="ios-cloud" @click.native="t" v-show="collected" size="30" color="#d43d3d" class="commentInco fr"></Icon>
+		<Icon type="ios-cloud" @click.native="t" v-show="collected" size="30" color="#1890ff" class="commentInco fr"></Icon>
 		<Icon type="ios-chatbubble-outline" size="30" class="commentInco fr showcomment" @click.native="tocomment">
 		</Icon>
 		<span class="commentNum" @click.native="tocomment">{{commentNum}}</span>
@@ -61,7 +59,7 @@ export default{
 	background: #fff;
     .editComment{
     	display: inline-block;
-    	width: 54%;
+    	width: 68%;
     	margin-left: .2rem;
     	margin-top: .1rem;
     }
@@ -74,6 +72,7 @@ export default{
     }
     .commentNum{
     	position: absolute;
+		  margin-right: -0.85rem;
     	padding: .05rem;
     	border-radius: 80%;
     	min-width: .55rem;
