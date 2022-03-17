@@ -16,15 +16,14 @@
         </div>
         <div class="contentNews">
             {{abstract}}
-            <img :src="img.url" alt="" v-for="(img,index) in image_list">
         </div>
+        <hr>
+        <hr>
         <div class="keywords">
             <span v-for="(item,index) in keywords.split(',')">
 				{{item}}
 			</span>
         </div>
-        <hr>
-        <hr>
     </div>
     <comment :comment="comment_count"></comment>
 </div>
@@ -150,7 +149,7 @@ export default {
     }
     .container {
         margin: 1.6rem auto 1.5rem;
-        width: 94%;
+        width: 95%;
         .detail-title {
             color: #000;
             font-size: 20px;
@@ -176,14 +175,18 @@ export default {
                 top: 0.6rem;
             }
             .newsType {
+                position: absolute;
+                font-weight: bold;
+                font-size: 13px;
+                left: 7.5rem;
+                top: 0.1rem;
                 background-color: #1890ff;
                 color: #fff;
-                float: right;
                 text-align: center;
-                margin-right: 0.3rem;
-                border: 1px solid #ccc;
+                border: 2px solid #ccc;
                 padding: 0 0.2rem;
-                border-radius: 0.4rem;
+                border-radius: 1.4rem;
+                margin-right: 0.3rem;
             }
         }
         .contentNews {
@@ -192,6 +195,7 @@ export default {
             color: #000;
             text-indent: 0.7rem;
             line-height: .8rem;
+            margin-bottom: 0.2rem;
             img {
                 text-align: center;
                 display: block;
@@ -200,7 +204,7 @@ export default {
             }
         }
         .keywords {
-            margin-top: 0.5rem;
+            margin-top: 0.2rem;
             line-height: 0.8rem;
             span {
                 margin-bottom: 0.3rem;
