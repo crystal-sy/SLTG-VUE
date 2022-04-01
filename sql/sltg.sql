@@ -365,6 +365,23 @@ create table sys_news (
     primary key (news_index)
 ) engine=innodb auto_increment=0 comment = '新闻信息表';
 
+-- ----------------------------
+-- 新闻评论表
+-- ----------------------------
+drop table if exists sys_news_comment;
+create table sys_news_comment (
+    comment_id         varchar(100)   not null                   comment '评论ID',
+    news_id            varchar(100)   not null                   comment '新闻ID',
+    user_id            varchar(100)   not null                   comment '用户id',
+    user_name          varchar(500)   not null                   comment '用户昵称',
+    comment_text       varchar(5000)  default ''                 comment '评论内容',
+    root_id            varchar(100)   not null                   comment '原始评论ID',
+    comment_time       varchar(20)    not null                   comment '评论时间',
+    like_count         int(4)         not null                   comment '点赞数',
+    create_time        datetime                                  comment '创建时间',
+    primary key (comment_id)
+) engine=innodb comment = '新闻评论表';
+
 
 -- ----------------------------
 -- 虚假新闻知识库表
