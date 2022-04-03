@@ -378,7 +378,9 @@ create table sys_news_comment (
     root_id            varchar(100)   not null                   comment '原始评论ID',
     comment_time       varchar(20)    not null                   comment '评论时间',
     like_count         int(4)         not null                   comment '点赞数',
+    sentiment_percent  decimal(5,2)                              comment '文本情感百分比',
     create_time        datetime                                  comment '创建时间',
+    update_time        datetime                                  comment '更新时间',
     primary key (comment_id)
 ) engine=innodb comment = '新闻评论表';
 
