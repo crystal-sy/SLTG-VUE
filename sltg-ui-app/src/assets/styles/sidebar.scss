@@ -3,14 +3,12 @@
   .main-container {
     min-height: 100%;
     transition: margin-left .28s;
-    margin-left: $sideBarWidth;
     position: relative;
   }
 
   .sidebar-container {
     -webkit-transition: width .28s;
     transition: width 0.28s;
-    width: $sideBarWidth !important;
     background-color: $menuBg;
     height: 100%;
     position: fixed;
@@ -86,8 +84,6 @@
 
     & .nest-menu .el-submenu>.el-submenu__title,
     & .el-submenu .el-menu-item {
-      min-width: $sideBarWidth !important;
-
       &:hover {
         background-color: rgba(0, 0, 0, 0.06) !important;
       }
@@ -106,10 +102,6 @@
   .hideSidebar {
     .sidebar-container {
       width: 54px !important;
-    }
-
-    .main-container {
-      margin-left: 54px;
     }
 
     .submenu-title-noDropdown {
@@ -153,10 +145,6 @@
     }
   }
 
-  .el-menu--collapse .el-menu .el-submenu {
-    min-width: $sideBarWidth !important;
-  }
-
   // mobile responsive
   .mobile {
     .main-container {
@@ -165,14 +153,12 @@
 
     .sidebar-container {
       transition: transform .28s;
-      width: $sideBarWidth !important;
     }
 
     &.hideSidebar {
       .sidebar-container {
         pointer-events: none;
         transition-duration: 0.3s;
-        transform: translate3d(-$sideBarWidth, 0, 0);
       }
     }
   }
