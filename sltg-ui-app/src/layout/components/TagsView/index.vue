@@ -1,35 +1,25 @@
 <template>
   <div id="tags-view-container" class="tags-view-container">
     <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll">
-      <router-link
-        v-for="tag in visitedViews"
-        ref="tag"
-        :key="tag.path"
-        :class="isActive(tag)?'active':''"
-        :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
-        tag="span"
-        class="tags-view-item"
-        :style="activeStyle(tag)"
-        @click.middle.native="!isAffix(tag)?closeSelectedTag(tag):''"
-        @contextmenu.prevent.native="openMenu(tag,$event)"
-      >
-        {{ tag.title }}
-        <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
-      </router-link>
+      <span v-for="(item,index) in navbar" :key="index" class="tags-view-item">
+        <router-link :to="{path:item.url,query:{type:item.type}}">{{item.text}}</router-link>
+      </span>
     </scroll-pane>
-    <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
-      <li @click="refreshSelectedTag(selectedTag)">刷新页面</li>
-      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">关闭当前</li>
-      <li @click="closeOthersTags">关闭其他</li>
-      <li v-if="!isLastView()" @click="closeRightTags">关闭右侧</li>
-      <li @click="closeAllTags(selectedTag)">关闭所有</li>
-    </ul>
+    <div class="SearchNav">
+      <el-input
+        v-model="input"
+        placeholder="请输入内容"
+        @keyup.native.enter="search(input)"
+        class="searchInput fl">
+        <Icon type="ios-refresh-empty" size="30"></Icon>
+      </el-input>
+      <el-button size="medium" icon="el-icon-search" @click="search()" class="homeSearch"/>
+    </div>
   </div>
 </template>
 
 <script>
 import ScrollPane from './ScrollPane'
-import path from 'path'
 
 export default {
   components: { ScrollPane },
@@ -39,25 +29,34 @@ export default {
       top: 0,
       left: 0,
       selectedTag: {},
-      affixTags: []
+      affixTags: [],
+      navbar: [{
+        text: '新闻库',
+        path: '/home',
+        type: 'home'
+      },
+        {
+          text: '知识库',
+          path: '/knowledge',
+          type: 'knowledge'
+        },
+        {
+          text: '用户新闻',
+          path: '/news',
+          type: 'news'
+        },
+      ],
     }
   },
   computed: {
     visitedViews() {
-      return this.$store.state.tagsView.visitedViews
+      return this.navbar
     },
     routes() {
       return this.$store.state.permission.routes
     },
-    theme() {
-      return this.$store.state.settings.theme;
-    }
   },
   watch: {
-    $route() {
-      this.addTags()
-      this.moveToCurrentTag()
-    },
     visible(value) {
       if (value) {
         document.body.addEventListener('click', this.closeMenu)
@@ -66,10 +65,6 @@ export default {
       }
     }
   },
-  mounted() {
-    this.initTags()
-    this.addTags()
-  },
   methods: {
     isActive(route) {
       return route.path === this.$route.path
@@ -77,40 +72,13 @@ export default {
     activeStyle(tag) {
       if (!this.isActive(tag)) return {};
       return {
-        "background-color": this.theme,
-        "border-color": this.theme
+        "color": "#1890ff",
+        "font-size": "17px",
+        "font-weight": "bold",
       };
     },
-    isAffix(tag) {
-      return tag.meta && tag.meta.affix
-    },
-    isLastView() {
-      try {
-        return this.selectedTag.fullPath === this.visitedViews[this.visitedViews.length - 1].fullPath
-      } catch (err) {
-        return false
-      }
-    },
-    filterAffixTags(routes, basePath = '/') {
-      let tags = []
-      routes.forEach(route => {
-        if (route.meta && route.meta.affix) {
-          const tagPath = path.resolve(basePath, route.path)
-          tags.push({
-            fullPath: tagPath,
-            path: tagPath,
-            name: route.name,
-            meta: { ...route.meta }
-          })
-        }
-        if (route.children) {
-          const tempTags = this.filterAffixTags(route.children, route.path)
-          if (tempTags.length >= 1) {
-            tags = [...tags, ...tempTags]
-          }
-        }
-      })
-      return tags
+    search() {
+      alert("aa")
     },
     initTags() {
       const affixTags = this.affixTags = this.filterAffixTags(this.routes)
@@ -120,98 +88,6 @@ export default {
           this.$store.dispatch('tagsView/addVisitedView', tag)
         }
       }
-    },
-    addTags() {
-      const { name } = this.$route
-      if (name) {
-        this.$store.dispatch('tagsView/addView', this.$route)
-      }
-      return false
-    },
-    moveToCurrentTag() {
-      const tags = this.$refs.tag
-      this.$nextTick(() => {
-        for (const tag of tags) {
-          if (tag.to.path === this.$route.path) {
-            this.$refs.scrollPane.moveToTarget(tag)
-            // when query is different then update
-            if (tag.to.fullPath !== this.$route.fullPath) {
-              this.$store.dispatch('tagsView/updateVisitedView', this.$route)
-            }
-            break
-          }
-        }
-      })
-    },
-    refreshSelectedTag(view) {
-      this.$store.dispatch('tagsView/delCachedView', view).then(() => {
-        const { fullPath } = view
-        this.$nextTick(() => {
-          this.$router.replace({
-            path: '/redirect' + fullPath
-          })
-        })
-      })
-    },
-    closeSelectedTag(view) {
-      this.$store.dispatch('tagsView/delView', view).then(({ visitedViews }) => {
-        if (this.isActive(view)) {
-          this.toLastView(visitedViews, view)
-        }
-      })
-    },
-    closeRightTags() {
-      this.$store.dispatch('tagsView/delRightTags', this.selectedTag).then(visitedViews => {
-        if (!visitedViews.find(i => i.fullPath === this.$route.fullPath)) {
-          this.toLastView(visitedViews)
-        }
-      })
-    },
-    closeOthersTags() {
-      this.$router.push(this.selectedTag).catch(()=>{});
-      this.$store.dispatch('tagsView/delOthersViews', this.selectedTag).then(() => {
-        this.moveToCurrentTag()
-      })
-    },
-    closeAllTags(view) {
-      this.$store.dispatch('tagsView/delAllViews').then(({ visitedViews }) => {
-        if (this.affixTags.some(tag => tag.path === this.$route.path)) {
-          return
-        }
-        this.toLastView(visitedViews, view)
-      })
-    },
-    toLastView(visitedViews, view) {
-      const latestView = visitedViews.slice(-1)[0]
-      if (latestView) {
-        this.$router.push(latestView.fullPath)
-      } else {
-        // now the default is to redirect to the home page if there is no tags-view,
-        // you can adjust it according to your needs.
-        if (view.name === 'Dashboard') {
-          // to reload home page
-          this.$router.replace({ path: '/redirect' + view.fullPath })
-        } else {
-          this.$router.push('/')
-        }
-      }
-    },
-    openMenu(tag, e) {
-      const menuMinWidth = 105
-      const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
-      const offsetWidth = this.$el.offsetWidth // container width
-      const maxLeft = offsetWidth - menuMinWidth // left boundary
-      const left = e.clientX - offsetLeft + 15 // 15: margin right
-
-      if (left > maxLeft) {
-        this.left = maxLeft
-      } else {
-        this.left = left
-      }
-
-      this.top = e.clientY
-      this.visible = true
-      this.selectedTag = tag
     },
     closeMenu() {
       this.visible = false
@@ -225,9 +101,9 @@ export default {
 
 <style lang="scss" scoped>
 .tags-view-container {
-  height: 34px;
+  height: 49px;
   width: 100%;
-  background: #fff;
+  background: #f4f5f6;
   border-bottom: 1px solid #d8dce5;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
   .tags-view-wrapper {
@@ -237,33 +113,16 @@ export default {
       cursor: pointer;
       height: 26px;
       line-height: 26px;
-      border: 1px solid #d8dce5;
-      color: #495060;
-      background: #fff;
       padding: 0 8px;
-      font-size: 12px;
+      width: 3.4rem;
+      font-size: 17px;
       margin-left: 5px;
-      margin-top: 4px;
+      margin-top: 5px;
       &:first-of-type {
-        margin-left: 15px;
+        margin-left: 10px;
       }
       &:last-of-type {
         margin-right: 15px;
-      }
-      &.active {
-        background-color: #42b983;
-        color: #fff;
-        border-color: #42b983;
-        &::before {
-          content: '';
-          background: #fff;
-          display: inline-block;
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          position: relative;
-          margin-right: 2px;
-        }
       }
     }
   }
@@ -288,11 +147,57 @@ export default {
       }
     }
   }
+
+  .SearchNav {
+    width: 100%;
+    overflow: hidden;
+    overflow-x: auto;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    font-size: 0;
+    top: 2.2rem;
+    background: #f4f5f6;
+    font-family: '微软雅黑',serif;
+    white-space: nowrap;
+    z-index: 999;
+    .tags-view-item {
+      display: inline-block;
+      height: 1rem;
+      line-height: 1rem;
+      width: 1.4rem;
+      font-size: 16px;
+      a {
+        color: #000;
+      }
+      .router-link-active {
+        color: #1890ff;
+        font-size: 17px;
+        font-weight: bold;
+      }
+    }
+    .searchInput{
+      width: 90%;
+      float: left;
+    }
+
+    .homeSearch{
+      display: inline-block;
+      vertical-align: middle;
+      float: right;
+      background: #f4f5f6;
+      border-color: #f4f5f6;
+    }
+
+    .el-button--medium {
+      font-size: 25px;
+      padding: 0.1rem;
+    }
+  }
 }
 </style>
 
 <style lang="scss">
-//reset element css of el-icon-close
 .tags-view-wrapper {
   .tags-view-item {
     .el-icon-close {

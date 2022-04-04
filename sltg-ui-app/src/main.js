@@ -17,8 +17,6 @@ import './permission' // permission control
 import { getDicts } from "@/api/system/dict";
 import { parseTime, resetForm, addDateRange, selectDictLabel, selectDictLabels, download, handleTree } from "@/utils/sltg";
 import Pagination from "@/components/Pagination";
-// 自定义表格工具组件
-import RightToolbar from "@/components/RightToolbar"
 // 字典标签组件
 import DictTag from '@/components/DictTag'
 // 头部标签组件
@@ -49,7 +47,6 @@ Vue.prototype.msgInfo = function (msg) {
 // 全局组件挂载
 Vue.component('DictTag', DictTag)
 Vue.component('Pagination', Pagination)
-Vue.component('RightToolbar', RightToolbar)
 
 Vue.use(permission)
 Vue.use(VueMeta)
