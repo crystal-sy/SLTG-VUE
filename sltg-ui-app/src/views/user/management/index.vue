@@ -4,11 +4,11 @@
       <span class="tags-view-item" @click="go_home()">
         <el-button class="router-link-deactive">新闻库</el-button>
       </span>
-      <span class="tags-view-item">
-        <el-button class="router-link-active">知识库</el-button>
+      <span class="tags-view-item" @click="go_knowledge()">
+        <el-button class="router-link-deactive">知识库</el-button>
       </span>
-      <span class="tags-view-item" @click="go_user_news()">
-        <el-button class="router-link-deactive">用户新闻</el-button>
+      <span class="tags-view-item">
+        <el-button class="router-link-active">用户新闻</el-button>
       </span>
       <el-input
         v-model="queryParams.newsTitle"
@@ -25,7 +25,7 @@
         <div>
           <div style=" font-size: 10px; margin-top: 0.15rem;">
             <span style="color: #000;">{{item.newsFrom}}</span> &nbsp;&nbsp;
-            <span style="color: #000;">{{item.detectionResult}}</span>
+            <span style="color: #000;">{{item.detectionPercent}}</span>
             <span style="float: right; color: #000;">{{item.newsDate}}</span>
           </div>
         </div>
@@ -50,7 +50,7 @@
 </template>
 
 <script>
-  import { knowledgeList, getKnowledgeInfo } from "@/api/news/knowledge";
+  import { userNewsList, getUserNews } from "@/api/user/management";
 
   export default {
     name: 'home',
@@ -78,13 +78,13 @@
       go_home() {
         this.$router.push("/home");
       },
-      go_user_news() {
-        this.$router.push("/user/management");
+      go_knowledge() {
+        this.$router.push("/news/knowledge");
       },
       /** 查询新闻列表 */
       getList() {
         this.loading = true;
-        knowledgeList(this.queryParams).then(response => {
+        userNewsList(this.queryParams).then(response => {
             this.newsList = response.rows;
             this.total = response.total;
             this.loading = false;

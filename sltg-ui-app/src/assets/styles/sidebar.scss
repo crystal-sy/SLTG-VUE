@@ -30,10 +30,6 @@
       overflow-x: hidden !important;
     }
 
-    .el-scrollbar__bar.is-vertical {
-      right: 0px;
-    }
-
     .el-scrollbar {
       height: 100%;
     }
@@ -42,10 +38,6 @@
       .el-scrollbar {
         height: calc(100% - 50px);
       }
-    }
-
-    .is-horizontal {
-      display: none;
     }
 
     a {

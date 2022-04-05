@@ -1,20 +1,5 @@
 <template>
   <div id="tags-view-container" class="tags-view-container">
-    <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll">
-      <span v-for="(item,index) in navbar" :key="index" class="tags-view-item">
-        <router-link :to="{path:item.url,query:{type:item.type}}">{{item.text}}</router-link>
-      </span>
-    </scroll-pane>
-    <div class="SearchNav">
-      <el-input
-        v-model="input"
-        placeholder="请输入内容"
-        @keyup.native.enter="search(input)"
-        class="searchInput fl">
-        <Icon type="ios-refresh-empty" size="30"></Icon>
-      </el-input>
-      <el-button size="medium" icon="el-icon-search" @click="search()" class="homeSearch"/>
-    </div>
   </div>
 </template>
 
@@ -30,22 +15,6 @@ export default {
       left: 0,
       selectedTag: {},
       affixTags: [],
-      navbar: [{
-        text: '新闻库',
-        path: '/home',
-        type: 'home'
-      },
-        {
-          text: '知识库',
-          path: '/knowledge',
-          type: 'knowledge'
-        },
-        {
-          text: '用户新闻',
-          path: '/news',
-          type: 'news'
-        },
-      ],
     }
   },
   computed: {
@@ -76,9 +45,6 @@ export default {
         "font-size": "17px",
         "font-weight": "bold",
       };
-    },
-    search() {
-      alert("aa")
     },
     initTags() {
       const affixTags = this.affixTags = this.filterAffixTags(this.routes)
@@ -145,53 +111,6 @@ export default {
       &:hover {
         background: #eee;
       }
-    }
-  }
-
-  .SearchNav {
-    width: 100%;
-    overflow: hidden;
-    overflow-x: auto;
-    text-align: center;
-    position: fixed;
-    left: 0;
-    font-size: 0;
-    top: 2.2rem;
-    background: #f4f5f6;
-    font-family: '微软雅黑',serif;
-    white-space: nowrap;
-    z-index: 999;
-    .tags-view-item {
-      display: inline-block;
-      height: 1rem;
-      line-height: 1rem;
-      width: 1.4rem;
-      font-size: 16px;
-      a {
-        color: #000;
-      }
-      .router-link-active {
-        color: #1890ff;
-        font-size: 17px;
-        font-weight: bold;
-      }
-    }
-    .searchInput{
-      width: 90%;
-      float: left;
-    }
-
-    .homeSearch{
-      display: inline-block;
-      vertical-align: middle;
-      float: right;
-      background: #f4f5f6;
-      border-color: #f4f5f6;
-    }
-
-    .el-button--medium {
-      font-size: 25px;
-      padding: 0.1rem;
     }
   }
 }

@@ -1,18 +1,18 @@
 <template lang="html">
-    <ul class="nav">
-        <router-link to="/home/" class="navItems" @click.native="hide">
-          <div class="bottom_nav_icon icon_1"></div>
-          <div class="bottom_nav_text">首页</div>
-        </router-link>
-        <router-link to="/collect/my" class="navItems">
-          <div class="bottom_nav_icon icon_2"></div>
-          <div class="bottom_nav_text">收藏</div>
-        </router-link>
-        <router-link to="/my" class="navItems">
-          <div class="bottom_nav_icon icon_3"></div>
-          <div class="bottom_nav_text">我的</div>
-        </router-link>
-    </ul>
+  <div class="nav">
+    <div class="navItems" >
+      <div class="bottom_nav_icon icon_1"></div>
+      <div class="bottom_nav_text_on">首页</div>
+    </div>
+    <div class="navItems">
+      <div class="bottom_nav_icon icon_2"></div>
+      <div class="bottom_nav_text">收藏</div>
+    </div>
+    <div class="navItems">
+      <div class="bottom_nav_icon icon_3"></div>
+      <div class="bottom_nav_text">我的</div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -53,15 +53,15 @@ export default {
           margin: 0 auto;
         }
         .icon_1{
-          background: url(../assets/images/bottom_nav/home_dark_icon.png) no-repeat center center;
+          background: url(/bottom_nav/home_dark_icon.png) no-repeat center center;
           background-size: contain;
         }
         .icon_2{
-          background: url(../assets/images/bottom_nav/collect_dark_icon.png) no-repeat center center;
+          background: url(/bottom_nav/collect_dark_icon.png) no-repeat center center;
           background-size: contain;
         }
         .icon_3{
-          background: url(../assets/images/bottom_nav/head_dark_icon.png) no-repeat center center;
+          background: url(/bottom_nav/head_dark_icon.png) no-repeat center center;
           background-size: contain;
         }
         .bottom_nav_text{
@@ -71,15 +71,15 @@ export default {
     .router-link-active {
         color: #1890ff;
         .icon_1{
-          background: url(../assets/images/bottom_nav/home_dark_icon.png) no-repeat center center;
+          background: url(/bottom_nav/home_dark_icon.png) no-repeat center center;
           background-size: contain;
         }
         .icon_2{
-          background: url(../assets/images/bottom_nav/collect_dark_icon.png) no-repeat center center;
+          background: url(/bottom_nav/collect_dark_icon.png) no-repeat center center;
           background-size: contain;
         }
         .icon_3{
-          background: url(../assets/images/bottom_nav/head_dark_icon.png) no-repeat center center;
+          background: url(/bottom_nav/head_dark_icon.png) no-repeat center center;
           background-size: contain;
         }
     }

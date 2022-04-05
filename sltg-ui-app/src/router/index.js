@@ -61,6 +61,19 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/news/knowledge',
+    component: Layout,
+    redirect: 'noredirect',
+    children: [
+      {
+        path: '/news/knowledge',
+        component: (resolve) => require(['@/views/news/knowledge'], resolve),
+        name: '知识库',
+        meta: { title: '知识库', icon: 'dashboard' }
+      }
+    ]
+  },
+  {
     path: '/user',
     component: Layout,
     hidden: true,

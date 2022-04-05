@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     refresh() {
-      alert("aa")
+      document.location.reload();
     }
   }
 }
@@ -39,7 +39,9 @@ export default {
 .navbar {
   height: 45px;
   overflow: hidden;
-  position: relative;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
   background: #1890ff;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
