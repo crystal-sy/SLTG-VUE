@@ -32,16 +32,19 @@
         <div class="bottom_line"/>
       </div>
     </div>
+    <div class="pulldownload" v-show="downLoadMore" @click="pulldownloadmore()">
+      点击加载更多
+    </div>
     <div class="nav">
       <div class="navItems" >
         <div class="bottom_nav_icon icon_1"></div>
         <div class="bottom_nav_text_on">首页</div>
       </div>
-      <div class="navItems">
+      <div class="navItems" @click="go_collect()">
         <div class="bottom_nav_icon icon_2"></div>
         <div class="bottom_nav_text">收藏</div>
       </div>
-      <div class="navItems">
+      <div class="navItems" @click="go_my()">
         <div class="bottom_nav_icon icon_3"></div>
         <div class="bottom_nav_text">我的</div>
       </div>
@@ -58,6 +61,8 @@
       return {
         // 遮罩层
         loading: true,
+        // 加载
+        downLoadMore: true,
         // 查询参数
         queryParams: {
           pageNum: 1,
@@ -80,6 +85,21 @@
       },
       go_user_news() {
         this.$router.push("/user/management");
+      },
+      go_collect() {
+        this.$router.push("/news/table");
+      },
+      go_my() {
+        this.$router.push("/system/user");
+      },
+      pulldownloadmore() {
+        this.queryParams.pageNum = this.queryParams.pageNum + 1;
+        this.loading = true;
+        knowledgeList(this.queryParams).then(response => {
+            this.newsList.push(response.rows);
+            this.loading = false;
+          }
+        );
       },
       /** 查询新闻列表 */
       getList() {
@@ -192,6 +212,16 @@
         }
       }
     }
+  }
+
+  .pulldownload {
+    margin-bottom: 1.3rem;
+    width: 100%;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    color: #000;
+    font-size: 18px;
+    text-align: center;
   }
 }
 

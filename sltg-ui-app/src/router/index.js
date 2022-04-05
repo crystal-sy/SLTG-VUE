@@ -61,19 +61,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/news/knowledge',
-    component: Layout,
-    redirect: 'noredirect',
-    children: [
-      {
-        path: '/news/knowledge',
-        component: (resolve) => require(['@/views/news/knowledge'], resolve),
-        name: '知识库',
-        meta: { title: '知识库', icon: 'dashboard' }
-      }
-    ]
-  },
-  {
     path: '/user',
     component: Layout,
     hidden: true,
@@ -81,7 +68,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'profile',
-        component: (resolve) => require(['@/views/system/user/profile/index'], resolve),
+        component: (resolve) => require(['@/views/system/user/index'], resolve),
         name: 'Profile',
         meta: { title: '个人中心', icon: 'user' }
       }
