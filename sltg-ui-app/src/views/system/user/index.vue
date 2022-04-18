@@ -2,8 +2,12 @@
   <div>
     <div class="my-header">
       <div class="my-info">
-        <userAvatar :user="user" />
-        <span class="my-name fl">{{ user.userName }}</span>
+        <div class="user-info-head fl">
+          <img v-bind:src="options.img" class="img-circle img-lg" />
+        </div>
+        <div class="my-name fl">
+          <span>{{ user.userName }}</span>
+        </div>
       </div>
       <ul class="info-bar clearfix">
         <div class="info-bar-item">
@@ -44,6 +48,7 @@
   import userAvatar from "./userAvatar";
   import userInfo from "./userInfo";
   import { getUserProfile } from "@/api/system/user";
+  import store from "@/store";
 
   export default {
     name: "Profile",
@@ -53,7 +58,10 @@
         user: {},
         roleGroup: {},
         postGroup: {},
-        activeTab: "userinfo"
+        activeTab: "userinfo",
+        options: {
+          img: store.getters.avatar, //裁剪图片的地址
+        },
       };
     },
     created() {
@@ -82,9 +90,17 @@
   height: 5.5rem;
   width: 100%;
   background: rgba(51,51,51,1);
+  ul {
+    padding-inline-start: 0;
+  }
   .my-info {
-    height: 4rem;
+    height: 3rem;
     display: block;
+    .user-info-head {
+      position: relative;
+      display: inline-block;
+      height: 120px;
+    }
     .my-head-portrait {
       height: 1.6rem;
       width: 1.6rem;

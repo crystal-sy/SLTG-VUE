@@ -1,5 +1,10 @@
 <template>
   <div class="search-page home">
+    <div class="navbar">
+      <div class="home-header-bar">
+        <span class="homeTitle">新闻管理</span>
+      </div>
+    </div>
     <div class="SearchNav">
       <span class="tags-view-item" @click="go_home()">
         <el-button class="router-link-deactive">新闻库</el-button>
@@ -121,6 +126,49 @@
   background-size: cover;
 }
 
+.navbar {
+  height: 45px;
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+  background: #1890ff;
+  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+
+  .topmenu-container {
+    position: absolute;
+    left: 50px;
+  }
+
+  .home-header-bar {
+    text-align: center;
+    z-index: 999;
+    margin-top: 0.25rem;
+
+    .homeTitle {
+      color: #fff;
+      font-size: 18px;
+      vertical-align: middle;
+      i {
+        vertical-align: middle;
+      }
+    }
+    .homeRefresh{
+      display: inline-block;
+      vertical-align: middle;
+      float: right;
+      background: #1890ff;
+      border-color: #1890ff;
+      margin-top: -0.25rem;
+    }
+
+    .el-button--medium {
+      font-size: 25px;
+      color: #fff;
+    }
+  }
+}
+
 .home {
   .search-icon {
     cursor: pointer;
@@ -143,10 +191,10 @@
     overflow: hidden;
     overflow-x: auto;
     text-align: center;
-    position: fixed;
+    // position: fixed;
     left: 0;
     font-size: 0;
-    top: 45px;
+    padding-top: 45px;
     background: #f4f5f6;
     font-family: '微软雅黑',serif;
     white-space: nowrap;
@@ -189,7 +237,7 @@
   }
 
   .contentNav {
-    margin-top: 85px;
+    // margin-top: 85px;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
     .newsContent {

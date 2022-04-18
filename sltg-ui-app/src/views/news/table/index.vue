@@ -1,5 +1,10 @@
 <template>
   <div class="search-page home">
+    <div class="navbar">
+      <div class="home-header-bar">
+        <span class="homeTitle">收藏</span>
+      </div>
+    </div>
     <div v-loading="loading" class="contentNav">
       <div v-for="(item, index) in newsList" class="newsContent">
         <p style="font-size: 16px; font-weight: bold; color: #000; margin-right: 3.4rem;">{{item.newsTitle}}</p>
@@ -113,6 +118,49 @@
     background-size: cover;
   }
 
+  .navbar {
+    height: 45px;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+    background: #1890ff;
+    box-shadow: 0 1px 4px rgba(0,21,41,.08);
+
+    .topmenu-container {
+      position: absolute;
+      left: 50px;
+    }
+
+    .home-header-bar {
+      text-align: center;
+      z-index: 999;
+      margin-top: 0.25rem;
+
+      .homeTitle {
+        color: #fff;
+        font-size: 18px;
+        vertical-align: middle;
+        i {
+          vertical-align: middle;
+        }
+      }
+      .homeRefresh{
+        display: inline-block;
+        vertical-align: middle;
+        float: right;
+        background: #1890ff;
+        border-color: #1890ff;
+        margin-top: -0.25rem;
+      }
+
+      .el-button--medium {
+        font-size: 25px;
+        color: #fff;
+      }
+    }
+  }
+
   .home {
     .search-icon {
       cursor: pointer;
@@ -133,6 +181,7 @@
     .contentNav {
       margin-left: 0.5rem;
       margin-right: 0.5rem;
+      padding-top: 45px;
       .newsContent {
         width: 100%;
         .newsDetail {
