@@ -215,3 +215,9 @@ export default {
   height: 38px;
 }
 </style>
+
+<style>
+  .el-message-box {
+    width: 360px;
+  }
+</style>

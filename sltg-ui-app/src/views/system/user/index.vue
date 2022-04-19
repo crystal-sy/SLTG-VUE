@@ -20,11 +20,11 @@
         </div>
       </ul>
     </div>
-    <div class="tipItems" @click="search()">
+    <div class="tipItems" @click="notice()">
       消息通知
       <el-button size="medium" icon="el-icon-arrow-right" class="itemRight"/>
     </div>
-    <div class="tipItems" @click="search()">
+    <div class="tipItems" @click="resetPwd()">
       账户设置
       <el-button size="medium" icon="el-icon-arrow-right" class="itemRight"/>
     </div>
@@ -78,6 +78,12 @@
       },
       go_collect() {
         this.$router.push("/news/table");
+      },
+      notice() {
+        this.$router.push("/system/notice");
+      },
+      resetPwd() {
+        this.$router.push("/system/resetPwd");
       },
       getUser() {
         getUserProfile().then(response => {
@@ -281,7 +287,7 @@
   }
 
   .el-button--medium {
-    padding: 12px 20px;
+    padding: 14px 20px;
   }
 }
 
@@ -331,7 +337,6 @@
   }
 }
 </style>
-
 
 <style>
   .el-message-box {
