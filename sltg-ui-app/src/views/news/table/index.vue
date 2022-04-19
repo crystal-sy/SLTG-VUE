@@ -88,7 +88,7 @@
       /** 删除按钮操作 */
       handleDelete(row) {
         const userIds = row.userId || this.ids;
-        this.$confirm('是否确认删除用户编号为"' + userIds + '"的数据项?', "警告", {
+        this.$confirm('是否确认删除该收藏项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -259,5 +259,12 @@
         color: #1890ff;
       }
     }
+  }
+</style>
+
+
+<style>
+  .el-message-box {
+    width: 360px;
   }
 </style>

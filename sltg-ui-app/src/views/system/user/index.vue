@@ -11,20 +11,25 @@
       </div>
       <ul class="info-bar clearfix">
         <div class="info-bar-item">
-          <p>106</p>评论</div>
+          <p style="margin-top: 0; margin-bottom: 0;">106</p>
+          <p style="margin-top: 5px; margin-bottom: 0;">评论</p>
+        </div>
         <div class="info-bar-item">
-          <p>14</p>收藏</div>
+          <p style="margin-top: 0; margin-bottom: 0;">14</p>
+          <p style="margin-top: 5px; margin-bottom: 0;">收藏</p>
+        </div>
       </ul>
     </div>
-    <div class="tipItems">
+    <div class="tipItems" @click="search()">
       消息通知
-      <!--<Icon type="ios-arrow-right" size="26" color="#ccc" class="fr toSetup"></Icon>-->
+      <el-button size="medium" icon="el-icon-arrow-right" class="itemRight"/>
     </div>
-    <div class="tipItems">
+    <div class="tipItems" @click="search()">
       账户设置
-      <!--<Icon type="ios-arrow-right" size="26" color="#ccc" class="fr toSetup"></Icon>-->
+      <el-button size="medium" icon="el-icon-arrow-right" class="itemRight"/>
     </div>
-    <div class="tipItems" style="text-align: center;margin-top: 7rem;color:#fff;background-color: #1890ff;">
+    <div class="tipItems" style="text-align: center;margin-top: 7rem;color:#fff;background-color: #1890ff;"
+         @click="logout()">
       退出登录
     </div>
     <div class="nav">
@@ -80,6 +85,17 @@
           this.roleGroup = response.roleGroup;
           this.postGroup = response.postGroup;
         });
+      },
+      async logout() {
+        this.$confirm('确定注销并退出系统吗？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$store.dispatch('LogOut').then(() => {
+            location.href = '/index';
+          })
+        }).catch(() => {});
       }
     }
   };
@@ -122,6 +138,7 @@
   }
   .info-bar {
     height: 1.5rem;
+    margin-block-start: 3em;
     .info-bar-item {
       float: left;
       width: 50%;
@@ -255,6 +272,17 @@
     margin-right: .3rem;
     margin-top: .2rem;
   }
+
+  .itemRight {
+    display: inline-block;
+    vertical-align: middle;
+    float: right;
+    border-color: #ffffff;
+  }
+
+  .el-button--medium {
+    padding: 12px 20px;
+  }
 }
 
 .nav {
@@ -302,4 +330,11 @@
     }
   }
 }
+</style>
+
+
+<style>
+  .el-message-box {
+    width: 360px;
+  }
 </style>
