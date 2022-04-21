@@ -80,10 +80,10 @@
         this.$router.push("/news/table");
       },
       notice() {
-        this.$router.push("/system/notice");
+        this.$router.push("/user/notice");
       },
       resetPwd() {
-        this.$router.push("/system/resetPwd");
+        this.$router.push("/user/resetPwd");
       },
       getUser() {
         getUserProfile().then(response => {

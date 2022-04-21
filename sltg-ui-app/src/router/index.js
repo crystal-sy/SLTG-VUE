@@ -71,6 +71,18 @@ export const constantRoutes = [
         component: (resolve) => require(['@/views/system/user/index'], resolve),
         name: 'Profile',
         meta: { title: '个人中心', icon: 'user' }
+      },
+      {
+        path: 'notice',
+        component: (resolve) => require(['@/views/system/notice/index'], resolve),
+        name: 'notice',
+        meta: { title: '消息中心', icon: 'user' }
+      },
+      {
+        path: 'resetPwd',
+        component: (resolve) => require(['@/views/system/resetPwd/index'], resolve),
+        name: 'resetPwd',
+        meta: { title: '修改密码', icon: 'user' }
       }
     ]
   }
