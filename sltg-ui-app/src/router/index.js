@@ -85,6 +85,32 @@ export const constantRoutes = [
         meta: { title: '修改密码', icon: 'user' }
       }
     ]
+  },
+  {
+    path: '/news',
+    component: Layout,
+    hidden: true,
+    redirect: 'noredirect',
+    children: [
+      {
+        path: 'detail',
+        component: (resolve) => require(['@/views/news/detail/index'], resolve),
+        name: 'detail',
+        meta: { title: '详情' }
+      },
+      {
+        path: 'knowledge',
+        component: (resolve) => require(['@/views/news/knowledge/index'], resolve),
+        name: 'knowledge',
+        meta: { title: '知识库' }
+      },
+      {
+        path: 'table',
+        component: (resolve) => require(['@/views/news/table/index'], resolve),
+        name: 'table',
+        meta: { title: '用户新闻列表' }
+      }
+    ]
   }
 ]
 

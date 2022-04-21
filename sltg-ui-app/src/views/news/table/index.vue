@@ -6,7 +6,7 @@
       </div>
     </div>
     <div v-loading="loading" class="contentNav">
-      <div v-for="(item, index) in newsList" class="newsContent">
+      <div v-for="(item, index) in newsList" class="newsContent" @click="go_detail(item.newsId)">
         <p style="font-size: 16px; font-weight: bold; color: #000; margin-right: 3.4rem;">{{item.newsTitle}}</p>
         <div>
           <div style=" font-size: 14px; margin-top: 0.6rem; color: #000;">
@@ -74,6 +74,9 @@
       },
       go_my() {
         this.$router.push("/system/user");
+      },
+      go_detail(newId) {
+        this.$router.push("/news/detail?type=collect&new_id=" + newId);
       },
       /** 查询新闻列表 */
       getList() {

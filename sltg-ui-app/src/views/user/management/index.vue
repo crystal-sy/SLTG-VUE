@@ -25,7 +25,7 @@
       <el-button size="medium" icon="el-icon-search" @click="search()" class="homeSearch"/>
     </div>
     <div v-loading="loading" class="contentNav">
-      <div v-for="(item, index) in newsList" class="newsContent">
+      <div v-for="(item, index) in newsList" class="newsContent" @click="go_detail(item.newsId)">
         <p style="font-size: 16px; font-weight: bold; color: #000;">{{item.newsTitle}}</p>
         <div>
           <div style=" font-size: 10px; margin-top: 0.15rem;">
@@ -93,6 +93,9 @@
       },
       go_collect() {
         this.$router.push("/news/table");
+      },
+      go_detail(newId) {
+        this.$router.push("/news/detail?type=user_news&new_id=" + newId);
       },
       go_my() {
         this.$router.push("/system/user");
