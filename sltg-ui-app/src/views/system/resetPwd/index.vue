@@ -25,7 +25,7 @@
         <div class="bottom_nav_text">首页</div>
       </div>
       <div class="navItems">
-        <div class="bottom_nav_icon icon_2"></div>
+        <div class="bottom_nav_icon icon_2" @click="go_collect()"></div>
         <div class="bottom_nav_text">收藏</div>
       </div>
       <div class="navItems" @click="go_my()">
@@ -74,6 +74,9 @@ export default {
   methods: {
     go_home() {
       this.$router.push("/home");
+    },
+    go_collect() {
+      this.$router.push("/news/table");
     },
     go_my() {
       this.$router.push("/system/user");
