@@ -26,9 +26,8 @@
     </div>
     <div class="nav">
       <el-input class="editComment" placeholder="写评论..." icon="edit"></el-input>
-      <Icon type="ios-cloud" @click.native="t" v-show="collected" size="30" color="#1890ff" class="commentInco fr"></Icon>
-      <Icon type="ios-chatbubble-outline" size="30" class="commentInco fr showcomment" @click.native="tocomment">
-      </Icon>
+      <el-button size="medium" icon="el-icon-cloudy" class="itemCloud" @click="go_comment()"/>
+      <el-button size="medium" icon="el-icon-star-off" class="itemRight_off" @click="add_collect()"/>
       <span class="commentNum" @click.native="tocomment">2805</span>
     </div>
   </div>
@@ -128,11 +127,11 @@
     .home-header-bar {
       text-align: center;
       z-index: 999;
-      margin-top: 0.25rem;
+      margin-top: 0.28rem;
       margin-right: 1rem;
 
       .itemLeft {
-        margin-top: -0.25rem;
+        margin-top: -0.28rem;
         display: inline-block;
         vertical-align: middle;
         float: left;
@@ -279,7 +278,7 @@
     background: #fff;
     .editComment{
       display: inline-block;
-      width: 80%;
+      width: 68%;
       margin-left: .2rem;
       margin-top: .1rem;
     }
@@ -290,9 +289,33 @@
     .showcomment{
       position: relative;
     }
+    .itemCloud {
+      display: inline-block;
+      vertical-align: middle;
+      border-color: #fff;
+      font-size: 30px;
+      padding: 10px;
+    }
+    .itemRight_on {
+      display: inline-block;
+      vertical-align: middle;
+      border-color: #fff;
+      font-size: 30px;
+      padding: 10px;
+      margin-left: 0;
+      color: #1890ff;
+    }
+    .itemRight_off {
+      display: inline-block;
+      vertical-align: middle;
+      border-color: #fff;
+      font-size: 30px;
+      padding: 10px;
+      margin-left: 0;
+    }
     .commentNum{
       position: absolute;
-      margin-right: -2.6rem;
+      margin-right: -1rem;
       padding: .05rem;
       border-radius: 80%;
       min-width: .55rem;
