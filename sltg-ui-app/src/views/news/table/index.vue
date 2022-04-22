@@ -106,7 +106,10 @@
         this.queryParams.pageNum = this.queryParams.pageNum + 1;
         this.loading = true;
         knowledgeList(this.queryParams).then(response => {
-            this.newsList.push(response.rows);
+            var data = response.rows;
+            for (var item in data) {
+              this.newsList.push(data[item]);
+            }
             this.loading = false;
           }
         );
