@@ -80,9 +80,7 @@
             this.noticeList = response.rows;
             this.total = response.total;
             this.loading = false;
-            if(this.total === 10) {
-              this.downLoadMore = true;
-            }
+            this.downLoadMore = this.total > this.queryParams.pageNum * this.queryParams.pageSize;
           }
         );
       },

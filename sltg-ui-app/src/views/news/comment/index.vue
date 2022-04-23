@@ -34,7 +34,7 @@
         // 遮罩层
         loading: true,
         // 加载
-        downLoadMore: true,
+        downLoadMore: false,
         // 查询参数
         queryParams: {
           pageNum: 1,
@@ -59,6 +59,7 @@
             this.commentList = response.rows;
             this.total = response.total;
             this.loading = false;
+            this.downLoadMore = this.total > this.queryParams.pageNum * this.queryParams.pageSize;
           }
         );
       },
