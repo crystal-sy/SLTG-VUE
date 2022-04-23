@@ -6,6 +6,7 @@ import com.sltg.common.core.domain.entity.UserNews;
 import com.sltg.common.enums.DetectionType;
 import com.sltg.common.utils.PythonUtils;
 import com.sltg.common.utils.file.FileUtils;
+import com.sltg.system.mapper.SysNewsCommentMapper;
 import com.sltg.system.mapper.UserNewsMapper;
 import com.sltg.system.service.UserNewsService;
 import org.apache.logging.log4j.util.Strings;
@@ -42,6 +43,9 @@ public class UserNewsServiceImpl implements UserNewsService {
     @Autowired
     private UserNewsMapper userNewsMapper;
 
+    @Autowired
+    private SysNewsCommentMapper newsCommentMapper;
+
     @Override
     public List<UserNews> selectUserNewsList(UserNews news) {
         return userNewsMapper.selectUserNewsList(news);
@@ -49,7 +53,9 @@ public class UserNewsServiceImpl implements UserNewsService {
 
     @Override
     public UserNews queryUserNewsById(Long newsId) {
-        return userNewsMapper.queryUserNewsById(newsId);
+        UserNews userNews = userNewsMapper.queryUserNewsById(newsId);
+        userNews.setComments(newsCommentMapper.queryNewsCommentCnt(newsId.toString()));
+        return userNews;
     }
 
     @Override

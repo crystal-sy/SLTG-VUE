@@ -56,6 +56,8 @@ public class SysNews extends BaseEntity {
 
     private String[] newsThemes;
 
+    private int comments;
+
     public SysNews() {}
 
     public SysNews(String newsId) {
@@ -174,5 +176,13 @@ public class SysNews extends BaseEntity {
 
     public void setNewsThemes(String[] newsThemes) {
         this.newsThemes = newsThemes;
+    }
+
+    public int getComments() {
+        return comments;
+    }
+
+    public void setComments(int comments) {
+        this.comments = comments;
     }
 }

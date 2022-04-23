@@ -20,6 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy"          column="update_by"      />
         <result property="updateTime"        column="update_time"    />
         <result property="remark"            column="remark"         />
+        <result property="comments"          column="comments"       />
     </resultMap>
     
     <sql id="selectNewsVo">
@@ -29,29 +30,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </sql>
     
     <select id="selectNewsList" parameterType="SysNews" resultMap="SysNewsResult">
-        <include refid="selectNewsVo"/>
+        select n.*, (select count(*) from sys_news_comment c where c.news_id=n.news_id) as comments
+        from sys_news n
         <where>
 			<if test="newsTitle != null and newsTitle != ''">
-				AND ( news_title like concat('%', #{newsTitle}, '%')
-				    OR (is_file = 1 AND news_text like concat('%', #{newsTitle}, '%') ) )
+				AND ( n.news_title like concat('%', #{newsTitle}, '%')
+				    OR (n.is_file = 1 AND n.news_text like concat('%', #{newsTitle}, '%') ) )
 			</if>
 			<if test="newsThemes != null and newsThemes != ''">
                 AND
                 <foreach collection="newsThemes" item="newsTheme" open="(" separator=" OR " close=")">
-                    news_theme like concat('%', #{newsTheme}, '%')
+                    n.news_theme like concat('%', #{newsTheme}, '%')
                 </foreach>
 			</if>
             <if test="detectionType != null and detectionType != ''">
-                AND detection_type = #{detectionType}
+                AND n.detection_type = #{detectionType}
             </if>
             <if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
-                and date_format(news_date,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
+                and n.date_format(news_date,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
             </if>
             <if test="endTime != null and endTime != ''"><!-- 结束时间检索 -->
-                and date_format(news_date,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
+                and n.date_format(news_date,'%y%m%d') &lt;= date_format(#{endTime},'%y%m%d')
             </if>
 		</where>
-        order by news_date desc
+        order by n.news_date desc
     </select>
 
     <select id="queryNewsById" parameterType="String" resultMap="SysNewsResult">

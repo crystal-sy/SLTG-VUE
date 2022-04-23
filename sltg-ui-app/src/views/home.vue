@@ -31,7 +31,7 @@
         <div>
           <div style=" font-size: 10px; margin-top: 0.15rem;">
             <span style="color: #000;">{{item.newsFrom}}</span> &nbsp;&nbsp;
-            <span style="color: #000;">评论&nbsp;0</span>
+            <span style="color: #000;">评论&nbsp;{{item.comments}}</span>
             <span style="float: right; color: #000;">{{item.newsDate}}</span>
           </div>
         </div>

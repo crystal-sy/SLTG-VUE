@@ -60,6 +60,8 @@ public class UserNews extends BaseEntity {
 
     private Long[] newsIds;
 
+    private int comments;
+
     public UserNews() {}
 
     public UserNews(Long newsId) {
@@ -186,5 +188,13 @@ public class UserNews extends BaseEntity {
 
     public void setNewsIds(Long[] newsIds) {
         this.newsIds = newsIds;
+    }
+
+    public int getComments() {
+        return comments;
+    }
+
+    public void setComments(int comments) {
+        this.comments = comments;
     }
 }

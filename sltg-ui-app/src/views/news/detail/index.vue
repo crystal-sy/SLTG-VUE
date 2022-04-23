@@ -28,7 +28,7 @@
       <el-input class="editComment" placeholder="写评论..." icon="edit"></el-input>
       <el-button size="medium" icon="el-icon-cloudy" class="itemCloud" @click="go_comment()"/>
       <el-button size="medium" icon="el-icon-star-off" class="itemRight_off" @click="add_collect()"/>
-      <span class="commentNum" @click.native="tocomment">2805</span>
+      <span class="commentNum">{{newsInfo.comments}}</span>
     </div>
   </div>
 </template>
@@ -53,11 +53,10 @@
         // 查询参数
         queryParams: {
           pageNum: 1,
-          pageSize: 10,
-          newsTitle: undefined,
+          pageSize: 10
         },
         // 新闻表格数据
-        newsInfo: null,
+        newsInfo: '',
         options: {
           img: store.getters.avatar, //裁剪图片的地址
         },
@@ -329,7 +328,6 @@
     }
   }
 </style>
-
 
 <style>
   .el-message-box {

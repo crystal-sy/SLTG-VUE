@@ -1,6 +1,7 @@
 package com.sltg.system.service.impl;
 
 import com.sltg.common.core.domain.entity.SysNews;
+import com.sltg.system.mapper.SysNewsCommentMapper;
 import com.sltg.system.mapper.SysNewsMapper;
 import com.sltg.system.service.SysNewsService;
 import org.apache.logging.log4j.util.Strings;
@@ -19,6 +20,9 @@ public class SysNewsServiceImpl implements SysNewsService {
     @Autowired
     private SysNewsMapper newsMapper;
 
+    @Autowired
+    private SysNewsCommentMapper newsCommentMapper;
+
     @Override
     public List<SysNews> selectNewsList(SysNews news) {
         String newsTheme = news.getNewsTheme();
@@ -30,6 +34,8 @@ public class SysNewsServiceImpl implements SysNewsService {
 
     @Override
     public SysNews queryNewsById(String newsId) {
-        return newsMapper.queryNewsById(newsId);
+        SysNews sysNews = newsMapper.queryNewsById(newsId);
+        sysNews.setComments(newsCommentMapper.queryNewsCommentCnt(newsId));
+        return sysNews;
     }
 }

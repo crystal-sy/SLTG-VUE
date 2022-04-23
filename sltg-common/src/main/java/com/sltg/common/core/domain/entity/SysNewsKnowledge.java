@@ -44,6 +44,8 @@ public class SysNewsKnowledge extends BaseEntity {
     @Excel(name = "新闻原始链接")
     private String originalUrl;
 
+    private int comments;
+
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
@@ -152,5 +154,13 @@ public class SysNewsKnowledge extends BaseEntity {
 
     public void setNewsThemes(String[] newsThemes) {
         this.newsThemes = newsThemes;
+    }
+
+    public int getComments() {
+        return comments;
+    }
+
+    public void setComments(int comments) {
+        this.comments = comments;
     }
 }
