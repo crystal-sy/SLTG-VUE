@@ -27,7 +27,8 @@
     <div class="nav">
       <el-input class="editComment" placeholder="写评论..." icon="edit"></el-input>
       <el-button size="medium" icon="el-icon-cloudy" class="itemCloud" @click="go_comment()"/>
-      <el-button size="medium" icon="el-icon-star-off" class="itemRight_off" @click="add_collect()"/>
+      <el-button size="medium" icon="el-icon-star-on" v-show="newsInfo.collected" class="itemRight_on" />
+      <el-button size="medium" icon="el-icon-star-off" v-show="!newsInfo.collected" class="itemRight_off" @click="add_collect()"/>
       <span class="commentNum" @click="go_comment()">{{newsInfo.comments}}</span>
     </div>
   </div>
@@ -37,6 +38,7 @@
   import { getKnowledgeInfo } from "@/api/news/knowledge";
   import { getUserNews } from "@/api/user/management";
   import { getNews } from "@/api/news/list";
+  import { addCollect } from "@/api/news/collect";
   import userAvatar from "./userAvatar";
   import userInfo from "./userInfo";
   import store from "@/store";
@@ -72,18 +74,29 @@
         this.$router.go(-1);
       },
       go_comment(){
-        this.$router.push("/news/comment?new_id=" + this.newsId);
+        if (this.newsInfo.comments > 0) {
+          this.$router.push("/news/comment?new_id=" + this.newsId);
+        } else {
+          this.msgSuccess("暂无评论");
+        }
+      },
+      add_collect() {
+        var collectData = {
+          newsId : this.newsInfo.newsId,
+          newsTitle : this.newsInfo.newsTitle,
+          newsFrom : this.newsInfo.newsFrom,
+          newsDate : this.newsInfo.newsDate,
+          newsTable : this.$route.query.type
+        }
+        addCollect(collectData).then(response => {
+          this.msgSuccess("收藏成功");
+          this.newsInfo.collected = true;
+        });
       },
       /** 查询新闻详情 */
       getNewsInfo() {
         this.loading = true;
-        if (this.type === 'news') {
-          getNews(this.newsId).then(response => {
-              this.newsInfo = response.data;
-              this.loading = false;
-            }
-          );
-        } else if (this.type === 'knowledge') {
+        if (this.type === 'knowledge') {
           getKnowledgeInfo(this.newsId).then(response => {
               this.newsInfo = response.data;
               this.loading = false;
@@ -96,7 +109,7 @@
             }
           );
         } else {
-          getKnowledgeInfo(this.newsId).then(response => {
+          getNews(this.newsId).then(response => {
               this.newsInfo = response.data;
               this.loading = false;
             }

@@ -92,7 +92,7 @@
         this.$router.push("/news/knowledge");
       },
       go_collect() {
-        this.$router.push("/news/table");
+        this.$router.push("/news/collect");
       },
       go_detail(newId) {
         this.$router.push("/news/detail?type=user_news&new_id=" + newId);

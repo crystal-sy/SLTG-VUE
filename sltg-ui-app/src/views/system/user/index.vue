@@ -77,7 +77,7 @@
         this.$router.push("/home");
       },
       go_collect() {
-        this.$router.push("/news/table");
+        this.$router.push("/news/collect");
       },
       notice() {
         this.$router.push("/user/notice");

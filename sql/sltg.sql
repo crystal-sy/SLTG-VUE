@@ -435,4 +435,19 @@ create table sys_user_news (
     foreign key (user_id) references sys_user(user_id)
 ) engine=innodb auto_increment=0 comment = '用户新闻信息表';
 
-
+-- ----------------------------
+-- 新闻收藏表
+-- ----------------------------
+drop table if exists sys_news_collect;
+create table sys_news_collect (
+  collect_id         bigint(20)     not null auto_increment    comment '新闻收藏ID',
+  news_id            varchar(100)   not null                   comment '新闻ID',
+  user_id            bigint(20)     not null                   comment '用户ID',
+  news_title         varchar(100)   not null                   comment '新闻标题',
+  news_from          varchar(50)    default ''                 comment '新闻来源',
+  news_date          varchar(10)    not null                   comment '新闻日期',
+  news_table         varchar(50)    default ''                 comment '新闻表',
+  create_time        datetime                                  comment '创建时间',
+  update_time        datetime                                  comment '更新时间',
+  primary key (collect_id)
+) engine=innodb auto_increment=0 comment = '新闻收藏表';

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sltg.system.mapper.SysNewsCollectMapper">
+    <resultMap type="SysNewsCollect" id="NewsCollectResult">
+        <result property="collectId"          column="collect_id"    />
+        <result property="newsId"             column="news_id"       />
+        <result property="userId"             column="user_id"       />
+        <result property="newsTitle"          column="news_title"    />
+        <result property="newsFrom"           column="news_from"     />
+        <result property="newsDate"           column="news_date"     />
+        <result property="newsTable"          column="news_table"    />
+        <result property="createTime"         column="create_time"   />
+        <result property="updateTime"         column="update_time"   />
+    </resultMap>
+    
+    <sql id="selectNewsCollectVo">
+        select collect_id, news_id, user_id, news_title, news_from, news_date, news_table, create_time, update_time
+		from sys_news_collect
+    </sql>
+
+    <select id="queryNewsCollectCnt" parameterType="map" resultType="Integer">
+        select count(1) from sys_news_collect where news_id = #{newsId} and user_id = #{userId}
+    </select>
+
+    <select id="queryNewsCollectInfo" parameterType="SysNewsCollect" resultMap="NewsCollectResult">
+        <include refid="selectNewsCollectVo"/>
+        where user_id = #{userId}
+        order by news_date desc
+    </select>
+
+    <delete id="deleteCollectById" parameterType="String">
+        delete from sys_news_collect where collect_id = #{collectId}
+    </delete>
+
+    <insert id="addCollect" parameterType="SysNewsCollect" useGeneratedKeys="true" keyProperty="collectId">
+        insert into sys_news_collect (
+        <if test="newsId != null and newsId != ''">news_id,</if>
+        <if test="userId != null and userId != 0">user_id,</if>
+        <if test="newsTitle != null and newsTitle != ''">news_title,</if>
+        <if test="newsFrom != null and newsFrom != ''">news_from,</if>
+        <if test="newsDate != null and newsDate != ''">news_date,</if>
+        <if test="newsTable != null and newsTable != ''">news_table,</if>
+        create_time
+        )values(
+        <if test="newsId != null and newsId != ''">#{newsId},</if>
+        <if test="userId != null and userId != 0">#{userId},</if>
+        <if test="newsTitle != null and newsTitle != ''">#{newsTitle},</if>
+        <if test="newsFrom != null and newsFrom != ''">#{newsFrom},</if>
+        <if test="newsDate != null and newsDate != ''">#{newsDate},</if>
+        <if test="newsTable != null and newsTable != ''">#{newsTable},</if>
+        sysdate()
+        )
+    </insert>
+</mapper>

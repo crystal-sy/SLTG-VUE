@@ -6,6 +6,7 @@ import com.sltg.common.core.domain.entity.UserNews;
 import com.sltg.common.enums.DetectionType;
 import com.sltg.common.utils.PythonUtils;
 import com.sltg.common.utils.file.FileUtils;
+import com.sltg.system.mapper.SysNewsCollectMapper;
 import com.sltg.system.mapper.SysNewsCommentMapper;
 import com.sltg.system.mapper.UserNewsMapper;
 import com.sltg.system.service.UserNewsService;
@@ -46,15 +47,19 @@ public class UserNewsServiceImpl implements UserNewsService {
     @Autowired
     private SysNewsCommentMapper newsCommentMapper;
 
+    @Autowired
+    private SysNewsCollectMapper collectMapper;
+
     @Override
     public List<UserNews> selectUserNewsList(UserNews news) {
         return userNewsMapper.selectUserNewsList(news);
     }
 
     @Override
-    public UserNews queryUserNewsById(Long newsId) {
+    public UserNews queryUserNewsById(Long newsId, Long userId) {
         UserNews userNews = userNewsMapper.queryUserNewsById(newsId);
         userNews.setComments(newsCommentMapper.queryNewsCommentCnt(newsId.toString()));
+        userNews.setCollected(collectMapper.queryNewsCollectCnt(newsId.toString(), userId) == 1);
         userNews.setNewsThemes(userNews.getNewsTheme().split(","));
         return userNews;
     }

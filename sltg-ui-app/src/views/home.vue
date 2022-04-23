@@ -96,7 +96,7 @@
         this.$router.push("/user/management");
       },
       go_collect() {
-        this.$router.push("/news/table");
+        this.$router.push("/news/collect");
       },
       go_detail(newId) {
         this.$router.push("/news/detail?type=news&new_id=" + newId);

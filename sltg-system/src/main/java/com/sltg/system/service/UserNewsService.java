@@ -23,9 +23,10 @@ public interface UserNewsService {
      * 通过新闻ID查询新闻详情
      * 
      * @param newsId 新闻ID
+     * @param userId 用户id
      * @return 新闻对象信息
      */
-    UserNews queryUserNewsById(Long newsId);
+    UserNews queryUserNewsById(Long newsId, Long userId);
 
     /**
      * 上传文件

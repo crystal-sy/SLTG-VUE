@@ -46,6 +46,8 @@ public class SysNewsKnowledge extends BaseEntity {
 
     private int comments;
 
+    private boolean collected;
+
     /** 创建时间 */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
@@ -162,5 +164,13 @@ public class SysNewsKnowledge extends BaseEntity {
 
     public void setComments(int comments) {
         this.comments = comments;
+    }
+
+    public boolean isCollected() {
+        return collected;
+    }
+
+    public void setCollected(boolean collected) {
+        this.collected = collected;
     }
 }

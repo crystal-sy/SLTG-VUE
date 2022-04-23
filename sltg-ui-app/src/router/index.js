@@ -111,8 +111,8 @@ export const constantRoutes = [
         meta: { title: '知识库' }
       },
       {
-        path: 'table',
-        component: (resolve) => require(['@/views/news/table/index'], resolve),
+        path: 'collect',
+        component: (resolve) => require(['@/views/news/collect/index'], resolve),
         name: 'table',
         meta: { title: '用户新闻列表' }
       }

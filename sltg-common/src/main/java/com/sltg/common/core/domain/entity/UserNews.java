@@ -64,6 +64,8 @@ public class UserNews extends BaseEntity {
 
     private int comments;
 
+    private boolean collected;
+
     public UserNews() {}
 
     public UserNews(Long newsId) {
@@ -206,5 +208,13 @@ public class UserNews extends BaseEntity {
 
     public void setComments(int comments) {
         this.comments = comments;
+    }
+
+    public boolean isCollected() {
+        return collected;
+    }
+
+    public void setCollected(boolean collected) {
+        this.collected = collected;
     }
 }

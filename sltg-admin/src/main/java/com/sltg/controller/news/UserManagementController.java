@@ -61,8 +61,10 @@ public class UserManagementController extends BaseController {
     @PreAuthorize("@ss.hasPermi('user:news:query')")
     @GetMapping(value = { "/detail/{newsId}" })
     public AjaxResult getUserNews(@PathVariable(value = "newsId") Long newsId) {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        Long userId = loginUser.getUser().getUserId();
         AjaxResult ajax = AjaxResult.success();
-        ajax.put(AjaxResult.DATA_TAG, userNewsService.queryUserNewsById(newsId));
+        ajax.put(AjaxResult.DATA_TAG, userNewsService.queryUserNewsById(newsId, userId));
         return ajax;
     }
 
@@ -85,8 +87,9 @@ public class UserManagementController extends BaseController {
     @GetMapping("/exportData/{newsId}/{type}")
     public AjaxResult exportData(@PathVariable(value = "newsId") Long newsId,
         @PathVariable(value = "type") String type) {
-        UserNews userNews = userNewsService.queryUserNewsById(newsId);
-        Long userId = userNews.getUserId();
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        Long userId = loginUser.getUser().getUserId();
+        UserNews userNews = userNewsService.queryUserNewsById(newsId, userId);
         String storeId = userNews.getStoreId();
         String targetDir;
         if ("0".equals(type)) {
@@ -121,7 +124,9 @@ public class UserManagementController extends BaseController {
     @Log(title = "新闻管理", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult editUserNews(@Validated @RequestBody UserNews news) {
-        UserNews userNews = userNewsService.queryUserNewsById(news.getNewsId());
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        Long userId = loginUser.getUser().getUserId();
+        UserNews userNews = userNewsService.queryUserNewsById(news.getNewsId(), userId);
         if (userNews == null) {
             return AjaxResult.error("修改用户新闻失败，该新闻不存在");
         }

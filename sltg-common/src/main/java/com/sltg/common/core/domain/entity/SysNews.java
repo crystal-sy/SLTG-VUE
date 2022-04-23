@@ -58,6 +58,8 @@ public class SysNews extends BaseEntity {
 
     private int comments;
 
+    private boolean collected;
+
     public SysNews() {}
 
     public SysNews(String newsId) {
@@ -184,5 +186,13 @@ public class SysNews extends BaseEntity {
 
     public void setComments(int comments) {
         this.comments = comments;
+    }
+
+    public boolean isCollected() {
+        return collected;
+    }
+
+    public void setCollected(boolean collected) {
+        this.collected = collected;
     }
 }

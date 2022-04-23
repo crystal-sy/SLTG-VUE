@@ -22,7 +22,8 @@ public interface SysNewsService {
      * 通过新闻ID查询新闻详情
      * 
      * @param newsId 新闻ID
+     * @param userId 用户id
      * @return 新闻对象信息
      */
-    SysNews queryNewsById(String newsId);
+    SysNews queryNewsById(String newsId, Long userId);
 }

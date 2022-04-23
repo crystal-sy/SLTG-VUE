@@ -64,14 +64,13 @@
       <el-table-column label="新闻编号" align="center" key="newsId" prop="newsId" v-if="columns[0].visible" />
       <el-table-column label="新闻标题" align="center" key="newsTitle" prop="newsTitle" v-if="columns[1].visible" :show-overflow-tooltip="true" width="400"/>
       <el-table-column label="新闻关键词" align="center" key="newsTheme" prop="newsTheme" v-if="columns[2].visible" :show-overflow-tooltip="true" />
-      <el-table-column label="虚假检测百分比" align="center" key="detectionPercent" prop="detectionPercent" v-if="columns[3].visible" />
-      <el-table-column label="检测类型" align="center" key="detectionType" v-if="columns[4].visible" >
+      <el-table-column label="检测类型" align="center" key="detectionType" v-if="columns[3].visible" >
         <template slot-scope="scope">
           <dict-tag :options="detectionTypeOptions" :value="scope.row.detectionType"/>
         </template>
       </el-table-column>
-      <el-table-column label="新闻来源" align="center" key="newsFrom" prop="newsFrom" v-if="columns[5].visible" />
-      <el-table-column label="新闻时间" align="center" prop="newsDate" v-if="columns[6].visible">
+      <el-table-column label="新闻来源" align="center" key="newsFrom" prop="newsFrom" v-if="columns[4].visible" />
+      <el-table-column label="新闻时间" align="center" prop="newsDate" v-if="columns[5].visible">
         <template slot-scope="scope">
           <span>{{ scope.row.newsDate }}</span>
         </template>
@@ -155,10 +154,9 @@ export default {
         { key: 0, label: `新闻编号`, visible: true },
         { key: 1, label: `新闻标题`, visible: true },
         { key: 2, label: `新闻关键词`, visible: true },
-        { key: 3, label: `虚假检测百分比`, visible: true },
-        { key: 4, label: `检测类型`, visible: true },
-        { key: 5, label: `新闻来源`, visible: true },
-        { key: 6, label: `新闻时间`, visible: true }
+        { key: 3, label: `检测类型`, visible: true },
+        { key: 4, label: `新闻来源`, visible: true },
+        { key: 5, label: `新闻时间`, visible: true }
       ],
       // 表单校验
     };

@@ -92,7 +92,7 @@
         this.$router.push("/user/management");
       },
       go_collect() {
-        this.$router.push("/news/table");
+        this.$router.push("/news/collect");
       },
       go_my() {
         this.$router.push("/system/user");

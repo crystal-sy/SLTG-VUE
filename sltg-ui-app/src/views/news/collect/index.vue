@@ -6,17 +6,17 @@
       </div>
     </div>
     <div v-loading="loading" class="contentNav">
-      <div v-for="(item, index) in newsList" class="newsContent" @click="go_detail(item.newsId)">
-        <p style="font-size: 16px; font-weight: bold; color: #000; margin-right: 3.4rem;">{{item.newsTitle}}</p>
+      <div v-for="(item, index) in collectList" class="newsContent">
+        <p style="font-size: 16px; font-weight: bold; color: #000;" @click="go_detail(item.newsId, item.newsTable)">{{item.newsTitle}}</p>
         <div>
           <div style=" font-size: 14px; margin-top: 0.6rem; color: #000;">
             <span style="margin-right: 0.2rem;">{{item.newsFrom}}</span> &nbsp;&nbsp;
-            <span style=" margin-top: 0.6rem;">0&nbsp;评论</span>
+            <span style="color: #000;">{{item.newsDate}}</span>
             <el-button
               plain
               icon="el-icon-delete"
               size="mini"
-              @click="handleDelete"
+              @click="handleDelete(item.collectId)"
               style="float: right; font-size: 12px;"
             >删除</el-button>
           </div>
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-  import { knowledgeList, getKnowledgeInfo } from "@/api/news/knowledge";
+  import { collectList, delCollect } from "@/api/news/collect";
 
   export default {
     name: 'home',
@@ -58,11 +58,10 @@
         // 查询参数
         queryParams: {
           pageNum: 1,
-          pageSize: 10,
-          newsTitle: undefined,
+          pageSize: 10
         },
         // 新闻表格数据
-        newsList: null,
+        collectList: null,
       }
     },
     created() {
@@ -75,14 +74,14 @@
       go_my() {
         this.$router.push("/system/user");
       },
-      go_detail(newId) {
-        this.$router.push("/news/detail?type=collect&new_id=" + newId);
+      go_detail(newId, newsTable) {
+        this.$router.push("/news/detail?type=" + newsTable + "&new_id=" + newId);
       },
       /** 查询新闻列表 */
       getList() {
         this.loading = true;
-        knowledgeList(this.queryParams).then(response => {
-            this.newsList = response.rows;
+        collectList(this.queryParams).then(response => {
+            this.collectList = response.rows;
             this.total = response.total;
             this.loading = false;
             this.downLoadMore = this.total > this.queryParams.pageNum * this.queryParams.pageSize;
@@ -90,14 +89,13 @@
         );
       },
       /** 删除按钮操作 */
-      handleDelete(row) {
-        const userIds = row.userId || this.ids;
+      handleDelete(collectId) {
         this.$confirm('是否确认删除该收藏项?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         }).then(function() {
-          return delUser(userIds);
+          return delCollect(collectId);
         }).then(() => {
           this.getList();
           this.msgSuccess("删除成功");
@@ -106,10 +104,10 @@
       pulldownloadmore() {
         this.queryParams.pageNum = this.queryParams.pageNum + 1;
         this.loading = true;
-        knowledgeList(this.queryParams).then(response => {
+        collectList(this.queryParams).then(response => {
             var data = response.rows;
             for (var item in data) {
-              this.newsList.push(data[item]);
+              this.collectList.push(data[item]);
             }
             this.loading = false;
           }
@@ -121,7 +119,6 @@
 
 <style scoped lang="scss">
   .search-page {
-    // background-image: url("../assets/images/login-background.jpg");
     background-size: cover;
   }
 
@@ -268,7 +265,6 @@
     }
   }
 </style>
-
 
 <style>
   .el-message-box {

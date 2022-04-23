@@ -3,7 +3,10 @@ package com.sltg.controller.news;
 import com.sltg.common.core.controller.BaseController;
 import com.sltg.common.core.domain.AjaxResult;
 import com.sltg.common.core.domain.entity.SysNewsKnowledge;
+import com.sltg.common.core.domain.model.LoginUser;
 import com.sltg.common.core.page.TableDataInfo;
+import com.sltg.common.utils.ServletUtils;
+import com.sltg.framework.web.service.TokenService;
 import com.sltg.system.service.SysKnowledgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,6 +28,9 @@ public class SysKnowledgeController extends BaseController {
     @Autowired
     private SysKnowledgeService knowledgeService;
 
+    @Autowired
+    private TokenService tokenService;
+
     /**
      * 获取知识库列表
      */
@@ -42,8 +48,10 @@ public class SysKnowledgeController extends BaseController {
     @PreAuthorize("@ss.hasPermi('news:knowledge:list')")
     @GetMapping(value = "/detail/{newsId}")
     public AjaxResult getKnowledgeInfo(@PathVariable(value = "newsId", required = false) String newsId) {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        Long userId = loginUser.getUser().getUserId();
         AjaxResult ajax = AjaxResult.success();
-        ajax.put(AjaxResult.DATA_TAG, knowledgeService.queryKnowledgeById(newsId));
+        ajax.put(AjaxResult.DATA_TAG, knowledgeService.queryKnowledgeById(newsId, userId));
         return ajax;
     }
 }
