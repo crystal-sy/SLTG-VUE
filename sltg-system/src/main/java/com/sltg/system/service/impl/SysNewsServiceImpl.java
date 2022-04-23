@@ -36,6 +36,7 @@ public class SysNewsServiceImpl implements SysNewsService {
     public SysNews queryNewsById(String newsId) {
         SysNews sysNews = newsMapper.queryNewsById(newsId);
         sysNews.setComments(newsCommentMapper.queryNewsCommentCnt(newsId));
+        sysNews.setNewsThemes(sysNews.getNewsTheme().split(","));
         return sysNews;
     }
 }

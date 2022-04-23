@@ -21,8 +21,8 @@ public interface SysNewsCommentMapper {
     /**
      * 查新新闻评论信息
      *
-     * @param newsId 新闻id
+     * @param comment 评论新闻
      * @return 评论信息列表
      */
-    List<SysNewsComment> queryNewsCommentInfo(String newsId);
+    List<SysNewsComment> queryNewsCommentInfo(SysNewsComment comment);
 }

@@ -55,6 +55,7 @@ public class UserNewsServiceImpl implements UserNewsService {
     public UserNews queryUserNewsById(Long newsId) {
         UserNews userNews = userNewsMapper.queryUserNewsById(newsId);
         userNews.setComments(newsCommentMapper.queryNewsCommentCnt(newsId.toString()));
+        userNews.setNewsThemes(userNews.getNewsTheme().split(","));
         return userNews;
     }
 

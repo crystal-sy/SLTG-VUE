@@ -3,105 +3,76 @@
     <div class="navbar">
       <div class="home-header-bar">
         <el-button size="medium" icon="el-icon-arrow-left" class="itemLeft" @click="goBack()"/>
-        <span class="homeTitle">新闻详情</span>
+        <span class="homeTitle">新闻评论</span>
       </div>
     </div>
     <div v-loading="loading" class="contentNav">
-      <h2 class="detail-title">{{newsInfo.newsTitle}}</h2>
-      <div class="media_name">
-        <img v-bind:src="options.img" height="360" width="360" alt="" class="avatar_url" />
-        <span class="name">{{newsInfo.newsFrom}}</span><br>
-        <span class="date">{{newsInfo.newsDate}}</span>
-        <span class="newsType">真实</span>
-      </div>
-      <div class="contentNews">
-        {{newsInfo.newsText}}
-      </div>
-      <hr>
-      <div class="keywords">
-        <span v-for="(item,index) in newsInfo.newsThemes">
-          {{item}}
-        </span>
+      <div v-for="(item, index) in commentList" class="newsContent">
+        <p style="font-size: 16px; font-weight: bold; color: #000;">{{item.commentText}}</p>
+        <div>
+          <div style=" font-size: 14px; margin-top: 0.6rem; color: #000;">
+            <span style="margin-right: 0.2rem;">{{item.userName}}</span> &nbsp;&nbsp;
+            <span style="float: right; color: #000;">{{item.commentTime}}</span>
+          </div>
+        </div>
+        <div class="bottom_line"/>
       </div>
     </div>
-    <div class="nav">
-      <el-input class="editComment" placeholder="写评论..." icon="edit"></el-input>
-      <el-button size="medium" icon="el-icon-cloudy" class="itemCloud" @click="go_comment()"/>
-      <el-button size="medium" icon="el-icon-star-off" class="itemRight_off" @click="add_collect()"/>
-      <span class="commentNum" @click="go_comment()">{{newsInfo.comments}}</span>
+    <div class="pulldownload" v-show="downLoadMore" @click="pulldownloadmore()">
+      点击加载更多
     </div>
   </div>
 </template>
 
 <script>
-  import { getKnowledgeInfo } from "@/api/news/knowledge";
-  import { getUserNews } from "@/api/user/management";
-  import { getNews } from "@/api/news/list";
-  import userAvatar from "./userAvatar";
-  import userInfo from "./userInfo";
-  import store from "@/store";
+  import { commentList } from "@/api/news/comment";
 
   export default {
-    name: 'detail',
-    components: { userAvatar, userInfo },
+    name: 'comment',
     data() {
       return {
         // 遮罩层
         loading: true,
-        type: '',
-        newsId: '',
+        // 加载
+        downLoadMore: true,
         // 查询参数
         queryParams: {
           pageNum: 1,
-          pageSize: 10
+          pageSize: 10,
+          newsId: this.$route.query.new_id
         },
-        // 新闻表格数据
-        newsInfo: '',
-        options: {
-          img: store.getters.avatar, //裁剪图片的地址
-        },
+        // 评论表格数据
+        commentList: null,
       }
     },
     created() {
-      this.type = this.$route.query.type;
-      this.newsId = this.$route.query.new_id;
-      this.getNewsInfo();
+      this.getList();
     },
     methods: {
       goBack(){
         this.$router.go(-1);
       },
-      go_comment(){
-        this.$router.push("/news/comment?new_id=" + this.newsId);
-      },
-      /** 查询新闻详情 */
-      getNewsInfo() {
+      /** 查询新闻评论列表 */
+      getList() {
         this.loading = true;
-        if (this.type === 'news') {
-          getNews(this.newsId).then(response => {
-              this.newsInfo = response.data;
-              this.loading = false;
+        commentList(this.queryParams).then(response => {
+            this.commentList = response.rows;
+            this.total = response.total;
+            this.loading = false;
+          }
+        );
+      },
+      pulldownloadmore() {
+        this.queryParams.pageNum = this.queryParams.pageNum + 1;
+        this.loading = true;
+        commentList(this.queryParams).then(response => {
+            var data = response.rows;
+            for (var item in data) {
+              this.commentList.push(data[item]);
             }
-          );
-        } else if (this.type === 'knowledge') {
-          getKnowledgeInfo(this.newsId).then(response => {
-              this.newsInfo = response.data;
-              this.loading = false;
-            }
-          );
-        } else if (this.type === 'user_news') {
-          getUserNews(this.newsId).then(response => {
-              this.newsInfo = response.data;
-              this.loading = false;
-            }
-          );
-        } else {
-          getKnowledgeInfo(this.newsId).then(response => {
-              this.newsInfo = response.data;
-              this.loading = false;
-            }
-          );
-        }
+            this.loading = false;
+          }
+        );
       },
     }
   }
@@ -186,6 +157,28 @@
       margin-left: 0.5rem;
       margin-right: 0.5rem;
       padding-top: 45px;
+      .newsContent {
+        width: 100%;
+
+        .newsDetail {
+          width: 94%;
+          display: block;
+          position: relative;
+          margin: 0 auto;
+          padding-bottom: 0.15rem;
+        }
+
+        .bottom_line {
+          margin-top: 5px;
+          border-top: 1px solid #ccc;
+          @media screen and (-webkit-min-device-pixel-ratio: 3) {
+            transform: scaleY(0.33333);
+          }
+          @media screen and (-webkit-min-device-pixel-ratio: 2) {
+            transform: scaleY(0.5);
+          }
+        }
+      }
       .detail-title {
         color: #000;
         font-size: 20px;
@@ -268,72 +261,15 @@
         background: #ccc;
       }
     }
-  }
 
-  .nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1.3rem;
-    z-index: 100;
-    background: #fff;
-    .editComment{
-      display: inline-block;
-      width: 68%;
-      margin-left: .2rem;
-      margin-top: .1rem;
-    }
-    .commentInco{
-      margin-top: .2rem;
-      margin-right: .55rem;
-    }
-    .showcomment{
-      position: relative;
-    }
-    .itemCloud {
-      display: inline-block;
-      vertical-align: middle;
-      border-color: #fff;
-      font-size: 30px;
-      padding: 10px;
-    }
-    .itemRight_on {
-      display: inline-block;
-      vertical-align: middle;
-      border-color: #fff;
-      font-size: 30px;
-      padding: 10px;
-      margin-left: 0;
-      color: #1890ff;
-    }
-    .itemRight_off {
-      display: inline-block;
-      vertical-align: middle;
-      border-color: #fff;
-      font-size: 30px;
-      padding: 10px;
-      margin-left: 0;
-    }
-    .commentNum{
-      position: absolute;
-      margin-right: -1rem;
-      padding: .05rem;
-      border-radius: 80%;
-      min-width: .55rem;
+    .pulldownload {
+      margin-bottom: 1.3rem;
+      width: 100%;
+      height: 1.5rem;
+      line-height: 1.5rem;
+      color: #000;
+      font-size: 18px;
       text-align: center;
-      line-height: .45rem;
-      background: #1890ff;
-      right: 28%;
-      top: .06rem;
-      color: #fff;
-      font-size: 10px;
     }
-  }
-</style>
-
-<style>
-  .el-message-box {
-    width: 360px;
   }
 </style>

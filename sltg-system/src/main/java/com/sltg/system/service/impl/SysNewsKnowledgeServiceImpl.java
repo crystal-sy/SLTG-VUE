@@ -36,6 +36,7 @@ public class SysNewsKnowledgeServiceImpl implements SysKnowledgeService {
     public SysNewsKnowledge queryKnowledgeById(String newsId) {
         SysNewsKnowledge newsKnowledge = newsKnowledgeMapper.queryNewsKnowledgeById(newsId);
         newsKnowledge.setComments(newsCommentMapper.queryNewsCommentCnt(newsId));
+        newsKnowledge.setNewsThemes(newsKnowledge.getNewsTheme().split(","));
         return newsKnowledge;
     }
 }

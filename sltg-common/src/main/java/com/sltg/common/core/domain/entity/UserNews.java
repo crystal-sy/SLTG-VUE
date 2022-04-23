@@ -60,6 +60,8 @@ public class UserNews extends BaseEntity {
 
     private Long[] newsIds;
 
+    private String[] newsThemes;
+
     private int comments;
 
     public UserNews() {}
@@ -188,6 +190,14 @@ public class UserNews extends BaseEntity {
 
     public void setNewsIds(Long[] newsIds) {
         this.newsIds = newsIds;
+    }
+
+    public String[] getNewsThemes() {
+        return newsThemes;
+    }
+
+    public void setNewsThemes(String[] newsThemes) {
+        this.newsThemes = newsThemes;
     }
 
     public int getComments() {

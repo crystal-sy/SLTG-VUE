@@ -93,6 +93,12 @@ export const constantRoutes = [
     redirect: 'noredirect',
     children: [
       {
+        path: 'comment',
+        component: (resolve) => require(['@/views/news/comment/index'], resolve),
+        name: 'comment',
+        meta: { title: '评论列表' }
+      },
+      {
         path: 'detail',
         component: (resolve) => require(['@/views/news/detail/index'], resolve),
         name: 'detail',
