@@ -114,8 +114,9 @@ public class UserNewsServiceImpl implements UserNewsService {
 
         String detectionPercent = new PythonUtils().executePythonScript(new String[]{"cmd", "/c",
             "python " + pythonScriptPath + "news_detection.py", contentFilePath, commentFilePath}, pythonLibPath);
-        news.setDetectionPercent(detectionPercent);
-        news.setDetectionType(getDetectionType(detectionPercent));
+        String[] detectionPercents = detectionPercent.split("\n");
+        news.setDetectionPercent(detectionPercents[0] + "%");
+        news.setDetectionType(getDetectionType(detectionPercents[1]));
         return userNewsMapper.insertUserNews(news);
     }
 
@@ -146,8 +147,9 @@ public class UserNewsServiceImpl implements UserNewsService {
 
         String detectionPercent = new PythonUtils().executePythonScript(new String[]{"cmd", "/c",
             "python " + pythonScriptPath + "news_detection.py", contentFilePath, commentFilePath}, pythonLibPath);
-        news.setDetectionPercent(detectionPercent);
-        news.setDetectionType(getDetectionType(detectionPercent));
+        String[] detectionPercents = detectionPercent.split("\n");
+        news.setDetectionPercent(detectionPercents[0] + "%");
+        news.setDetectionType(getDetectionType(detectionPercents[1]));
         return userNewsMapper.updateUserNews(news);
     }
 
@@ -166,6 +168,14 @@ public class UserNewsServiceImpl implements UserNewsService {
     }
 
     private String getDetectionType(String detectionPercent) {
+        if ("1".equals(detectionPercent)) {
+            return "2";
+        }
+
+        if ("0".equals(detectionPercent)) {
+            return "0";
+        }
+
         if (Strings.isBlank(detectionPercent) || !detectionPercent.contains("%")) {
             return "5"; // 其他
         }

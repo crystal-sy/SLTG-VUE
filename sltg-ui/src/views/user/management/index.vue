@@ -99,7 +99,7 @@
       <el-table-column label="新闻编号" align="center" key="newsId" prop="newsId" v-if="columns[0].visible" />
       <el-table-column label="新闻标题" align="center" key="newsTitle" prop="newsTitle" v-if="columns[1].visible" :show-overflow-tooltip="true" width="400" />
       <el-table-column label="新闻日期" align="center" key="newsDate" prop="newsDate" v-if="columns[2].visible" />
-      <el-table-column label="虚假检测百分比" align="center" key="detectionPercent" prop="detectionPercent" v-if="columns[3].visible" />
+      <el-table-column label="文本检测百分比" align="center" key="detectionPercent" prop="detectionPercent" v-if="columns[3].visible" />
       <el-table-column label="检测类型" align="center" key="detectionType" v-if="columns[4].visible" >
         <template slot-scope="scope">
           <dict-tag :options="detectionTypeOptions" :value="scope.row.detectionType"/>
@@ -252,7 +252,7 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="检测百分比：">{{ form.detectionPercent }}</el-form-item>
+            <el-form-item label="文本检测百分比：">{{ form.detectionPercent }}</el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="检测类型：">{{ form.detectionDesc }}</el-form-item>
@@ -346,7 +346,7 @@
           { key: 0, label: `新闻编号`, visible: true },
           { key: 1, label: `新闻标题`, visible: true },
           { key: 2, label: `新闻日期`, visible: true },
-          { key: 3, label: `虚假检测百分比`, visible: true },
+          { key: 3, label: `文本检测百分比`, visible: true },
           { key: 4, label: `检测类型`, visible: true },
           { key: 5, label: `新闻来源`, visible: true },
           { key: 6, label: `创建时间`, visible: true }
